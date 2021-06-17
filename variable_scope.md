@@ -31,7 +31,7 @@ puts num_2        # outputs => undefined local variable or method `num_2' for ma
 
 The example above illustrates inner and outer variable scope. The local variable `num_1` is initialized in the main object (outside of a block), local variable `num_2` is intialized within the block passed in as an argument to the `times` method. In this circumstance `num_1` has an _outer scope_ and `num_2` has an _inner scope_ because of where they were initialized. When we invoke the `puts` method and pass in local variables `num_1` and `num_2`, `4` is outputted followed by an error of 
 
->`undefined local variable or method num_2' for main:Object (NameError)`.
+>`undefined local variable or method 'num_2' for main:Object (NameError)`.
 
 `4` is outputted when we `puts num_1` because `num_1` was intitialized and assigned the value of `9` on the first line giving it an out scope, then within the block of the `times` method it is reassigned to the value of `4`, because it has outer scope `num_1` is available to pass to the puts method. `num_2` is initialized within the block of the `times` method and therefore has an inner scope, so it is _not_ available to be passed to the `puts` method on the last line, and throws an error. 
 
@@ -116,7 +116,7 @@ Variable shadowing occurs when a local variable outside of a block shares the sa
   name = 'michelle'
 
   arr_of_names.each do |name|
-    puts name                   # => 'chris'... 'adrienne'...
+    puts name                   # => 'chris'... 'adrienne'... 'hunter'...
   end
 ```
 
@@ -145,7 +145,7 @@ def say_name_variable_passed_as_argument(name3)
 end
 
 say_name
-say_name_variable_initialized_in_de\finition
+say_name_variable_initialized_in_definition
 say_name_variable_passed_as_argument('Adrienne')
 ```
 
