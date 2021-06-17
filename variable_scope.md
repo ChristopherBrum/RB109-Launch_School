@@ -8,11 +8,12 @@ A variable is a container that stores information that can be referenced and man
 
 ## What is _**Scope**_? ##
 
-A variable's scope determines where in a program that variable is availble for use. It's scope is determined by where it is **initialized** or created. Scope in Ruby is defined by a block, which is a piece of code following a method invocation, and usually defined by either curly braces `{}` or `do/end`. Note: not all `do/end` demarcate a block!
+A variable's scope determines where in a program that variable is availble for use. It's scope is determined by where it is **initialized** or created. Scope in Ruby is defined by a block, which is a piece of code following a method invocation, and usually defined by either curly braces `{ }` or `do...end`.<br>
+Note: not all `do...end` demarcate a block!
 
 ### Inner & Outer Scope ###
 
-
+A local variable is scoped according to where it was _intialized_. A local variable initialized within the main object of a program will be accessible anywhere within the program, including anywhere in the main object and inside blocks and nested blocks(with the exception of inside method definitions). A variable intialized within a block will be accessible within that block and any blocks nested within it, but not in the main object, other blocks it may be nested within or other blocks at the same level of nesting as itself. A local variable initialized in the main object will be considered to have **outer scope** of any blocks created within the main object. Any local variable created within a block will be considered to have **inner scope**. 
 
 >_Inner scope can access variables initialized in an outer scope, but not vice versa._
 
@@ -34,22 +35,119 @@ The example above illustrates inner and outer variable scope. The local variable
 
 `4` is outputted when we `puts num_1` because `num_1` was intitialized and assigned the value of `9` on the first line giving it an out scope, then within the block of the `times` method it is reassigned to the value of `4`, because it has outer scope `num_1` is available to pass to the puts method. `num_2` is initialized within the block of the `times` method and therefore has an inner scope, so it is _not_ available to be passed to the `puts` method on the last line, and throws an error. 
 
->_The key distinguishing factor for deciding whether code delimited by `{}` or `do/end` is considered a block (and thereby creates a new scope for variables), is seeing if the `{}` or `do/end` immediately follows a method invocation._
+### Scopes with a Block ###
+
+A block is any code between a `do..end` or curly braces `{ }` that follows a method invocation, and denotes a new inner scope. 
+
+>_The key distinguishing factor for deciding whether code delimited by `{ }` or `do...end` is considered a block (and thereby creates a new scope for variables), is seeing if the `{}` or `do...end` immediately follows a method invocation._
 
 ```ruby
 arr = [1, 2, 3]
-
-for i in arr do
-  a = 5          # a is initialized here
+a = 9             # 'a'is intialized here
+arr.each do |num|
+  a = 7           # 'a' is re-assigned here
+  b = 2           # 'b' is intialized here
 end
 
-puts a           # is it accessible here? yes, because the do/end of the for loop is not a block and not scoped as a block
-```
+for i in arr do
+  c = 5           # 'c' is initialized here
+end
 
-`a` is accessible because `for` is not a method but a part of Ruby syntax, therefore the `do/end` following the `for` keyword does not deliniate a block or an inner scope.
+puts a            # 'a' outputs 7
+puts b            # 'b' throws a nameError because it was intialized in a block.
+puts c            # is 'c' accessible here? yes, because the do/end of the for loop is not a block and not scoped as a block
+```
+`a` is intialized outside of a block(outer scope), and then re-assigned within the block passed to the `#each` method. Because it was intialized in the main object it is accessible and outputs `7` when it's passed to the `#puts` method.<br>
+`b` is initialized within the block(inner scope) passed to the `#each` method, and is therefore not accessible in the main object. When passed as an argument to the `#puts` method it outsputs a nameError.<br>
+`c` is accessible because it was intiailized in the main object and `for` is not a method but a part of Ruby syntax, therefore the `do...end` following the `for` keyword does not deliniate a block or an inner scope.
 
 ### Local & Global Scope ###
 
+  Globally scoped variables are accessible anywhere within the program. In ruby, only **global variables** and **constants** are globally scoped. Local variable accessibility is determined by where in the program they are *initialized*.
+  
+  ```ruby
+    FIRST_NAME = 'Chris'    # Constants are in all capitals
+    first_name = 'Christopher'
+
+    def say_name(name)
+      puts FIRST_NAME       # => 'Chris'
+      puts first_name       # => nameError...
+    end
+
+    say_name('joe')       
+  ```
+
+### Nested Scope ###
+
+When you begin nesting blocks within blocks you created *nested scoping*. Instead of saying inner or outer scope, we would say 1st level scope, 2nd level scope, 3rd level scope, etc. 1st level scope will be the outermost scope and each scope after that would represent an inner scope one level deeper than the last. 
+
+A local variable initialized in the 1st level scope would be accessible by every scope within it. A local variable initialized in the 2nd level scope would not be accessible in the 1st level scope but would be in the 2nd level scope, 3rd level scope, and so on. A local variable initialized in the 3rd level scope would not be accessible in the 1st or 2nd level scope but would be in the 3rd level scope, 4th level scope, 5th level scope. And so on...
+
+```ruby
+a = 'First level scope'
+
+1.times do 
+  b = 'Second level scope'
+
+  1.times do 
+    c = 'Third level scope'
+    
+    puts a    # => 'First level scope'
+    puts b    # => 'Second level scope'
+    puts c    # => 'Third level scope'
+  end
+
+  puts a      # => 'First level scope'
+  puts b      # => 'Second level scope'
+  puts c      # => nameError ( out of scope )
+end
+
+puts a        # => 'First level scope'
+puts b        # => nameError ( out of scope )
+puts c        # => nameError ( out of scope )
+```
+
+### Variable Shadowing ###
+
+Variable shadowing occurs when a local variable outside of a block shares the same name as a block parameter. The local variable initialized outside of the block will not be accessible within the block because the block parameter of the same name 'overshadows' it. This means you can not access, re-assign or manipulate the object the outer variable is referencing. 
+
+```ruby
+  arr_of_names = ['chris', 'adrienne', 'hunter']
+  name = 'michelle'
+
+  arr_of_names.each do |name|
+    puts name                   # => 'chris'... 'adrienne'...
+  end
+```
+
+The local variable `name` intialized on line 2 is invisible in the block of the `#each` method because the block parameter shares the same name, making it invisible within the block.<br>
+
+If you are specific and descriptive with the naming of your variables you should not put yourself in a position where you experience variable shadowing. 
+
+### Method Scope ###
+
+The scope of a method definition is independent and self-contained. Any local variable accessible within a method definition's scope is either initialized within the method definition, which would make it inaccessible outside of the method definition, or passed into the method definition as an argument.
+
+```ruby
+name1 = 'chris'
+
+def say_name
+  puts "Hello " + name1      # => nameError ( not in scope )
+end
+
+def say_name_variable_initialized_in_defintion
+  name2 = 'Chris'
+  puts "Hello " + name2      # => Hello Chris 
+end
+
+def say_name_variable_passed_as_argument(name3)
+  puts "Hello " + name3      # => Hello Adrienne
+end
+
+say_name
+say_name_variable_initialized_in_de\finition
+say_name_variable_passed_as_argument('Adrienne')
+```
 
 ## Variable Scope Quiz ##
 
