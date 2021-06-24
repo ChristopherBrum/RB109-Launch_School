@@ -218,7 +218,7 @@
   ### Pass By Value ###
   Pass by value creates a copy of an object, and that copy is what gets passd around. Because it is only a copy it is impossible to change the original object, and any attempt to change the original object will result in changing the copy. 
 
-  Pass by value: when objects are passed to a method, only a copy of the original object (or value) will be passed to the method. This means that any manipulations performed on the object within the method will have no effect on the original object.
+  **Pass by value**: when objects are passed to a method, only a copy of the original object (or value) will be passed to the method. This means that any manipulations performed on the object within the method will have no effect on the original object.
 
   - Ruby is not pass by value, but sometimes it can act like it is, when a copy is generated within a method and reassigned to the variable in question.
 

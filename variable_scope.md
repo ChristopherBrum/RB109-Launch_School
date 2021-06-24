@@ -1,17 +1,28 @@
 # **Variable Scope** #
 
-### What is a _**Variable**_? ###
+[Variable Scope](https://github.com/ChristopherBrum/RB109-Launch_School/blob/main/variable_scope.md)
+  - [What is a Variable?](#what-is-a-variable)
+  - [What is Scope?](#what-is-scope)
+    - [Inner and Outer Scope](#inner-and-outer-scope)
+    - [Scopes with a Block](#scopes-with-a-block)
+    - [Local and Global Scope](#local-and-global-scope)
+    - [Nested Scope](#nested-scope)
+    - [Variable Shadowing](#variable-shadowing)
+    - [Method Scope](#method-scope)
+  - [Variable Scope Quiz](#variable-scope-quiz)
+
+## What is a Variable? ##
 
 A variable is a container that stores information that can be referenced and manipulated within a computer program. A variable also provides a way of labeling this data in a descriptive way so that the program can be understood more clearly by ourselves and others reading our code. 
 
 >_Their sole purpose is to label and store data in memory. This data can then be used throughout your program._
 
-### What is _**Scope**_? ###
+### What is Scope? ###
 
 A variable's scope determines where in a program that variable is availble for use. It's scope is determined by where it is **initialized** or created. Scope in Ruby is defined by a block, which is a piece of code following a method invocation, and usually defined by either curly braces `{ }` or `do...end`.<br>
 Note: not all `do...end` demarcate a block!
 
-#### Inner & Outer Scope ####
+#### Inner and Outer Scope ####
 
 A local variable is scoped according to where it was _intialized_. A local variable initialized within the main object of a program will be accessible anywhere within the program, including anywhere in the main object and inside blocks and nested blocks(with the exception of inside method definitions). A variable intialized within a block will be accessible within that block and any blocks nested within it, but not in the main object, other blocks it may be nested within or other blocks at the same level of nesting as itself. A local variable initialized in the main object will be considered to have **outer scope** of any blocks created within the main object. Any local variable created within a block will be considered to have **inner scope**. 
 
