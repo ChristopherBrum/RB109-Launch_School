@@ -1,6 +1,6 @@
-# RUby Collections #
+# Ruby Collections #
 
-1. [Ruby Collection]()
+1. [Ruby Collections]()
 2. [Element Reference]()
     - [String Element Reference]()
     - [Array Element Reference]()

@@ -23,3 +23,10 @@
       - [Pass By Value](https://github.com/ChristopherBrum/RB109-Launch_School/blob/main/mutating_methods_object_passing.md#pass-by-value)
       - [What Ruby Uses](https://github.com/ChristopherBrum/RB109-Launch_School/blob/main/mutating_methods_object_passing.md#what-ruby-uses)
     - [Mutating Methods and Object Passing Quiz](https://github.com/ChristopherBrum/RB109-Launch_School/blob/main/mutating_methods_object_passing.md#mutating-methods-and-object-passing-quiz)
+
+3. [Ruby Collections](https://github.com/ChristopherBrum/RB109-Launch_School/blob/main/ruby_collections.md)
+    - [Ruby Collections]()
+    - [Element Reference]()
+      - [String Element Reference]()
+      - [Array Element Reference]()
+      - [Hash Element Reference]()
