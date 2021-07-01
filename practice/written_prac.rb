@@ -1,7 +1,3 @@
-def cap(str)
-  str.capitalize!   # does this affect the object outside the method?
-end
-
-name = "jim"
-cap(name)
-puts name 
+a = %w(a b c)
+a[1] = '-'
+p a
