@@ -745,5 +745,102 @@ The `p` method is invoked on the last line and passed the `meal` method as an ar
 > What does the following code return? What does it output? Why? What concept does it demonstrate?
 
 ```ruby
+def meal
+  return 'Breakfast'
+  'Dinner'
+  puts 'Dinner'
+end
 
+puts meal
 ```
+
+This code will output `Bereakfast` and return `nil`. This is an example of explicit return in Ruby. 
+
+The `puts` method is called on the last line with the `meal` methof passed in as an argument. Within the `meal` method definition the `return` keyword is called so `Breakfast` is immediately returned the method definition is exited. Being the value returned by `meal`, `Breakfast` is passed to `puts` and is output and `nil` returned. 
+
+> Time: 3m 6s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def count_sheep
+  5.times do |sheep|
+    puts sheep
+  end
+end
+
+puts count_sheep
+```
+
+This code will output `0`, `1`, `2`, `3`,`4`, and `5` on separate lines and return `nil`. This is an example of iteration with the `times` method. 
+
+The `times` method will loop through the block passed to it up to the integer object it is called upon, starting from 0. This integer is assigned to the block parameter `sheep` and then passed to the `puts` method, which outputs the current integer. `times` returns the calling object, which is passed to the `puts` method on the last line where it is output and `nil` is returned
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def count_sheep
+  5.times do |sheep|
+    puts sheep
+  end
+  10
+end
+
+puts count_sheep
+```
+
+This code will output integers `0 - 4` and `10` and will return `nil`. This is an exmaple of implicit return in Ruby.
+
+The `count_sheep` method is passed to the `puts` method as an argument on the last line. Within the `count_sheep` method definition the `times` method is called on integere object `5`. Within the block passed to `times` `puts` is called on the block parameter which outputs `0-4` and `times` returns the calling object `5`. The `count_sheep` method returns `10` because that is the lane executed line of code in the method body. So it is passed into the `puts` method and output, and `nil` is returned. 
+
+> Time: 4m 29s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def count_sheep
+  5.times do |sheep|
+    puts sheep
+    if sheep >= 2
+      return
+    end
+  end
+end
+
+p count_sheep
+```
+
+This code will output integers `0-2` on separate lines, as well as `nil` and will return `nil`. This is an example of explicit return in Ruby.
+
+The `p` method is invoked and the `count_sheep` method passed to it as an argument. Within the `count_sheep` method is the integer object `5` with `times` method called on it. Within the block passed to `times` the block parameter is passed to `puts` where it will be out. After that an if conditional statement checks to see if the block parameter is greater than or equal to 2. When this condition evaluates to `true` the method explicitly returns and exits the method. So far the integers `0`, `1`, and `2` have been output. The explicit return returned `nil` which is the value passed to the `p` method on the last line. The `p` method returns and outputs `nil`. 
+
+> Time: 5m 26s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def tricky_number
+  if true
+    number = 1
+  else
+    2
+  end
+end
+
+puts tricky_number
+```
+
+This code will output integer object `1` and return `nil`. This is an example of implicit return in Ruby.
+
+Within the method definition of `tricky_number` is an if condition checking with `true` is truthy, which it is, therefore `number = 1` is the last executed line of code in the method body and evaulates to `1` so that is the value returned on the last line where `tricky_number` is invoked. It is passed to the `puts` method as an argument which outputs `1` and returns `nil`.
+
+> Time: 3m 39s
+
