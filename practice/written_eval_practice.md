@@ -459,3 +459,291 @@ An array object is assigned to local variable `arr`. Then `map` method is calle 
 
 ---
 
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = "hello"
+
+[1, 2, 3].map { |num| a }
+```
+
+This code will output nothing and return array object `['hello', 'hello', 'hello']`. This is an example of transformational iteration using the `map` method. 
+
+The `map` method is called on an array object, then passed a block as an argument. Within this block local variable `a`, which was initialized on line 1, is what is returned by the block. `map` pushed the return value of the block to a new array object, so when `a` is what the block returns the string variable `hello` is pushed to the new array. `map` then returns this new array object upon completing its iteration. 
+
+> Time: 5m 5s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].each do |num|
+  puts num
+end
+```
+
+This code will output integers `1`, `2`, and `3` on separate lines and return array object `[1, 2, 3]`. This is an example of iteration using the `each` method. 
+
+The `each` method is called on array object `[1, 2, 3]` and passed a block as an argument. Within the block the `puts` method is invoked and passed the object passed in from the calling object. This will output `1`, `2`, `3` all on separate lines. Because `each` always returns the calling object array object `[1, 2, 3]` is returned. 
+
+> Time: 3m 47s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].any? do |num|
+  num > 2
+end
+```
+
+This code will return boolean object `true` and outputs nothing. This is an example of how the `any?` method uses the block return value to determine the method return value. 
+
+When `any?` is called on the array object each element will be passed to the block and assigned to the block parameter `num`. The block will execute any code and evaluate the return value to a boolean value. The method is looking for the block to return a truthy value for _any_ of the iterations. If a truthy value is returned then the `any?` method will return `true`, otherwise it will return `false`.
+
+> Time: 4m 20s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+{ a: "ant", b: "bear", c: "cat" }.any? do |key, value|
+  value.size > 4
+end
+```
+
+This code will output nothing and return boolean object `false`. This is an exmaple of the block returning a truthy or falsy value to determine the `any?` methods return value. 
+
+Each key-value pair of the hash that the `any?` method is called on will be passed to the block one at a time and assigned to the block parameters `key` and `value`. The block will evaluate the block to truthy or falsy. If there are _any_ instances where the block returns a truthy valut then the `any?` method will return `true`, if not, it will return `false`. In this case the block is checking to see if any of the string objects assigned to the `value` block paramter havea length greater than 4, which none do, so this code will return `false`. 
+
+> Time: 5m 40s
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].all? do |num|
+  num > 2
+end
+```
+This code will output nothing and return boolean object `false`. This is an example of the block returning a truthy or falsy value to the `all?` method, and the methhod using that to determine it's return value. 
+
+The `any?` method is called on an array object, each element within the array will be passed to the block one at a time and the block will return a truthy or falsy value depending on the code executed within it. In this circumstance the integer object assigned to block parameter `num` is is being compared to the integer 2. If `num` is greater than or equal to `2` then it will return `true` and the block will also return `true`, then will continue on to the next iteration. If all iterations result in the block returning `true` then the `all?` method will return `true` but if `any` of the iterations return `false` then the method will return false as well. Because the first integer in the calling object is less than 2 this method will return `false`. 
+
+> Time: 5m 56s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+{ a: "ant", b: "bear", c: "cat" }.all? do |key, value|
+  value.length >= 3
+end
+```
+
+Thsi code will output nothing but will return boolean object `true`. This is an example of the `all?` method utilizing its blocks truthy or falsy return value. 
+
+The `all?` method is called on a hash, and the key-value pairs of the calling object are passed into the block and assigned to block parameters `key` and `value`. The `all?` methods block will return a truthy or falsy value based on the code executed within it. In this case, the code in the block is evaluating whether the current object referenced by `value` has a length greater than or equal to the integer object `3`. Becase all of the values of the calling object are at least 3 characters long each iteration of the block evaluates to true, and because of this the `all?` method will return `true`.
+
+> Time: 6m 43s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].each_with_index do |num, index|
+  puts "The index of #{num} is #{index}."
+end
+```
+This code will output `"The index of 1 is 0."`, `"The index of 2 is 1."`, and `"The index of 3 is 2."`, and will return array object `[1, 2, 3]`. This is an example of the `each_with_object` method returning the calling object.
+
+`each_with_index` is called on an array object, each element within the calling object is passed to the block as a parameter as well as the current index, one at a time. Within the block the `puts` method is called and a string object with the element and the index added to the string through interpolation. These string objects are all output. Because `each_with_index` return the calling object, `[1, 2, 3]` is returned. 
+
+> Time: 4m 25s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+{ a: "ant", b: "bear", c: "cat" }.each_with_object([]) do |pair, array|
+  array << pair.last
+end
+```
+
+This code will output nothing and return an array object with the string objects `ant`, `bear`, and `cat` inside of it. This is an example of the `each_with_object` method converting a key-value pair from its calling object to an array object and returning a new object. 
+
+The `each_with_object` method is called on a hash object with one argument, an empty array. Each key-value pair is passed to the block one at a time and assigned to the block parameter `pair` as a 2 elements array object. The argument passed into the method is assigned to the block parameter `array`. Within the block the `last` method is called on the object referenced by `pair`, which returns the last elements of the array object. and thios is passed as an argument to the shoverl operator, which has been called on the object referenced by `array`. The `each_with_object` method then returns a new array object populated with the string objects from the calling object.
+
+> Time: 7m 59s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+{ a: "ant", b: "bear", c: "cat" }.each_with_object({}) do |(key, value), hash|
+  hash[value] = key
+end
+```
+
+This code will output nothing and return hash object `{"ant"=>:a, "bear"=>:b, "cat"=>:c}`. This is an example of the `each_with_object` method returning a new object and setter methods.
+
+The `each_with_object` method is called on a hash object with one argument, an empty hash. Each key-value pair is passed to the block one at a time and assigned to the block parameters `key` and `value` and the hash object argument is assigned to block parameter `hash`. Within the block the setter method `[ ]=` is used to set `value` as the key and `key` as the value in the hash object `hash`. Because `each_with_object` returns the new object, `{"ant"=>:a, "bear"=>:b, "cat"=>:c}` is returned. 
+
+> Time: 5m 45s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+odd, even = [1, 2, 3].partition do |num|
+  num.odd?
+end
+
+p odd 
+p even
+```
+
+This code woll output integers `[1, 3]` and `[2]`, then will return array object `[2]`. This is an example of the `partition` method utilizing a block that returns a truthy or falsy value based on the code executed within itself. 
+
+The `partition` method is called on an array object, and each element of the calling object is pased to the block and assigned to block parameter `num`. Within the block the `odd?` method is called on `num` and will return a boolean value based on whether or not `num` is an odd integer object. `partition` will pass all truthy evaluating values to a subarray and all falsy evaluating values to a second subarray. These nested arrays are then returned by the `partition` method and assigned to local variables `odd` and `even`. The `p` method is called on both of these variables which outputs the two arrays and returns `[2]`.
+
+> Time: 6m 24s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = "Hello"
+
+if a
+  puts "Hello is truthy"
+else
+  puts "Hello is falsey"
+end
+```
+
+This code will output `Hello is truthy` and return `nil`. This is an example of truthy and falsey values. 
+
+String object `Hello` is assigned to local variable `a` on line 1, then ono line 3 an in conditional evaluates whether or not `a` is considered truthy. Because the object referenced by `a` is `Hello`, a valid string object, and not `nil` or `false`, it evaluates to true, and the `puts` method on line 4 is invoked with the string `"Hello is truthy` passed in as an argument. This is outputted and `nil` is returned.
+
+> Time: 3m 19s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def test
+  puts "written assessment"
+end
+
+var = test
+
+if var
+  puts "written assessment"
+else
+  puts "interview"
+end
+```
+
+This code will output `interview` and return `nil`. This is an example of how Ruby evaluates truthy and falsey values. 
+
+On line 4 local variable `var` is assigned to the return value of the `test` method. Because the last line in the `test` method is an invocation of the `puts` method is returns `nil`, so that is the value assigned to `var`. On line 7 an if conditional statement checks to see if `var` is a truthy value, because `nil` evaluates to `falsey` the `else` statement is executed and the  puts   method is invoked with `interview` passed in as an argument. This is output and `nil` is returned. 
+
+> Time: 3m 50s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def meal
+  return 'Breakfast'
+end
+
+puts meal
+```
+
+This code will output `Breakfast` and and return `nil`. This is an example of explicitly calling `return`. 
+
+The `puts` method is called on line 5 and the return value of the `meal` method is passed in as an argument. Within the method definition string object `Breakfast` is explicitly returned(note: the explicit return is not necessary in this situation because this is also the last line of the block, so it will implicitly return this anyhow), being the return value of the method, this is what the `puts` method outputs, and `puts` will return `nil`.
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def meal
+  'Evening'
+end
+
+puts meal
+```
+
+The `puts` method is called and the return value of `meal` is passed in as an argument. Within the `meal` method body is the string object `Evening`, which, being the last thing executed in the method body will be implicitly returned. Therefore `Eveneing` will be output by `puts` and it will return `nil`. 
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def meal
+  return 'Breakfast'
+  'Dinner'
+end
+
+puts meal
+```
+This code will output 'Breakfast` and return `nil`. This is an example of explicitly return. 
+
+The `puts` method is called on the last line, and the return value of the `meal` method invocation is passed in as an argument. Within the  `meal` method definition the `return` keyword is called to return `Breakfast`. This keyword exits the method and immediately returns the code that follows it, because that is essesntiall the new last line of the method body. In this case it returns `Breakfast` to the `puts` method invocation, which is output and `nil` is returned. 
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def meal
+  puts 'Dinner'
+  return 'Breakfast'
+end
+
+puts meal
+```
+
+This code will output `Dinner` and `Breakfast` on separate lines and return `nil`. This is an example of explicit and implicit return in Ruby. 
+
+The `puts` method is onvoked on the last line and passed in the `meal` method as an argument. Within the `meal` method definition the `puts` method is invoked and string object `Dinner` is output. On the next line string object `Breakfast` is returned and the `meal` method returns it to the `puts` method on the last line, where it is output and `nil` is returned. 
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+def meal
+  'Dinner'
+  puts 'Dinner'
+end
+
+p meal
+```
+
+This code will output `Dinner` and `nil` and also return `nil`. This is an example of the difference between output and return in Ruby. 
+
+The `p` method is invoked on the last line and passed the `meal` method as an argument. Within the `meal` method body the `puts` method is invoked and string object `Dinner` is passed in as an argument, which outputs `Dinner` and returns `nil`. Since the return value of `meal` is `nil`, the `p` method on the last line outputs `nil` and also returns it. 
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+
+```
