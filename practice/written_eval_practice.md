@@ -844,3 +844,329 @@ Within the method definition of `tricky_number` is an if condition checking with
 
 > Time: 3m 39s
 
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = 7
+
+def my_value(b)
+  b += 10
+end
+
+my_value(a)
+puts a
+```
+
+This code will output integer object `7` and return `nil`. This is an example of object passing by valuwe within Ruby. 
+
+Local variable `a` is initialized to integer object `7` on line `1`. It is then passed as an argument to the `my_value` method invocation where the object referenced by `a` is assigned to method parameter `b`. Within the method body the object referenced by `b` is then reassigned to to return value of  incrementing the value of `b` with integere object `10`. Because of this reassignment and ebcause integers are immutable a new object is returned, `17`, and `b` is now pointing to that new object. So when the `puts` method is called with `a` passed in as an argument, it returns `7` because the `my_value` was not destructive. 
+
+> Time: 5m 15s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby 
+a = 7
+
+def my_value(a)
+  a += 10
+end
+
+my_value(a)
+puts a
+```
+
+This code will output integere object `7` and return `nil`. This is an example of object passing by value. 
+
+Thge local variable `a` is initialized to `7` on line and then passed as an argument to the `my_value` method invoked on like 7. Within the method definition the object referenced by `a` is then assigned to method parameter `a`. Line 4 has `a` reassigned to the return value of `a` added to `10`. Because of this reassignment and that integers are immutable method parameter `a` is no longer pointing to the same object as local variable `a`. Therefore when the `puts` method is called on line 8 and `a` is passed in, it outputs `7`, not `17`, and returns `nil`. 
+
+
+> Time: 5m 20s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = 7
+
+def my_value(b)
+  a = b
+end
+
+my_value(a + 5)
+puts a
+```
+
+This code will output integer object `7`, return `nil` and is an example of variable scope with methods in Ruby. 
+
+The local variable `a` is initialized to `7` on line 1 and passed as an argument to the `my_value` method where the object referenced by `a` is added to `5` and then assigned to method parameter `b`. Within the method body local variable `a` (different `a`, with an inner scope) is then assigned to the object referenced by `b`. Because method definition scope does not allow for passing objects outside of passing in parameters, `a` is initialized within the block completely independently of the local variable `a` initialized on line 1. Therefore when the `puts` method is invoked and `a` is passed in, `7` is output because the object `a` is referencing has not be changed. 
+
+> Time: 5m 55s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = "Xyzzy"
+
+def my_value(b)
+  b[2] = '-'
+end
+
+my_value(a)
+puts a
+```
+
+This code will output `Xy-zy`, return, `nil`, and is an example of object passing by reference in Ruby. 
+
+A string object is passed to local variable `a` on line 1 and then is passed as an argument to the invoked method `my_value`. The object referenced by `a` is assigned to method parameter `b` and on line 3 a setter method is used to mutate the character at index 2 of the string object. Because setter methods are destructive this permanently changes the string object referenced by `a` and `b` to `'Xy-xy'`. The `puts` method is called and `a` the object referenced by `a` is passed in as an argument and `Xy-xy` is output and `nil` returned. 
+
+> Time: 4m 15s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = "Xyzzy"
+
+def my_value(b)
+  b = 'yzzyX'
+end
+
+my_value(a)
+puts a
+```
+
+This code will output "Xyzzy", return `nil` and is an example of variables acting as pointers in Ruby. 
+
+Local variable `a` is initialized to a string object on line 1, passed to the invoked method `my_value` on line 7, and then the object referenced by `a` is assigned to method parameter `b` in the method definition. Within the method body `b` is reassigned to a different string object, so now `a` and be are pointing at 2 different object in memory. `a` is then passed as an argument to `my_value` on the last line and the string object is was initialized to is output and  nil  returned. 
+
+> Time: 3m 24s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = 7
+
+def my_value(b)
+  b = a + a
+end
+
+my_value(a)
+puts a
+```
+
+This code will throw a `NameError` and is an example of variable scope within Ruby. 
+
+The program throwsa a `NameError` because it cannot find local variable `a` within the method definition. That is because, even though local variable `a` is initialized on line 1 in the main object, within the method defition `a` has not been initiialzed. A method definitions has strict scoping parameters and local variable cannot be accessed from outside the defintion unless passed in as arguments.
+
+> Time: 3m 16s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = 7
+array = [1, 2, 3]
+
+array.each do |element|
+  a = element
+end
+
+puts a
+```
+
+This code will output `3`, return `nil` and is an example of variable scope in Ruby. 
+
+Local variable `a` is initialized to integer object `7` on line 1. Then the `each` method is called on the array object referenced by `array` and each element from the array object is assigned to `element` with each iteration. Within the mwethod block `a` is reassigned to the object referenced by `element`, and because `a` (having outer scope) is accessible within the method block `a` is accessible and therefore is successfully reassigned to each element of the calling object. The last of which is integer object `3`, which is what is passed to the `puts` method on the last line, and output.
+
+> Time: 4m 16s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+array = [1, 2, 3]
+
+array.each do |element|
+  a = element
+end
+
+puts a
+```
+
+This code will throw a `NameError` and is an example of variable scope within Ruby. 
+
+When the `each` array is called on the local variable `arr` that is referencing an arrya object an inner scope is created within the block passed to the method as an argument. A local variable is initialized within the block and therefore has an inner scope. So when the `puts` method is called on the last line and `a` is passed to it the program cannot find it because it cannot be accessed in the main object and throws a `NameError`.
+
+> Time: 3m 41s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = 7
+array = [1, 2, 3]
+
+array.each do |a|
+  a += 1
+end
+
+puts a
+```
+
+This code will output `7`, return `nil` and is an example of variable shadowing. 
+
+Because local variable `a`, initialized on line 1, and the block parameter on line 4 share the same variable name `a` initialized on line 1 is not accessible within the method block on lines 4-6, therefore the object it is pointing to remains the same as when it was initialized. It is passed to the `puts` method as an argument and `7` is output. 
+
+> Time: 3m 15s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+a = 7
+array = [1, 2, 3]
+
+def my_value(ary)
+  ary.each do |b|
+    a += b
+  end
+end
+
+my_value(array)
+puts a
+```
+
+This code will throw a `NoMethodError` and is an example of variable scope in Ruby. 
+
+On line 6 local variable `a` is trying to increment itself by the value of `b` but because it is within a method definition the local variable `a` initialization on line 1 is not accessible. Therefore `a` within the method definition does not exist and a `NoMethodError` is throw because the program cannot call the `+` method on `nil`. 
+
+> Time: 2m 54s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].select do |num|
+  num > 5
+  'hi'
+end
+```
+
+This code will output nothing, return `[1, 2, 3]` and is an example of how the `select` method evaluates the return value of the block for selective iteration. 
+
+This code returns a new array with the same elements as the calling array object because the block passed in as an argument always returns a truthy value. The last line in the block is the string object `hi` which is truthy and therefore every element within the calling object will be pushed to a new array object, and the `select` method returns this new array object. 
+
+> Time: 3m 8s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+['ant', 'bat', 'caterpillar'].count do |str|
+  str.length < 4
+end
+```
+
+This code will output nothing, return `2` and is an example of how the `count` method evaluates the block to a truthy or falsey value. 
+
+The count method, in this circumstance, is called on an array of strings. Each string is passed to the block and then checked to see if its length is less than `4`, which returns a boolean value and is what the block returns. 2 of the 3 elements have a length less than 3, and that is what the `count` method returns.
+
+> Time: 3m 56s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].reject do |num|
+  puts num
+end
+```
+
+This code will output `1`, `2`, and `3` on separate lines and return array object `[1, 2, 3]`. This is an example of the `reject` method evaluating a truthy or falsey value from the block. 
+
+The `reject` method is called on an array object and will evaluate a truthy or falsey value from its block. In this circumstance within the block the `puts` method is called and the element passed in from the caller is passed as an argument. Its value is output and it returns `nil`. The   `reject` method pushes each element from the caller to a new array if the block evaluates to false, therefore each element within the calling object is passed to a new array, and is then returned by the `reject` method.
+
+> Time: 5m 40s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+['ant', 'bear', 'cat'].each_with_object({}) do |value, hash|
+  hash[value[0]] = value
+end
+```
+
+This code will output nothing an return `{ 'a' => 'ant', 'b' => 'bear', 'c' => 'cat' }`. This is an examplwe of how setter methods operate. 
+
+The `each_with_object` method allows us to create a new object while iterating over a collection at the same time. Within the block of this method the newly created hash `hash` is having a new `key-value` pair assigned to it. The key is being set by referencing the element at index `1` of the string object passed to the block and assigned to the block parameter `value`, then setting that key to the value of `value`. This occurs for each instance of the calling object. When iteration is done the `each_with_object` method returns the new object it has created. 
+
+> Time: 5m 13s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# TRY THESE OUT #
+
+
+
+```ruby
+array = [1, 2, 3, 4, 5, 6, 7]
+counter = 0
+
+loop do
+  break if counter >= array.length
+  array[counter] += 1
+  counter += 1
+end
+
+array   
+```
+
+```ruby
+array = [1, 2, 3, 4, 5, 6, 7]
+counter = 0
+evens = []
+
+loop do
+  break if counter >= array.length
+  if array[counter].even?
+    evens << array[counter]
+  end
+  counter += 1
+end
+
+p array   
+p evens   
+```
