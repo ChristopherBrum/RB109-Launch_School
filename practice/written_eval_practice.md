@@ -1122,20 +1122,106 @@ The `each_with_object` method allows us to create a new object while iterating o
 
 > Time: 5m 13s
 
+---
 
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
 
+```ruby
+hash = { a: 'ant', b: 'bear' }
+hash.shift
+```
 
+This code will output nothing, return `[:a, 'ant']` and is an example of the `Hash#shift` method and how it returns an array object instead of a hash. 
 
+The `Hash#shift` method will remove the first key-value pair from the hash object it is called upon and return it in the form of a 2 element hash. IN this circumstance the first key-value pair is `{a: 'and'}` which is removed from the calling object and returned as `[:a, 'ant']`. 
 
+> Time: 3m 50s
 
+---
 
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
 
+```ruby
+['ant', 'bear', 'caterpillar'].pop.size
+```
 
+This code will output nothing, return integer object `11`, and is an ecample of what the return value of the `Array#pop` method is in Ruby. 
 
+The `Array#pop` method will remove the last element of an array object from the calling array object and return the element that is being removed. In this situation the return value will be `caterpillar`, but because the `String#size` method is chained onto the object returned by `pop`, `String#size` will count the number of elements within the string and return that number, which is `11`. 
 
+> Time: 3m 39s
 
+---
 
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
 
+```ruby
+[1, 2, 3].any? do |num|
+  puts num
+  num.odd?
+end
+```
+
+Thsi code will output `1`, return `true` and is an example of how the block passed to the `any?` method evaluates to truthy or falsey. 
+
+The output of this code is due to the `puts` method being called on line 2 with the first element of the calling array object passed in via the `num` block parameter. The `any?` method is waiting for the block to return a truthy value and as soon as that occurs the `any?` method will return `true`. If the block never returns a truthy value then the `any?` method will iterate through each element of the calling object and return `false` at the end. 
+
+> Time: 5m 0s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+arr = [1, 2, 3, 4, 5]
+arr.take(2)
+```
+
+This code will output nothing, return `[1, 2]` and is an example of how the `take` method works. 
+
+Local variable `arr` is assigned to an array object on line 1 and then the `take` method is called on it on line 2 with `2` passed in as an argument. The arument will dictate the length of the new array object returned by `take`. In this situation 2 is the length so `take` will push the first two elements of the calling object to a new array, and then return that array. This is not a destructive method so the original object remains unchanged. 
+
+> Time: 4m 10s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+{ a: 'ant', b: 'bear' }.map do |key, value|
+  if value.size > 3
+    value
+  end
+end
+```
+
+This code will output nothing, return `[nil, 'bear']`, and is an example of how the `map` mewthod uses the return value of its block to perform transformative iteration. 
+
+The `map` method is being called on a hash object and passed a block with two parameters, `key` and `value`, both assigned to the key and value the calling object upon each iteration. Within the block an `if` conditional is evaluating whether the length of `value` is greater than `3`, and if this evaluates to `true` then returning `value`. If it doesn't evaluate to true then the `if` statement returns `nil`. Because `map` uses the return value of the block to populate a new object the return value of the block will either be the object referenced by `value` or `nil`. The first value in the caller evaluates to `nil` because `ant` is no greater than 3 characters long, and the second returns `bear` because the value is greater than `3`. `map` then returns the new array object. 
+
+> Time: 6m 30s
+
+---
+
+> What does the following code return? What does it output? Why? What concept does it demonstrate?
+
+```ruby
+[1, 2, 3].map do |num|
+  if num > 1
+    puts num
+  else
+    num
+  end
+end
+```
+
+This code will output `2`, and `3` on separate lines , return `[1, nil, nil]` and is an example of how the `map` method uses the block passed to it to transform collections. 
+
+Within the block pased to the `map` method `num` is being assigned to a element from the calling array object upon each iteration. On the second line an `if...else` conditional is evaluating whether `num` is greater than `1`. If this evaluates to true then the `puts` method is called and `num` pased in as an argument which, in this situation outputs `2` and `3`, and then returns `nil`. If it evaluates to `false` then it defaults to the `else` statement where `num` is returned, in this case `1` is the only instance of `num` that goes to the `else` statement. Because `map` uses the return value of the block to poplulate a new array `[1, nil, nil]` is returned because of the `if...else` conditional within the block. 
+
+> Time: 6m 25s
+
+---
 
 # TRY THESE OUT #
 
