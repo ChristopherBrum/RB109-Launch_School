@@ -142,7 +142,22 @@
   
 </details>
 <details>
-  <summary></summary>
+  <summary>What's the difference between #dup and #clone?</summary>
+
+  
+</details>
+<details>
+  <summary>What does it mean to 'freeze' an object?</summary>
+
+  
+</details>
+<details>
+  <summary>IN what way are the #dup #clone and #feeze methods similar?</summary>
+
+  
+</details>
+<details>
+  <summary>What is the difference with using #dup and #freeze together and #clone and #freeze together?</summary>
 
   
 </details>

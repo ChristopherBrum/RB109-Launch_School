@@ -1256,3 +1256,162 @@ end
 p array   
 p evens   
 ```
+
+---
+
+```ruby
+a = 2
+b = 2
+ 
+c = "riaz"
+d = "riaz"
+
+p a.object_id
+p b.object_id
+p c.object_id
+p d.object_id
+```
+
+This example demonstrates **Object passing strategy** in Ruby. Here the **Object is being appears to be passed as a value** since the original object is **not mutated**.
+
+This example demonstrates **Object passing strategy** in Ruby. Here the **Object is being appears to be passed as a reference** since the original object **is mutated**. 
+
+---
+```ruby
+words = %w(Mary bowtie California pasta tacos Ohio)
+words.partition { |word| (word =~ /[A-Z]/) == 0 }
+# => [["Mary", "California", "Ohio"], ["bowtie", "pasta", "tacos"]]
+
+# capturing the above arrays using parallel assignment
+proper_nouns, nouns = words.partition { |word| (word =~ /[A-Z]/) == 0 }
+p proper_nouns  # => ["Mary", "California", "Ohio"]
+p nouns         # => ["bowtie", "pasta", "tacos"]
+
+# super simple parallel assignment
+a, b = [1, 2]
+
+# using partition
+odds, evens = (1..10).partition { |num| num.odd? }
+p odds  # => [1, 3, 5, 7, 9]
+p evens # => [2, 4, 6, 8, 10]
+
+##################
+
+nums = [3, 2, 6, 4, 8, 1, 5, 9, 0]
+
+nums.sort { |a, b| b <=> a }
+# => [9, 8, 6, 5, 4, 3, 2, 1, 0]
+
+# compare by other criteria
+['aaa', 'a', 'aaaaa', 'aa', 'aaaa'].sort do |a, b|
+  a.size <=> b.size
+end
+# => ["a", "aa", "aaa", "aaaa", "aaaaa"]
+
+# block with additional code
+['aaa', 'a', 'aaaaa', 'aa', 'aaaa'].sort do |a, b|
+  puts "a has #{a.size} letters and b has #{b.size} letters"
+  a.size <=> b.size
+end
+# a has 3 letters and b has 1 letters
+# a has 3 letters and b has 5 letters
+# a has 5 letters and b has 2 letters
+# a has 3 letters and b has 2 letters
+# a has 1 letters and b has 2 letters
+# a has 5 letters and b has 4 letters
+# a has 3 letters and b has 4 letters
+# => ["a", "aa", "aaa", "aaaa", "aaaaa"] 
+
+###############
+
+[123, 432, 543, 642, 543, 256].sort_by do |num|
+  num.digits.first
+end
+# => [432, 642, 123, 543, 543, 256]
+
+contacts = {
+  Jenny: '230-867-5309',
+  Skylar: '432-555-5555',
+  joe: '230-432-1234',
+  Jimmy: '123-123-1234'
+}
+contacts.sort_by do |_, number|
+  number.split('-')[0]
+end
+# => [[:Jimmy, "123-123-1234"], [:Jenny, "230-867-5309"], [:joe, "230-432-1234"], [:Skylar, "432-555-5555"]]
+
+# sort by name in alphabetical order
+contacts.sort_by do |name, _|
+  name.capitalize
+end
+# => [[:Jenny, "230-867-5309"], [:Jimmy, "123-123-1234"], [:joe, "230-432-1234"], [:Skylar, "432-555-5555"]]
+
+hash = { chris: '510-204-5555', sam: '510-909-5526',
+adrienne: '650-433-2112' }
+
+hash.sort_by do |name, number|
+  p name.length * number.split('-')[2][0].to_i
+end
+# 25, 15, 16
+# => [[:sam, "510-909-5526"], [:adrienne, "650-433-2112"], [:chris, "510-204-5555"]] 
+
+
+########################
+
+words = %w(cantaloupe apple durian bananas)
+
+# default uses <=> to compare collection elements
+words.min                                 # = > "apple"
+words.min(2)                              # => ["apple", "bananas"]
+
+# with a block
+words.min { |a, b| a.size <=> b.size }    # => "apple"
+words.min(2) { |a, b| a.size <=> b.size } # => ["apple", "durian"]
+
+
+##################
+
+
+words = %w(cantaloupe apple durian)
+
+# sort by amount of vowels
+words.min_by { |word| word.count("aeiou") }
+# => "apple"
+words.min_by(2) { |word| word.count("aeiou") }
+# => ["apple", "durian"]
+
+```
+
+```ruby
+#Provide two examples of a method invocation that you have previously defined. One should have all syntactical sugar removed
+
+def say_hello
+  puts 'hi'
+end
+
+say_hello
+say_hello()
+
+#what does this return? 
+1.times { 2 + 2 }
+
+
+#what error does this return 
+def change_object(string, a)
+  string += "!"
+end
+
+a = "Value"
+puts a                   
+puts change_object(a)      
+puts a                 
+
+# What are the different hash types?
+old_hash = { :a => 'ant', :b => 'bear' }
+new_hash = { a: 'ant', b: 'bear' }
+
+# what types of objects can a key and value be?
+
+# What can go wrong with hashes?
+```
+
