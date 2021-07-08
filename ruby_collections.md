@@ -162,22 +162,7 @@
   
 </details>
 <details>
-  <summary></summary>
-
-  
-</details>
-<details>
-  <summary></summary>
-
-  
-</details>
-<details>
-  <summary></summary>
-
-  
-</details>
-<details>
-  <summary></summary>
+  <summary>What object types have access to Enumerable methods?</summary>
 
   
 </details>
