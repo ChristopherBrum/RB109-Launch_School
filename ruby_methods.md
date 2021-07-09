@@ -4,38 +4,30 @@
 ## Ruby Methods Quiz ##
 
 <details>
-  <summary></summary>
+  <summary>What is a method?</summary>
 
 </details>
 <details>
-  <summary></summary>
+  <summary>What are the two componments of a method?</summary>
 
 </details>
 <details>
-  <summary></summary>
+  <summary>How do we define a method?</summary>
 
 </details>
 <details>
-  <summary></summary>
+  <summary>In broad terms, what are the 3 different kinds of methods?</summary>
 
 </details>
 <details>
-  <summary></summary>
+  <summary>What does a method invocation do?</summary>
 
 </details>
 <details>
-  <summary></summary>
+  <summary>Whats the difference between an argument and a parameter?</summary>
 
 </details>
 <details>
-  <summary></summary>
-
-</details>
-<details>
-  <summary></summary>
-
-</details>
-<details>
-  <summary></summary>
+  <summary>How can you set a default parameter?</summary>
 
 </details>

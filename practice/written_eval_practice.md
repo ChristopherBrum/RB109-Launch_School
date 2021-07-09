@@ -1414,4 +1414,64 @@ new_hash = { a: 'ant', b: 'bear' }
 
 # What can go wrong with hashes?
 ```
+---
+```ruby
+# What is output when we execute the following code?
+def a_method
+  puts message
+end
+
+message = "hello there!"
+
+puts message
+a_method
+```
+
+This will output `hello there!` and then throw a `NameError`. This is an example of local variable scoping rules. 
+
+The first successful output is due to the `puts` method invocation on line 7 and the object referenced by local variable `message` passed in as an argument. On line 8 `a_method` is invoked and within the method body local variable `message` is passed to the `puts` method invocation. Because `message` has not been initialized within the method body and variables initialized outside of the method body are not accessible inside it, unless passed as an argument, the NameError is thrown. 
+
+> Time: 4m 42s
+
+---
+
+```ruby
+# What is output when we execute the following code?
+# How does it differ from the example above?
+MESSAGE = "hello there!"
+
+def a_method
+  puts message
+end
+
+puts MESSAGE
+a_method
+```
+This will output `hello there!` and then throw a `NameError`. This is an example of local variable scoping rules. 
+
+This is nearly identical to the problem from above with the difference being that a constant is being initialized on line 1. But because the `puts` method invocation within the `a_method` definition is being passed `message` it will throw a `NameError` again. This is once again because `message` has not been initialized within the method body or passed in as an argument, which means it is not accessible within the method body.
+
+> Time: 3m
+
+---
+
+```ruby
+# What is output when we execute the following code? Explain how and why
+def a_method(message)
+  puts message
+end
+
+message = "hello there!"
+
+puts message
+a_method(message)
+```
+
+This code is going to output `"hello there!"` two times on separate lines, return `nil` and is an example of object passing in Ruby.
+
+Local variable `message` is initialized to a string object on line 5, then passed as an argument to the `puts` method invocation where the string object is output the first time. `message` is then passed as an argument to the `a_method` method invocation, where the object referenced by `message` is assigned to the method parameter `message` within the method body. That reference is then passed as an argument to the `puts` method which outputs the string object the second time and returns `nil`. Being the last evaluated line of code from the method this `nil` is what the code returns. 
+
+> Time: 4m 38s
+
+---
 
