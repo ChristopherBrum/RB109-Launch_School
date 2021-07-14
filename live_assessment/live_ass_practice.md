@@ -50,7 +50,7 @@ p repeater('') == ''
 <br><br>
 
 2. ## Double Consonants ##
-- [] Problem Completed? 
+- [ ] Problem Completed? 
 
 Write a method that takes a string, and returns a new string in which every consonant character is doubled. Vowels (a,e,i,o,u), digits, punctuation, and whitespace should not be doubled.
 
@@ -86,7 +86,7 @@ double_consonants('') == ""
 <br><br>
 
 3. ## Rotate 13 ##
-- [] Problem Completed? 
+- [ ] Problem Completed? 
 
 How can you tell an extrovert from an introvert at NSA? Va gur ryringbef, gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
 
