@@ -1103,14 +1103,487 @@ p next_bigger_num(531) == -1
 p next_bigger_num(123456789) == 123456798
 ```
 
+---
 
-14. ##  ##
+14. ## Count Letters in String ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+Count letters in string
+In this kata, you've to count lowercase letters in a given string and return the letter count in a hash with 'letter' as key and count as 'value'. The key must be 'symbol' instead of string in Ruby and 'char' instead of string in Crystal.
+
+Example:
+
+letterCount('arithmetics') #=> {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}
+
+p letter_count('codewars') == {:a=>1, :c=>1, :d=>1, :e=>1, :o=>1, :r=>1, :s=>1, :w=>1}<br>
+p letter_count('activity') == {:a=>1, :c=>1, :i=>2, :t=>2, :v=>1, :y=>1}<br>
+p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}<br>
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+In this kata, you've to count lowercase letters in a given string and return the letter count in a hash with 'letter' as key and count as 'value'. The key must be 'symbol' instead of string in Ruby.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Hash
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Find number of instances of letters within given string
+  -Convert each letter to a symbol and make it the key
+  -Make the value the number of instances of that particular character
+Implicit:
+  -Input strings will not be empty
+  -Input strings will be lowercase
+  -keys in hash are sorted
+
+--------------------------EXAMPLES---------------------------------------
+letterCount('arithmetics') #=> {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}
+arithmetics
+a -> 1
+r -> 1
+i -> 2
+t -> 1
+h -> 1
+m -> 1
+c -> 1
+s -> 1
+Sort letters
+
+----------------------------ALGO-----------------------------------------
+--> method 1 --> letter_count(string) --> hash
+  -Split into an array of characters and sort
+  -Iterate over the collection
+    -If hash at current key exists?
+      -Increment value by 1
+    -Otherwise
+      -Set value to 1
+  -Return hash
+  
+=end
+
+def letter_count(str)
+  str.chars.sort.each_with_object(Hash.new(0)) { |char, hsh| hsh[char.to_sym] += 1 } 
+end
+
+p letter_count('codewars') == {:a=>1, :c=>1, :d=>1, :e=>1, :o=>1, :r=>1, :s=>1, :w=>1}
+p letter_count('activity') == {:a=>1, :c=>1, :i=>2, :t=>2, :v=>1, :y=>1}
+p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}
+```
+
+---
+
+15. ## Count Letters in String ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+You are given array of integers, your task will be to count all pairs in that array and return their count.
+
+Notes:
+
+Array can be empty or contain only one value; in this case return 0<br>
+If there are more pairs of a certain number, count each pair only once.<br> 
+E.g.: for [0, 0, 0, 0] the return value is 2 (= 2 pairs of 0s)<br>
+Random tests: maximum array length is 1000, range of values in array is between 0 and 1000<br>
+
+Examples
+[1, 2, 5, 6, 5, 2]  -->  2<br>
+...because there are 2 pairs: 2 and 5
+
+[1, 2, 2, 20, 6, 20, 2, 6, 2]  -->  4<br>
+...because there are 4 pairs: 2, 20, 6 and 2 (again)<br>
+
+p pairs([1, 2, 5, 6, 5, 2]) == 2<br>
+p pairs([1, 2, 2, 20, 6, 20, 2, 6, 2]) == 4<br>
+p pairs([0, 0, 0, 0, 0, 0, 0]) == 3<br>
+p pairs([1000, 1000]) == 1<br>
+p pairs([]) == 0<br>
+p pairs([54]) == 0<br>
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You are given array of integers, your task will be to count all pairs in that array and return their count.
+
+Notes:
+
+Array can be empty or contain only one value; in this case return 0
+If there are more pairs of a certain number, count each pair only once. E.g.: for [0, 0, 0, 0] the return value is 2 (= 2 pairs of 0s)
+Random tests: maximum array length is 1000, range of values in array is between 0 and 1000
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+  -
+Input: 1 Array
+Output: 1 Integer
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Count all pairs within the given collection
+  -Arrays with 0 or 1 element will return 0
+  -A pair consists of 2 of the same element that have not been counted as a pair previously.
+  -Max input length 1000
+  -Values within input collections are integers between 0 and 1000
+Implicit:
+  -Input collections will consist of integers
+  -Empty arrays are acceptable inputs
+--------------------------EXAMPLES---------------------------------------
+[1, 2, 5, 6, 5, 2]  -->  2
+...because there are 2 pairs: 2 and 5
+
+[1, 2, 2, 20, 6, 20, 2, 6, 2]  -->  4
+...because there are 4 pairs: 2, 20, 6 and 2 (again)
+
+----------------------------ALGO-----------------------------------------
+==> Iterate over the given collection and collect the total instances of each element., returning the number of pairs within the collection. 
+
+--> method --> pairs(array) --> integer
+  -if arr length less than 2, return 0
+  -initialize 'count' to 0
+  -initialize a unique array of arr elements
+  -iterate through the collection
+    -find the number of instances of current element
+    -if greater than 1
+      -increment 'count' by the instances divided by 2
+  -return 'count'
+
+=end
+
+def pairs(arr)
+  return 0 if arr.size < 2
+  
+  count = 0
+  uniq_els = arr.uniq
+  
+  uniq_els.each do |el|    
+    count += arr.count(el) / 2
+  end
+  
+  count
+end
+
+p pairs([1, 2, 5, 6, 5, 2]) == 2
+p pairs([1, 2, 2, 20, 6, 20, 2, 6, 2]) == 4
+p pairs([0, 0, 0, 0, 0, 0, 0]) == 3 
+p pairs([1000, 1000]) == 1
+p pairs([]) == 0
+p pairs([54]) == 0
+```
+
+---
+
+16. ## Return Substring Instance Count ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the solution so that it returns the number of times the search_text is found within the full_text.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 String, full string, and search substring
+Output: 1 Integer
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Return the number of instances that the search sunstring is found in the full string
+Implicit:
+  -All strings are lowercase
+  -There are no empty string arguments
+
+--------------------------EXAMPLES---------------------------------------
+solution('aa_bb_cc_dd_bb_e', 'bb') # should return 2 since bb shows up twice
+solution('aaabbbcccc', 'bbb') # should return 1
+
+----------------------------ALGO-----------------------------------------
+
+--> method 1 --> solution(str, search_txt) --> integer
+  -Delete all instances of the search_txt found in the str.
+  -Subtract the length of the modified str from the non-modified string and divide the result by the length od the search_txt
+  -return result
+  
+=end
+
+def solution(str, search_txt)
+  mod_str = str.delete(search_txt)
+  (str.size - mod_str.size) / search_txt.size
+end
+
+
+p solution('abcdeb','b') == 2
+p solution('abcdeb', 'a') == 1
+p solution('abbc', 'bb') == 1
+```
+
+---
+
+17. ## Alphabet Symmetry ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+Alphabet symmetry
+Consider the word "abode". We can see that the letter a is in position 1 and b is in position 2. In the alphabet, a and b are also in positions 1 and 2. Notice also that d and e in abode occupy the positions they would occupy in the alphabet, which are positions 4 and 5.
+
+Given an array of words, return an array of the number of letters that occupy their positions in the alphabet for each word. For example,
+
+solve(["abode","ABc","xyzD"]) = [4, 3, 1]
+See test cases for more examples.
+
+Input will consist of alphabet characters, both uppercase and lowercase. No spaces.
+
+Good luck!
+
+If you like this Kata, please try:
+
+Last digit symmetry
+
+Alternate capitalization
+
+p solve(["abode","ABc","xyzD"]) == [4,3,1]<br>
+p solve(["abide","ABc","xyz"]) == [4,3,0]<br>
+p solve(["IAMDEFANDJKL","thedefgh","xyzDEFghijabc"])== [6,5,7]<br>
+p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3]<br>
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Consider the word "abode". We can see that the letter a is in position 1 and b is in position 2. In the alphabet, a and b are also in positions 1 and 2. Notice also that d and e in abode occupy the positions they would occupy in the alphabet, which are positions 4 and 5.
+
+Given an array of words, return an array of the number of letters that occupy their positions in the alphabet for each word.
+
+Input will consist of alphabet characters, both uppercase and lowercase. No spaces.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Array of strings
+Output: 1 Array of integers, same length as input array
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Return an array of the number of characters that their current position is the same position within the alphabet.
+  -Inputs will only contain alphabetic characters
+  -Uppercase and lower
+  -No spaces
+Implicit:
+  -No empty arrays as arguments
+  -No empty strings as elements within the input arrays
+
+--------------------------EXAMPLES---------------------------------------
+solve(["abode","ABc","xyzD"]) = [4, 3, 1]
+"a", "b", "c", "d", "e", "f", "g", "h", "i"
+--> abode
+'a' pos 1 in string and alphabet +1
+'b' pos 2 in string and alphabet +1
+'o' pos not matching xxxxxxxxxx
+'d' pos 4 in string and alphabet +1
+'e' pos 5 in string and alphabet +1
+--> 4 elements match!
+
+----------------------------ALGO-----------------------------------------
+==> Initialize an arr of all alphabetical letters ordered, then compare the pos of individual letters in strings to see how many match their position within the alphabet. Return an array with the number of matches per string object.
+
+-- main method --> solve(array of strings) --> array of integers
+  -create alphabet array
+  -iterate through given array using transformation
+    -find number of elements thats indices match their corrisponding index in alphabet_arr
+  -return transformed array
+  
+-- helper method --> find_same_positioned(arr, alphabet_arr) --> integer
+  -initialize a count variable and set to 0
+  -iterate through the given array
+    -if the current elements index and that elements index within the alphabet_arr are the same
+      -increment count by 1
+  -return count
+  
+-- helper method --> make_alpha_arr --> array
+  -create an array of all the letters of the alphabet in lowercase and return
+  
+=end
+
+def solve(main_arr)
+  alpha_arr = make_alpha_arr
+  main_arr.map { |string| find_same_pos(string, alpha_arr) }
+end
+
+def find_same_pos(string, alpha_arr)
+  count = 0
+  string.chars.each_with_index do |el, index|
+    if index == alpha_arr.index(el.downcase)
+      count += 1
+    end
+  end
+  count
+end
+
+def make_alpha_arr
+  ('a'..'z').to_a
+end
+
+# p make_alpha_arr
+
+# p find_same_pos("abode", make_alpha_arr)
+# p find_same_pos("ABc", make_alpha_arr)
+# p find_same_pos("xyzD", make_alpha_arr)
+
+p solve(["abode","ABc","xyzD"]) == [4,3,1]
+p solve(["abide","ABc","xyz"]) == [4,3,0]
+p solve(["IAMDEFANDJKL","thedefgh","xyzDEFghijabc"])== [6,5,7]
+p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3]
+```
+
+---
+
+18. ## Longest Vowel Chain ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+
+The vowel substrings in the word codewarriors are o,e,a,io. The longest of these has a length of 2. Given a lowercase string that has alphabetic characters only and no spaces, return the length of the longest vowel substring. Vowels are any of aeiou.
+
+p solve("codewarriors") == 2<br>
+p solve("suoidea") == 3<br>
+p solve("iuuvgheaae") == 4<br>
+p solve("ultrarevolutionariees") == 3<br>
+p solve("strengthlessnesses") == 1<br>
+p solve("cuboideonavicuare") == 2<br>
+p solve("chrononhotonthuooaos") == 5<br>
+p solve("iiihoovaeaaaoougjyaw") == 8<br>
+    
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+The vowel substrings in the word codewarriors are o,e,a,io. The longest of these has a length of 2. Given a lowercase string that has alphabetic characters only and no spaces, return the length of the longest vowel substring. Vowels are any of aeiou.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Integer
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Find the longest substring in the string that contains only vowels (aeiou)
+  -Input strings will be all lowercase
+  -Input string will contain only alphabetic letters, and no spaces
+Implicit:
+  -Input string will not be empty
+  
+--------------------------EXAMPLES---------------------------------------
+p solve("codewarriors") returns ==> 2
+codewarriors
+vowel substrings:
+'o'  length -> 1
+'e'  length -> 1
+'a'  length -> 1
+'io' length -> 2 ***
+The longest substring of only vowels is 2 characters long
+
+----------------------------ALGO-----------------------------------------
+==> Seach through the given string to find all of the substrings containing only vowel characters and return the length of the longest of these substrings
+
+-- main method --> solve(string) --> integer
+  -initialize 'subs' to the return value of the find_subs array with the given array passed in as an argument
+  -iterate through the 'subs' array and select all sub strings that contain only vowels
+  -find the length of the longest vowel substring and return
+  
+-- helper method --> find_subs(arr) --> array
+  -initialize 'sub_strs' to an empty array
+  -iterate through the array passed in
+    -find each substring and push into the 'sub_strs' array
+  -return 'sub_strs' array
+  
+=end
+
+=begin
+def solve(str)
+  vowels = %w(a e i o u)
+  subs = find_subs(str.chars)
+  vowel_arr = subs.select do |str|
+    str.chars.all? { |char| vowels.include?(char) }
+  end
+  vowel_arr.max { |str| str.size }.size
+end
+
+def find_subs(arr)
+  sub_strings = []
+  1.upto(arr.size) do |num|
+    arr.each_cons(num) { |sub_arr| sub_strings << sub_arr.join }
+  end
+  sub_strings
+end
+
+# p find_subs(%w(c o d e w a r r i o r s))
+
+p solve("codewarriors") == 2
+p solve("suoidea") == 3
+p solve("iuuvgheaae") == 4
+p solve("ultrarevolutionariees") == 3
+p solve("strengthlessnesses") == 1
+p solve("cuboideonavicuare") == 2
+p solve("chrononhotonthuooaos") == 5
+p solve("iiihoovaeaaaoougjyaw") == 8
+=end
+
+=begin
+### MUCH QUICKER METHOD !!!
+
+-- main method --> solve(str) --> integer
+  -substitute all characters of given string that are not vowels with a space
+  -split string at blank spaces
+  -find string with greatest length
+  -return length
+
+=end
+
+def solve(str)
+  new_str = str.gsub(/[^'aeiou']/, ' ')
+  longest = new_str.split(' ').max { |a, b| a.size <=> b.size }  
+  longest.size
+end
+
+p solve("codewarriors") == 2
+p solve("suoidea") == 3
+p solve("iuuvgheaae") == 4
+p solve("ultrarevolutionariees") == 3
+p solve("strengthlessnesses") == 1
+p solve("cuboideonavicuare") == 2
+p solve("chrononhotonthuooaos") == 5
+p solve("iiihoovaeaaaoougjyaw") == 8
+```
+
+---
+
+19. ## Non-Even Substrings  ##
 
 - ### Difficulty: **medium** ###
 - [ ] Problem Completed?
 
+Given a string of integers, return the number of odd-numbered substrings that can be formed.
 
+For example, in the case of "1341", they are 1, 1, 3, 13, 41, 341, 1341, a total of 7 numbers.
 
+solve("1341") = 7. See test cases for more examples.
+=end
+p solve("1341") == 7
+p solve("1357") == 10
+p solve("13471") == 12
+p solve("134721") == 13
+p solve("1347231") == 20
+p solve("13472315") == 28
 
+```ruby
 
-
+```
