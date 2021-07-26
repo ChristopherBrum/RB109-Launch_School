@@ -1569,7 +1569,7 @@ p solve("iiihoovaeaaaoougjyaw") == 8
 19. ## Non-Even Substrings  ##
 
 - ### Difficulty: **medium** ###
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 Given a string of integers, return the number of odd-numbered substrings that can be formed.
 
@@ -1585,5 +1585,418 @@ p solve("1347231") == 20
 p solve("13472315") == 28
 
 ```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string of integers, return the number of odd-numbered substrings that can be formed.
 
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String, of digits
+Output: 1 integer, the number of odd substrings found in given
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Return the number of odd-numbered substrings that can be formed
+Implicit:
+  -Input string will not be empty
+  -Input string will contain only digits
+
+--------------------------EXAMPLES---------------------------------------
+"1341" --> odd substrings => 1, 1, 3, 13, 41, 341, 1341
+Total of 7 odd numbers found in the given string of digits.
+
+solve("1341") = 7
+
+----------------------------ALGO-----------------------------------------
+==> Find all substrings of the given string input, then filter to only odd substrings and then find the number of odd substrings.
+
+-- solve(string) --> integer
+  -initialize 'sub_strings' to the array returned by the find_subs method
+  -select all of the sub_strings that are odd when converted to integers
+  -find the number of odd substrings and return
+  
+-- find_subs(string) --> array
+  -initialize 'subs' to an empty array
+  -split the string into an array of characters
+  -iterate over the array starting from 1 and increasing the 'length' by 1 for each iteration
+    -iterate to find each consecutive possible substring using 'length' as the parameter
+      -push each substring into 'subs'
+  -return 'subs'
+  
+=end
+
+def find_subs(str)
+  subs = []
+  digits = str.chars
+  1.upto(str.size) do |length|
+    digits.each_cons(length) { |sub_arr| subs << sub_arr.join }
+  end
+  subs
+end
+
+# p find_subs("1341")
+
+def solve(str)
+  sub_strings = find_subs(str)
+  sub_strings.select { |str| str.to_i.odd? }.size
+end
+
+p solve("1341") == 7
+p solve("1357") == 10
+p solve("13471") == 12
+p solve("134721") == 13
+p solve("1347231") == 20
+p solve("13472315") == 28
+```
+
+---
+
+20. ## Substring Fun ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+Complete the function that takes an array of words.
+
+You must concatenate the nth letter from each word to construct a new word which should be returned as a string, where n is the position of the word in the list.
+
+For example:
+
+["yoda", "best", "has"]  -->  "yes"<br>
+  ^        ^        ^<br>
+  n=0     n=1     n=2<br>
+
+Note: Test cases contain valid input only - i.e. a string array or an empty array; and each word will have enough letters.
+
+
+p nth_char(['yoda', 'best', 'has']) == 'yes'<br>
+p nth_char([]) == ''<br>
+p nth_char(['X-ray']) == 'X'<br>
+p nth_char(['No', 'No']) == 'No'<br>
+p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) ==  'Codewars'<br>
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the function that takes an array of words.
+
+You must concatenate the nth letter from each word to construct a new word which should be returned as a string, where n is the position of the word in the list.
+
+Note: Test cases contain valid input only - i.e. a string array or an empty array; and each word will have enough letters.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input 1 Array
+Output: 1 String
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Concatenate the character at the nth position of each word in the input array so that they create a new word
+  -Test cases will always be valid inputs  
+Implicit:
+  -An empty array is valid, and will return an empty string
+  -Non-letter characters are valid
+
+--------------------------EXAMPLES---------------------------------------
+["yoda", "best", "has"]  -->  "yes"
+  ^        ^        ^          ^
+  n=0     n=1     n=2    new string returned
+----------------------------ALGO-----------------------------------------
+==> Go through each word in the given array and select the proper element to be added to a new string, then return the newly constructed string
+
+-- nth_char(array) --> string
+  -initialize 'string' to an empty string
+  -iterate through the given array utilizing index
+    -concatenate the character at the given index to 'string'
+  -return 'string'
+
+=end
+
+def nth_char(arr)
+  string = ''
+  arr.each_with_index { |word, index| string.concat(word[index]) }
+  string
+end
+
+p nth_char(['yoda', 'best', 'has']) == 'yes'
+p nth_char([]) == ''
+p nth_char(['X-ray']) == 'X'
+p nth_char(['No', 'No']) == 'No'
+p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) ==  'Codewars'
+```
+
+---
+
+21. ## Repeated Substring ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed?
+
+For a given nonempty string s find a minimum substring t and the maximum number k, such that the entire string s is equal to t repeated k times. The input string consists of lowercase latin letters. Your function should return a tuple (in Python) (t, k) or an array (in Ruby and JavaScript) [t, k]
+
+Example #1:
+
+for string `s = "ababab"`
+the answer is `["ab", 3]`
+
+Example #2:
+
+for string `s = "abcde"` the answer is `"abcde"` because for this string `"abcde"` the minimum substring `t`, such that `s` is `t` repeated `k` times, is itself.
+
+
+`p f("ababab") == ["ab", 3]`<br>
+`p f("abcde") == ["abcde", 1]`<br>
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+For a given nonempty string s find a minimum substring t and the maximum number k, such that the entire string s is equal to t repeated k times. The input string consists of lowercase latin letters. Your function should return an array (in Ruby and JavaScript) [t, k]
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Array, substring and times it repeats to create given string
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Find smallest substring that when repeated forms the input string
+  -Return repeated substring and the number of times needed to match input string in a 2 element array
+  -Input strings will be lowercase letters
+Implicit:
+  -Input string will not be empty or contain non-alphabetical letters
+
+--------------------------EXAMPLES---------------------------------------
+Example #1:
+
+for string s = "ababab" the answer is ["ab", 3]
+
+Example #2:
+
+for string s = "abcde" the answer is because for this string "abcde" the minimum substring t, such that s is t repeated k times, is itself.
+
+----------------------------ALGO-----------------------------------------
+==> Find all substrings of given string, then find all substrings that when repeated a certain number of times are equal to the input string, then find the shorted of the matching substrings and return it and the number of times when repeated form the input string. 
+
+-- f(string) --> array(1 string and 1 integer)
+  -initialize 'subs' to the return value of find_subs(string)
+  -initialize 'matches' to the return value of find_matching_subs(subs, string)
+  -sort through 'matches' to find the highest integer in index 1 of all sub-arrays and return that sub-array
+  
+-- find_subs(string) --> array
+  -initialize 'subs' to an empty array
+  -split string into array of characters (char_arr)
+  -loop from 1 to the length of char_arr using the number as a 'length'
+    -iterate through the char_arr to find sensectutive sub_strings of the length of 'length'
+      -push sub_strings to the 'subs' array
+  -return 'subs'
+
+-- find_matching_subs(array, string) --> array
+  -initialize 'matches' to an empty array
+  -iterate through 'array' with 'el' as current element
+    -intialize 'count' to 0
+    -initialize 'current' to enpty string
+    -loop
+      -concat 'el' to 'current'
+      -increment 'count' by 1
+      
+    -break if current's length is greater than or equal to string length
+    -if 'current' is equal in length to 'string'
+      -push 'el' and 'count' as a 2 element sub-array to 'matches'
+  -return 'matches'
+  
+=end
+
+def find_subs(string)
+  subs = []
+  1.upto(string.size) do |length|
+    string.chars.each_cons(length) { |arr| subs << arr.join }
+  end
+  subs
+end
+
+def find_matching_subs(arr, str)
+  matches = []
+  arr.select do |sub_str|
+    count = 0
+    current = ''
+    loop do 
+      current.concat(sub_str)
+      count += 1
+      break if current.size >= str.size
+    end
+    matches << [sub_str, count] if current == str
+  end
+  matches.uniq
+end
+
+def f(string)
+  subs = find_subs(string)
+  matches = find_matching_subs(subs, string)
+  matches.sort_by { |arr| arr[1] }.last
+end
+
+# p find_subs("ababab")
+
+# arr =["a", "b", "a", "b", "a", "b", "ab", "ba", "ab", "ba", "ab", "aba", "bab", "aba", "bab", "abab", "baba", "abab", "ababa", "babab", "ababab"]
+# p find_matching_subs(arr, "ababab")
+
+p f("ababab") == ["ab", 3]
+p f("abcde") == ["abcde", 1]
+p f("apeapeapeape") == ["ape", 4]
+p f("poopspoops") == ["poops", 2]
+```
+
+22. ## Typoglycemia Generator ##
+
+- ### Difficulty: **hard** ###
+- [x] Problem Completed? 
+
+There is a message that is circulating via public media that claims a reader can easily read a message where the inner letters of each words is scrambled, as long as the first and last letters remain the same and the word contains all the letters. 
+
+Another example shows that it is quite difficult to read the text where all the letters are reversed rather than scrambled.
+
+In this kata we will make a generator that generates text in a similar pattern, but instead of scrambled or reversed, ours will be sorted alphabetically
+
+Requirement
+return a string where:
+
+1) the first and last characters remain in original place for each word
+2) characters between the first and last characters must be sorted alphabetically
+3) punctuation should remain at the same place as it started, for example: shan't -> sahn't
+
+Assumptions
+
+1) words are separatedseperated by single spaces
+2) only spaces separate words, special characters do not, for example: tik-tak -> tai-ktk
+3) special characters do not take the position of the non special characters, for example: -dcba -> -dbca
+4) for this kata punctuation is limited to 4 characters: hyphen(-), apostrophe('), comma(,) and period(.)
+5) ignore capitalisation
+
+for reference: http://en.wikipedia.org/wiki/Typoglycemia
+=end
+
+p scramble_words('professionals') == 'paefilnoorsss'
+p scramble_words('i') == 'i'
+p scramble_words('') == ''
+p scramble_words('me') == 'me'
+p scramble_words('you') == 'you'
+p scramble_words('card-carrying') == 'caac-dinrrryg'
+p scramble_words("shan't") == "sahn't"
+p scramble_words('-dcba') == '-dbca'
+p scramble_words('dcba.') == 'dbca.'
+p scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.") == "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth."
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+There is a message that is circulating via public media that claims a reader can easily read a message where the inner letters of each words is scrambled, as long as the first and last letters remain the same and the word contains all the letters. 
+
+Another example shows that it is quite difficult to read the text where all the letters are reversed rather than scrambled.
+
+In this kata we will make a generator that generates text in a similar pattern, but instead of scrambled or reversed, ours will be sorted alphabetically
+
+Requirement
+return a string where:
+
+1) the first and last characters remain in original place for each word
+2) characters between the first and last characters must be sorted alphabetically
+3) punctuation should remain at the same place as it started, for example: shan't -> sahn't
+
+Assumptions
+
+1) words are seperated by single spaces
+2) only spaces separate words, special characters do not, for example: tik-tak -> tai-ktk
+3) special characters do not take the position of the non special characters, for example: -dcba -> -dbca
+4) for this kata punctuation is limited to 4 characters: hyphen(-), apostrophe('), comma(,) and period(.)
+5) ignore capitalisation
+
+for reference: http://en.wikipedia.org/wiki/Typoglycemia
+
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  - the first and last characters remain in original place for each word
+  - characters between the first and last characters must be sorted alphabetically
+  - punctuation should remain at the same place as it started, for example: shan't -> sahn't
+Implicit:
+  -words are seperated by single spaces
+  -only spaces separate words, special characters do not, for example: tik-tak -> tai-ktk
+  -special characters do not take the position of the non special characters, for example: -dcba -> -dbca
+  -for this kata punctuation is limited to 4 characters: hyphen(-), apostrophe('), comma(,) and period(.)
+  -ignore capitalisation
+
+--------------------------EXAMPLES---------------------------------------
+scramble_words('professionals') returns ==> 'paefilnoorsss'
+--> 'professionals'
+--> 'p' + 'rofessional' + 's'
+--> 'p' + 'aefilnoorss' + 's'
+--> 'paefilnoorsss'
+
+----------------------------ALGO-----------------------------------------
+==> Find any non-alphabetical characters and save them and their index, then delete from the string. Save and remove the first char and the last char from the string. Sort the remaining characters. Prepend the first char and append the last char. Then insert the non-alphabetical char if applicable. 
+
+-- scramble_words(string) --> string
+  -split string by blank spaces and iterate
+    -if there is any non-alphabetical characters, delete and save their index and char
+    -if string 3 chars or shorter return str
+    -delete first el and save to 'first'
+    -delete last el and save tio 'last'
+    -sort remaining characters
+    -prepend 'first
+    -append 'last'
+    -insert non-alphabetical chars if applicable
+  -join array
+
+  
+  
+=end
+
+def scramble_one_word(word)
+  if word.size <= 3 
+    word
+  else 
+    word = word.chars
+    first = word.delete_at(0)
+    last = word.delete_at(-1)
+    word = word.sort.join
+    word = first + word + last
+  end
+end
+
+def scramble_words(str)
+  str.split(' ').map do |word|
+
+    if word.match?(/[-.,']/)
+      punc_index = word.index(/[,.'-]/)
+      punc = word.chars.delete_at(punc_index)
+      word = word.delete(punc)
+    end
+    
+    word = scramble_one_word(word)
+    
+    if punc_index 
+      word.insert(punc_index, punc)
+    else
+      word
+    end
+  end.join(' ')
+end
+
+p scramble_words('professionals') == 'paefilnoorsss'
+p scramble_words('i') == 'i'
+p scramble_words('') == ''
+p scramble_words('me') == 'me'
+p scramble_words('you') == 'you'
+p scramble_words('card-carrying') == 'caac-dinrrryg'
+p scramble_words("shan't") == "sahn't"
+p scramble_words('-dcba') == '-dbca'
+p scramble_words('dcba.') == 'dbca.'
+p scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.") == "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth."
 ```
