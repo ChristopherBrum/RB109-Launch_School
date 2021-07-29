@@ -26,8 +26,11 @@
 26. [Dubstep](#dubstep)
 27. [Take a Ten Minute Walk](#take-a-ten-minute-walk)
 28. [Stop gninnipS My sdroW](#stop-gninnips-my-sdrow)
-29. [Write Number in Expanded Form](#write-number-in-expanded-form)
-30. [Mexican Wave](#mexican-wave)
+29. [Nested Brackets](#nested-brackets)
+30. [Write Number in Expanded Form](#write-number-in-expanded-form)
+31. [Mexican Wave Variation 1](#mexican-wave-variation-1)
+32. [Sum Consecutives](#sum-consecutives)
+33. [Mexican Wave Variation 2](#mexican-wave-variation-2)
 
 ---
 
@@ -2550,7 +2553,108 @@ p spin_words("test") == "test"
 
 ---
 
-29. ## Write Number in Expanded Form ##
+29. ## Nested Brackets ##
+
+- ### Difficulty: **hard** ###
+- [x] Problem Completed? 
+
+Given a string containing brackets [], braces {}, parentheses (), or any combination thereof, verify that any and all pairs are matched and nested correctly.
+
+p paired?('[]]') == false<br>
+p paired?(']][[') == false<br>
+p paired?('{}{}[()]') == true<br>
+p paired?('{}{}[()') == false<br>
+p paired?('[({]})') == false<br>
+p paired?('\left(\begin{array}{cc} \frac{1}{3} & x\\ ' +<br>
+  '\mathrm{e}^{x} &... x^2 \end{array}\right)') == true<br>
+p paired?('(((185 + 223.85) * 15) - 543)/2') == true<br>
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string containing brackets [], braces {}, parentheses (), or any combination thereof, verify that any and all pairs are matched and nested correctly.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 boolean
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Given string will include brackets [], braces {}, parentheses (), or any combo of 
+  -verify that any and all pairs are matched and nested correctly.
+Implicit:
+  -given string can contain any other character types
+  -any bracket opening must be closed with the corresponding closing bracket
+  -a bracket within an outer bracket opening must be closed before the outer bracket can be closed
+  
+--------------------------EXAMPLES---------------------------------------
+paired?('{}{}[()'); == false
+'{}{}[()'
+ {}
+   {}
+     [   --> missing closing bracket # return false
+      ()
+
+----------------------------ALGO-----------------------------------------
+
+-- method --> paired?(string) --> boolean
+  -create a hash of opening brackets and closing brackets (brackets)
+  -initialize local variable to empty arr (stack)
+  -iterate through the characters of the given string
+    -if character is found in the value associated with 'opening' in the brackets hash
+      -push character to 'stack'
+    -if character is found in the value associated with 'closing' in the brackets hash
+      -if the last element in 'stack' is the corresponding opening bracket 
+        -remove last element from 'stack'
+      -otherwise
+        -return false
+  -if 'stack' is empty 
+    -return true
+  -otherwise
+    -return false
+    
+=end
+
+BRACKETS = { '{' => '}', '(' => ')', '[' => ']' }
+
+def matching_brackets?(closing, stack)
+  index = BRACKETS.values.index(closing)
+  
+  BRACKETS.keys[index] == stack.last
+end
+
+def paired?(string)
+  stack = []
+  
+  string.each_char do |char|
+    if BRACKETS.keys.include?(char)
+      stack << char
+    elsif BRACKETS.values.include?(char)
+      if matching_brackets?(char, stack)
+        stack.pop
+      else
+        return false
+      end
+    end
+  end
+  stack.empty?
+end
+
+
+p paired?('[]]') == false
+p paired?(']][[') == false
+p paired?('{}{}[()]') == true
+p paired?('{}{}[()') == false
+p paired?('[({]})') == false
+p paired?('\left(\begin{array}{cc} \frac{1}{3} & x\\ ' +
+  '\mathrm{e}^{x} &... x^2 \end{array}\right)') == true
+p paired?('(((185 + 223.85) * 15) - 543)/2') == true
+```
+
+---
+
+30. ## Write Number in Expanded Form ##
 
 - ### Difficulty: **medium** ###
 - [ ] Problem Completed? 
@@ -2576,6 +2680,23 @@ p expanded_form(70304) == '70000 + 300 + 4'<br>
 ```
 
 ---
+
+31. ## Mexican Wave Variation 1 ##
+
+- ### Difficulty: **hard** ###
+- [x] Problem Completed? 
+
+In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
+
+Rules
+  1.  The input string will always be lower case but maybe empty.
+  2.  If the character in the string is whitespace then pass over it as if it was an empty seat.
+
+p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]<br>
+p wave("codewars") == ["Codewars", "cOdewars", "coDewars", "codEwars", "codeWars", "codewArs", "codewaRs", "codewarS"]<br>
+p wave("") == []<br>
+p wave("two words") == ["Two words", "tWo words", "twO words", "two Words", "two wOrds", "two woRds", "two worDs", "two wordS"]<br>
+p wave(" gap ") == [" Gap ", " gAp ", " gaP "]<br>
 
 ```ruby
 =begin
@@ -2662,6 +2783,21 @@ p wave("two words") == ["Two words", "tWo words", "twO words", "two Words", "two
 p wave(" gap ") == [" Gap ", " gAp ", " gaP "]
 ```
 
+---
+
+32. ## Sum Consecutives ##
+
+- ### Difficulty: **hard** ###
+- [ ] Problem Completed? 
+
+You are given an array that contains only integers (positive and negative). Your job is to sum only the numbers that are the same and consecutive. The result should be one array.
+
+You can assume there is never an empty array and there will always be an integer.
+
+p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2]<br>
+p sum_consecutives([1,1,7,7,3]) == [2,14,3]<br>
+p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]<br>
+
 ```ruby
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
@@ -2738,4 +2874,113 @@ end
 p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2]
 p sum_consecutives([1,1,7,7,3]) == [2,14,3]
 p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
+```
+
+---
+
+33. ## Mexican Wave Variation 2 ##
+
+- ### Difficulty: **hard** ###
+- [ ] Problem Completed? 
+
+Your task is to create a method that turns a string into a wave (like at a stadium). You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
+
+Rules
+
+ 1. The input string will always be lower case but maybe empty.
+ 2. If the character in the string is whitespace then pass over it
+ 3. Leave each fourth letter unaltered—-do not make those letters uppercase
+
+p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]<br>
+p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]<br>
+p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"]<br>
+p wave("") == []<br>
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Your task is to create a method that turns a string into a wave (like at a stadium). You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
+
+Rules
+
+ 1. The input string will always be lower case but maybe empty.
+ 2. If the character in the string is whitespace then pass over it
+ 3. Leave each fourth letter unaltered—-do not make those letters uppercase
+
+--------------------------PROBLEM----------------------------------------
+Questions: 
+Input: 1 String
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:
+  -input string will be lowercase but may be an empty string
+  -it char is white space pass it over
+  -leave each 4th letter unaltered
+Implicit:
+  -empty string input with return an empty array
+
+--------------------------EXAMPLES---------------------------------------
+wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]
+1st -- "Hello"
+2nd -- "hEllo"
+3rd -- "heLlo"
+4th -- "hello"
+5th -- "hellO"
+--> ["Hello", "hEllo", "heLlo", "hello", "hellO"]
+----------------------------ALGO-----------------------------------------
+
+-- method --> wave(string) --> array
+  -intialize 'wave_arr' to empty array
+  -split given string into characters and iterate utilizing index
+    -if current element is ' '
+      -return nil
+    -otherwise
+    `-initialize 'current' to an empty string
+      -iterate over string split into characters utilizing index
+        -if inner index and outer index are 3 
+          -push current element to 'wave_arr'
+        -if outer index and inner index are the same 
+          -push current capitalized current letter to 'wave_arr'
+        -otherwise
+          -push current element to 'wave_arr'
+  -return new array with `nil` values removed
+
+=end
+
+def wave(str)
+  
+  wave_arr = str.chars.map.with_index do |outer_char, outer_index|
+    if outer_char == ' '
+      nil
+    else
+      
+      current = ''
+      str.chars.each_with_index do |inner_char, inner_index|
+        if inner_index == 3 && outer_index == 3
+        # if we_skip(inner_index)
+          current << inner_char
+        elsif inner_index == outer_index
+          current << inner_char.capitalize
+        else
+          current << inner_char
+        end
+      end
+      
+      current
+    end
+  end
+  
+  wave_arr.compact
+end
+
+def we_skip(index)
+  INDEX_TO_SKIP = 4
+  
+  (index + 1) % INDEX_TO_SKIP == 0
+end
+  
+p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]
+p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]
+p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"]
+p wave("") == []
 ```
