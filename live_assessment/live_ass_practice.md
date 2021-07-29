@@ -1,3 +1,36 @@
+1. [Repeater](#repeater)
+2. [Double Consonants](#double-consonants)
+3. [Rotate 13](#rotate-13)
+4. [Longest Palindrome](#longest-palindrome)
+5. [Find Chidren](#find-children)
+6. [Double Consonants Alternative](#double-consonants-alternative)
+7. [Reversed Number](#reversed-number)
+8. [Get the Middle Character](#get-the-middle-character)
+9. [Rotation Pt 1](#rotation-pt-1)
+10. [Rotation Pt 2](#rotation-pt-2)
+11. [Rotation Pt 3](#rotation-pt-3)
+12. [1000 Lights](#1000-lights)
+13. [Next Largest Num](#next-largest-num)
+14. [Count Letters in Strings](#count-letters-in-strings)
+15. [Count Pairs in String](#count-pairs-in-string)
+16. [Return Substring Instance Count](#return-substring-instance-count)
+17. [Alphabet Symmetry](#alphabet-symmetry)
+18. [Longest Vowel Chain](#longest-vowel-chain)
+19. [Non Even Substrings](#non-even-substrings)
+20. [Substring Fun](#substring-fun)
+21. [Repeated Substring](#repeated-substring)
+22. [Typoglycemia Generator](#typoglycemia-generator)
+23. [Most Frequently Used Words in a Text](#most-frequently-used-words-in-a-text)
+24. [Detect Pangram](#detect-pangram)
+25. [Kebabize](#kebabize)
+26. [Dubstep](#dubstep)
+27. [Take a Ten Minute Walk](#take-a-ten-minute-walk)
+28. [Stop gninnipS My sdroW](#stop-gninnips-my-sdrow)
+29. [Write Number in Expanded Form](#write-number-in-expanded-form)
+30. [Mexican Wave](#mexican-wave)
+
+---
+
 1. ## Repeater ##
 
 - ### Difficulty: **easy** ###
@@ -409,7 +442,7 @@ p find_children("") == ""
 
 ---
 
-6. ## Double Consonants ##
+6. ## Double Consonants Alternative ##
 
 - ### Difficulty: **easy** ###
 - [x] Problem Completed?
@@ -586,7 +619,7 @@ p reversed_number(1) == 1
 
 8. ## Get The Middle Character ## 
 
-### Difficulty: **easy** ###
+- ### Difficulty: **easy** ###
 - [x] Problem Completed?
 
 Write a method that takes a non-empty string argument, and returns the middle character or characters of the argument. If the argument has an odd length, you should return exactly one character. If the argument has an even length, you should return exactly two characters.
@@ -1178,7 +1211,7 @@ p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>
 
 ---
 
-15. ## Count Letters in String ##
+15. ## Count Pairs in String ##
 
 - ### Difficulty: **medium** ###
 - [x] Problem Completed?
@@ -1566,7 +1599,7 @@ p solve("iiihoovaeaaaoougjyaw") == 8
 
 ---
 
-19. ## Non-Even Substrings  ##
+19. ## Non Even Substrings  ##
 
 - ### Difficulty: **medium** ###
 - [x] Problem Completed?
@@ -1847,6 +1880,8 @@ p f("apeapeapeape") == ["ape", 4]
 p f("poopspoops") == ["poops", 2]
 ```
 
+---
+
 22. ## Typoglycemia Generator ##
 
 - ### Difficulty: **hard** ###
@@ -1999,4 +2034,708 @@ p scramble_words("shan't") == "sahn't"
 p scramble_words('-dcba') == '-dbca'
 p scramble_words('dcba.') == 'dbca.'
 p scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.") == "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth."
+```
+
+---
+
+23. ## Most Frequently Used Words in a Text ##
+
+- ### Difficulty: **hard** ###
+- [X] Problem Completed? 
+
+Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
+
+Assumptions:
+A word is a string of letters (A to Z) optionally containing one or more apostrophes (') in ASCII. (No need to handle fancy punctuation.)
+Matches should be case-insensitive, and the words in the result should be lowercased.
+Ties may be broken arbitrarily.
+If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+
+Examples:
+
+top_3_words("In a village of La Mancha, the name of which I have no desire to call to
+mind, there lived not long since one of those gentlemen that keep a lance
+in the lance-rack, an old buckler, a lean hack, and a greyhound for
+coursing. An olla of rather more beef than mutton, a salad on most
+nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
+on Sundays, made away with three-quarters of his income.")<br>
+returns => ["a", "of", "on"]
+
+top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e")<br>
+returns => ["e", "ddd", "aa"]
+
+top_3_words("  //wont won't won't")<br>
+returns => ["won't", "wont"]
+
+Bonus points (not really, but just for fun):<br>
+Avoid creating an array whose memory footprint is roughly as big as the input text.<br>
+Avoid sorting the entire array of unique words.
+
+p top_3_words("a a a  b  c c  d d d d  e e e e e") == ["e", "d", "a"]<br>
+p top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e") == ["e", "ddd", "aa"]<br>
+p top_3_words("  //wont won't won't ") == ["won't", "wont"]<br>
+p top_3_words("  , e   .. ") == ["e"]<br>
+p top_3_words("  ...  ") == []<br>
+p top_3_words("  '  ") == []<br>
+p top_3_words("  '''  ") == []<br>
+p top_3_words("""In a village of La Mancha, the name of which I have no desire to call to
+mind, there lived not long since one of those gentlemen that keep a lance
+in the lance-rack, an old buckler, a lean hack, and a greyhound for
+coursing. An olla of rather more beef than mutton, a salad on most
+nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
+on Sundays, made away with three-quarters of his income.""") == ["a", "of", "on"]
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
+
+A word is a string of letters (A to Z) optionally containing one or more apostrophes (') in ASCII. (No need to handle fancy punctuation.)
+Matches should be case-insensitive, and the words in the result should be lowercased.
+Ties may be broken arbitrarily.
+If a text contains fewer than three unique words, then either the top-2 or top-1 words should be returned, or an empty array if a text contains no words.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Array, 3 most frequently used strings
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -A word is any string of letters or punctuation separated by a space
+  -matches are case insensitive
+  -output should be lowercase
+  -ties broken by first most frequently found string in the results array
+  -if less than 3 words return top 2 or 1 words
+  -return an array of the top 3 most frequently found words in the given string in descending order
+Implicit:
+  -Multiple spaces between words in given string is acceptable
+  -if given string has no alphabetical characters it will return an empty array
+
+--------------------------EXAMPLES---------------------------------------
+top_3_words("In a village of La Mancha, the name of which I have no desire to call to
+mind, there lived not long since one of those gentlemen that keep a lance
+in the lance-rack, an old buckler, a lean hack, and a greyhound for
+coursing. An olla of rather more beef than mutton, a salad on most
+nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
+on Sundays, made away with three-quarters of his income.")
+# => ["a", "of", "on"]
+
+top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e")
+# => ["e", "ddd", "aa"]
+
+top_3_words("  //wont won't won't")
+# => ["won't", "wont"]
+
+----------------------------ALGO-----------------------------------------
+==> Clean up given string by removing unnecessary punctuation and white space while isolating individual words into an array. Tally the occurances of each word in the given string and then return the 3 most frequently found words.
+
+-- top_3_words(string) --> array
+  -downcase given string
+  -convert to array of characters (arr)
+  -remove any blank spaces, lone numbers and lone punctuation
+  -tally the occurances of each word to a hash
+  -sort the hash by its values
+  -find the 3(or less) most frequently used keys and return in an array
+
+=end
+
+# def top_3_words(str)
+#   arr_of_words = str.downcase.gsub(/[^a-zA-Z ']/, '').split
+#   filtered_words = arr_of_words.select { |word| word.match?(/[a-z]/) }
+#   words_hash = filtered_words.tally
+#   words_hash.max_by(3) { |word, count| count }.to_h.keys
+# end
+
+def tally_words(arr)
+  arr.each_with_object(Hash.new(0)) do |word, hash|
+    hash[word] += 1
+  end
+end
+
+def top_3_words(str)
+  arr_of_words = str.downcase.gsub(/[^a-zA-Z ']/, '').split
+  filtered_words = arr_of_words.select { |word| word.match?(/[a-z]/) }
+  words_hash = tally_words(filtered_words)
+  words_hash.max_by(3) { |word, count| count }.to_h.keys
+end
+
+p top_3_words("a a a  b  c c  d d d d  e e e e e") == ["e", "d", "a"]
+p top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e") == ["e", "ddd", "aa"]
+p top_3_words("  //wont won't won't ") == ["won't", "wont"]
+p top_3_words("  , e   .. ") == ["e"]
+p top_3_words("  ...  ") == []
+p top_3_words("  '  ") == []
+p top_3_words("  '''  ") == []
+p top_3_words("""In a village of La Mancha, the name of which I have no desire to call to
+mind, there lived not long since one of those gentlemen that keep a lance
+in the lance-rack, an old buckler, a lean hack, and a greyhound for
+coursing. An olla of rather more beef than mutton, a salad on most
+nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
+on Sundays, made away with three-quarters of his income.""") == ["a", "of", "on"]
+```
+
+---
+
+24. ## Detect Pangram ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed? 
+
+A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
+
+Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
+=end
+p panagram?("The quick brown fox jumps over the lazy dog.") == true
+p panagram?("This is not a pangram.") == false
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
+
+Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+-What's a pangram?
+  --> A pangram is a sentence that contains every single letter of the alphabet at least once.
+Input: 1 String
+Output: Boolean
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -determine whether the given string is a pangram
+    -if so, return true
+    -otherwise- return false
+  -ignore numbers and punctuation
+Implicit:
+  -inputs will be valid strings
+--------------------------EXAMPLES---------------------------------------
+p panagram?("The quick brown fox jumps over the lazy dog.") == true
+Every letter in the alphabet is used within the given string
+Therefore, this will return 'true'
+
+----------------------------ALGO-----------------------------------------
+==> Breakdown given string into characters and check to see if every letter of the alphabet has been used. 
+
+-- method --> pangram?(string) --> boolean
+  -assign 'alpha' to an array of all alphabetical letters
+  -split the given string into characters
+  -determine if all letters of the alphabet are found in the array of characters
+  -return true if so,
+  -otherwise return false
+
+=end
+
+def panagram?(str)
+  alpha = ('a'..'z').to_a
+  alpha.all? { |letter| str.downcase.include?(letter) }
+end
+
+p panagram?("The quick brown fox jumps over the lazy dog.") == true
+p panagram?("This is not a pangram.") == false
+```
+
+---
+
+25. ## Kebabize ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed? 
+
+Modify the kebabize function so that it converts a camel case string into a kebab case.
+
+kebabize('camelsHaveThreeHumps') // camels-have-three-humps<br>
+kebabize('camelsHave3Humps') // camels-have-humps
+
+Notes:
+
+the returned string should only contain lowercase letters
+
+p kebabize('myCamelCasedString') == 'my-camel-cased-string'<br>
+p kebabize('myCamelHas3Humps') == 'my-camel-has-humps'
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Modify the kebabize function so that it converts a camel case string into a kebab case.
+
+the returned string should only contain lowercase letters
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String, modified
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -convert a camel cased string into kebab cased. camelCase kabab-cased
+  -return string should be all lowercase letters
+Implicit:
+  -a number within a string will be ommited
+  
+--------------------------EXAMPLES---------------------------------------
+kebabize('camelsHaveThreeHumps') // camels-have-three-humps
+kebabize('camelsHave3Humps') // camels-have-humps
+
+'camelsHaveThreeHumps' --> camel case
+'camels' + 'Have' + 'Three' + 'Humps'
+-->     sH        eT        eH
+        s-h       e-t       e-h
+        'camels-have-three-humps'
+
+----------------------------ALGO-----------------------------------------
+==> Go through the string character by character and identify when a lowercase letter is followed by an uppercase letter, then convert the uppercase to lower and put a dash between them.
+
+-- method --> kebabize(string) --> string
+  -split string into characters (str_arr)
+  -initialize 'kebab_str' to an empty array
+  -iterate through str_arr with index
+    -if index is 0 
+      -push current element to 'kebab_str'
+    -if current element is the same as itself capitalized
+      -push a dash to 'kabab_str'
+      -push current element downcased to 'kabab_str'
+    -otherwise
+      -push current element to 'kabab_str'
+  - join and return 'kabab_str'
+  
+=end
+
+def kebabize(str)
+  kebab_str = []
+  str.chars.each_with_index do |char, index|
+    if char.to_i.to_s == char
+      next
+    elsif index == 0
+      kebab_str.push(char)
+    elsif char == char.upcase
+      kebab_str.push('-', char.downcase)
+    else
+      kebab_str.push(char)
+    end
+  end
+  kebab_str.join
+end
+
+
+p kebabize('myCamelCasedString') == 'my-camel-cased-string'
+p kebabize('myCamelHas3Humps') == 'my-camel-has-humps'
+```
+
+---
+
+26. ## Dubstep ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed? 
+
+Polycarpus works as a Dhttps://www.codewars.com/kata/551dc350bf4e526099000ae5/train/rubyJ in the best Berland nightclub, and he often uses dubstep music in his performance. Recently, he has decided to take a couple of old songs and make dubstep remixes from them.
+
+Let's assume that a song consists of some number of words (that don't contain WUB). To make the dubstep remix of this song, Polycarpus inserts a certain number of words "WUB" before the first word of the song (the number may be zero), after the last word (the number may be zero), and between words (at least one between any pair of neighbouring words), and then the boy glues together all the words, including "WUB", in one string and plays the song at the club.
+
+For example, a song with words "I AM X" can transform into a dubstep remix as "WUBWUBIWUBAMWUBWUBX" and cannot transform into "WUBWUBIAMWUBX".
+
+Recently, Jonny has heard Polycarpus's new dubstep track, but since he isn't into modern music, he decided to find out what was the initial song that Polycarpus remixed. Help Jonny restore the original song.
+
+Input<br>
+The input consists of a single non-empty string, consisting only of uppercase English letters, the string's length doesn't exceed 200 characters
+
+Output<br>
+Return the words of the initial song that Polycarpus used to make a dubsteb remix. Separate the words with a space.
+
+Examples<br>
+song_decoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB")  =>  WE ARE THE CHAMPIONS MY FRIEND<br>
+p song_decoder("AWUBBWUBC") == "A B C"<br>
+p song_decoder("AWUBWUBWUBBWUBWUBWUBC") == "A B C"<br>
+p song_decoder("WUBAWUBBWUBCWUB") == "A B C"
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Polycarpus works as a Dhttps://www.codewars.com/kata/551dc350bf4e526099000ae5/train/rubyJ in the best Berland nightclub, and he often uses dubstep music in his performance. Recently, he has decided to take a couple of old songs and make dubstep remixes from them.
+
+Let's assume that a song consists of some number of words (that don't contain WUB). To make the dubstep remix of this song, Polycarpus inserts a certain number of words "WUB" before the first word of the song (the number may be zero), after the last word (the number may be zero), and between words (at least one between any pair of neighbouring words), and then the boy glues together all the words, including "WUB", in one string and plays the song at the club.
+
+For example, a song with words "I AM X" can transform into a dubstep remix as "WUBWUBIWUBAMWUBWUBX" and cannot transform into "WUBWUBIAMWUBX".
+
+Recently, Jonny has heard Polycarpus's new dubstep track, but since he isn't into modern music, he decided to find out what was the initial song that Polycarpus remixed. Help Jonny restore the original song.
+
+Input
+The input consists of a single non-empty string, consisting only of uppercase English letters, the string's length doesn't exceed 200 characters
+
+Output
+Return the words of the initial song that Polycarpus used to make a dubsteb remix. Separate the words with a space.
+
+Examples
+song_decoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB")  =>  WE ARE THE CHAMPIONS MY FRIEND
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String, capitalized letters only
+Output: 1 String
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Find the letters of the given strings between 'WUB's
+  -return the leftover letters as a string separated by a space
+Implicit:
+  -inputs and outputs will all be capitalized
+  -will not be empty
+  -will only contain letters
+
+--------------------------EXAMPLES---------------------------------------
+
+----------------------------ALGO-----------------------------------------
+--- method --> song_decoder(string) --> string
+  -replace all instances of 'WUB' with '*' 
+  -split string by '*'
+  -delete all '*'
+  -join array by ' ' and return
+  
+=end
+
+def song_decoder(string)
+  string.gsub('WUB', ' ').split(' ').join(' ')  
+end
+
+p song_decoder("AWUBBWUBC") == "A B C"
+p song_decoder("AWUBWUBWUBBWUBWUBWUBC") == "A B C"
+p song_decoder("WUBAWUBBWUBCWUB") == "A B C"
+p song_decoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB") == "WE ARE THE CHAMPIONS MY FRIEND"
+```
+
+---
+
+27. ## Take a Ten Minute Walk ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed? 
+
+You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. ['n', 's', 'w', 'e']). You always walk only a single block in a direction and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
+
+Note: you will always receive a valid array containing a random assortment of direction letters ('n', 's', 'e', or 'w' only). It will never give you an empty array (that's not a walk, that's standing still!).
+
+p is_valid_walk(['n','s','n','s','n','s','n','s','n','s']) == true<br>
+p is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e']) == false<br>
+p is_valid_walk(['w']) == false<br>
+p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false<br>
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. ['n', 's', 'w', 'e']). You always walk only a single block in a direction and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
+
+Note: you will always receive a valid array containing a random assortment of direction letters ('n', 's', 'e', or 'w' only). It will never give you an empty array (that's not a walk, that's standing still!).
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Array
+Output: Boolean
+---------------------------RULES-----------------------------------------
+Explicit:
+  -The given array will contain an assortment of the letters 'n', 's', 'e', and 'w' which are represenative of the directions of a map
+  -The directions array should have 10 elements total
+  -The directions array should have an equal number of 'n'/'s' and 'e'/'w' directions
+  -If these two conditions are not met return false, otherwise true
+Implicit:
+  -all letters are lowercase
+  
+--------------------------EXAMPLES---------------------------------------
+is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false
+The directions arr is 10 elements long but...
+..there are 6 'n' directions and only 4 's' directions
+so it returns false
+
+----------------------------ALGO-----------------------------------------
+-- method --> is_valid_walk(array) --> boolean
+  -if directions array is 10 elements long
+  -AND
+  -there are equal number of 's' and 'n'
+  -AND 
+  -there are equal number of 'e' and 'w'
+  -return true
+  -otherwise return false
+
+=end
+
+def is_valid_walk(directions)
+  directions.size == 10 && 
+  directions.count('n') == directions.count('s') &&
+  directions.count('e') == directions.count('w')
+end
+
+p is_valid_walk(['n','s','n','s','n','s','n','s','n','s']) == true
+p is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e']) == false
+p is_valid_walk(['w']) == false
+p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false
+```
+
+---
+
+28. ## Stop gninnipS My sdroW ##
+
+- ### Difficulty: **medium** ###
+- [x] Problem Completed? 
+
+(https://www.codewars.com/kata/5264d2b162488dc400000001)
+6 kyu
+Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+
+Examples: spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
+
+p spin_words("Hey fellow warriors") == "Hey wollef sroirraw"<br>
+p spin_words("This is a test") == "This is a test"<br>
+p spin_words("This is another test") == "This is rehtona test"<br>
+p spin_words('test') == 'test'
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present. 
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Take any word of 5 or more characters and reverse the word within the string
+  -Given strings will only consist of letters and spaces
+  -spaces are only included when more than one word is found in the string
+  -return the string
+Implicit:
+  -Capital letters remain capitalized
+  
+--------------------------EXAMPLES---------------------------------------
+Examples: spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
+Hey ==> only 3 characters
+fellow ==> more than 4 characters --> reversed
+warriors ==> more than 4 characters --> reversed
+new string --> "Hey wollef sroirraw"
+
+----------------------------ALGO-----------------------------------------
+==> Reverse all words that have more than 4 characters and then return the string in its original order.
+
+-- method --> spin_words(string) --> string
+  -split string into individual words
+  -iterate using transformation --> new_arr
+    -if current element's length is > 4
+      -return current element reversed
+    -otherwise
+      -return current element
+  -join and return new-arr
+
+=end
+
+def spin_words(str)
+  str.split.map do |word|
+    if word.size > 4
+      word.reverse
+    else
+      word
+    end
+  end.join(' ')
+end
+
+p spin_words("Hey fellow warriors") == "Hey wollef sroirraw"
+p spin_words("This is a test") == "This is a test" 
+p spin_words("This is another test") == "This is rehtona test"
+p spin_words("test") == "test"
+```
+
+---
+
+29. ## Write Number in Expanded Form ##
+
+- ### Difficulty: **medium** ###
+- [ ] Problem Completed? 
+
+Write Number in Expanded Form
+You will be given a number and you will need to return it as a string in Expanded Form. 
+
+For example:
+
+expanded_form(12); # Should return '10 + 2'<br>
+expanded_form(42); # Should return '40 + 2'<br>
+expanded_form(70304); # Should return '70000 + 300 + 4'<br>
+NOTE: All numbers will be whole numbers greater than 0.<br>
+
+If you liked this kata, check out part 2!!
+
+p expanded_form(12) == '10 + 2'<br>
+p expanded_form(42) == '40 + 2'<br>
+p expanded_form(70304) == '70000 + 300 + 4'<br>
+
+```ruby
+
+```
+
+---
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
+
+Rules
+  1.  The input string will always be lower case but maybe empty.
+  2.  If the character in the string is whitespace then pass over it as if it was an empty seat.
+  
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Array, of strings depicting a mexican wave
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -input string will always be lowercase
+  -input string may be empty
+  -pass over any white space encountered
+  -insert a copy of the given string to an array a number of times equal to the strings length
+  -each copy pased to the array will have a single character capitalized based on the current index
+Implicit:
+  -empty string input will return an empty arrauy
+  -if input string has whitespace only insert a copy of the string for each letter character
+
+--------------------------EXAMPLES---------------------------------------
+p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+"hello"
+index 0 ==> 'Hello'
+index 1 ==> 'hEllo'
+index 2 ==> 'heLlo'
+index 3 ==> 'helLo'
+index 4 ==> 'hellO'
+each copy passed to an array and returned
+==> ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+
+----------------------------ALGO-----------------------------------------
+==> Create a copy of the given string and capitalize the appropriate character then pass to an array. 
+
+-- method --> wave(string) --> array
+  -split string into array of characters
+  -iterate through array using transformation using index (outer_index)
+    -if current element is not a letter 
+      -return nil
+    -otherwise
+      -initialize an empty string (current)
+      -iterate through a copy of the input string using index (inner_index)
+        -if 'outer_index' and 'inner_index' are the same 
+          -push uppercase version of current element to 'current'
+        -otherwise
+          -push current element to 'current'
+      -return 'current'
+  -filter out all instances of array that are nil and return
+  
+=end
+
+def wave(str)
+  split_str = str.chars
+  
+  wave_arr = split_str.map.with_index do |char, outer_index|
+    if char.match?(/[^A-z]/)
+      nil
+    else
+      current = ''
+      split_str.each_with_index do |inner_char, inner_index|
+        if outer_index == inner_index
+          current << inner_char.upcase
+        else
+          current << inner_char
+        end
+      end
+      current
+    end
+  end
+  wave_arr.compact
+end
+
+
+p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+p wave("codewars") == ["Codewars", "cOdewars", "coDewars", "codEwars", "codeWars", "codewArs", "codewaRs", "codewarS"]
+p wave("") == []
+p wave("two words") == ["Two words", "tWo words", "twO words", "two Words", "two wOrds", "two woRds", "two worDs", "two wordS"]
+p wave(" gap ") == [" Gap ", " gAp ", " gaP "]
+```
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You are given an array that contains only integers (positive and negative). Your job is to sum only the numbers that are the same and consecutive. The result should be one array.
+
+You can assume there is never an empty array and there will always be an integer.
+
+--------------------------PROBLEM----------------------------------------
+Questions: 
+Input: 1 Array
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:
+  -sum numbers in given array that are the same and consecutive
+  -Integers in given array can be positive or negative
+  
+Implicit:
+  -given array will not be empty
+
+--------------------------EXAMPLES---------------------------------------
+sum_consecutives([1,1,7,7,3]) ==> [2,14,3]
+[1,1,7,7,3] -->  1 + 1 = 2, 7 + 7 = 14, 3 --> [2, 14, 3]
+
+----------------------------ALGO-----------------------------------------
+-- method sum_consecutives(array) --> array
+  -initialize 'sums' to an empty array
+  -iterate through the given array with index (num, index)
+    -initialize 'sum' to 0
+    -initialize 'current' to 0
+    -loop 
+      -set 'current' to 'num'
+      -increment 'sum' by 'current'
+      -break if array[index] is not equal to array[index + 1]
+    -end
+    -push 'sum' to 'sums'
+  -return 'sums'
+
+=end
+
+# def sum_consecutives(arr)
+#   sums = []
+#   arr.each_with_index do |num, index|
+#     sum = 0
+#     current = 0
+#     loop do
+#       current = num
+#       sum += current
+#       p "array current: #{arr[index]}, arr + 1: #{arr[index + 1]}"
+#       break if arr[index] != arr[index + 1]
+#     end
+#     sums << sum
+#   end
+#   sum
+# end
+
+def sum_consecutives(arr)
+  temp = []
+  result = []
+  
+  arr.each do |num|
+    if temp.last == num
+     temp << num
+    else
+      result << temp
+      temp = []
+      temp << num
+    end
+  end
+    result << temp
+    result.shift
+    result.map(&:sum)
+end
+
+p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2]
+p sum_consecutives([1,1,7,7,3]) == [2,14,3]
+p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
 ```
