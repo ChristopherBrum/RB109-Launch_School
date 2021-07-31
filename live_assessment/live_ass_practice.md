@@ -2657,7 +2657,7 @@ p paired?('(((185 + 223.85) * 15) - 543)/2') == true
 30. ## Write Number in Expanded Form ##
 
 - ### Difficulty: **medium** ###
-- [ ] Problem Completed? 
+- [x] Problem Completed? 
 
 Write Number in Expanded Form
 You will be given a number and you will need to return it as a string in Expanded Form. 
@@ -2676,7 +2676,74 @@ p expanded_form(42) == '40 + 2'<br>
 p expanded_form(70304) == '70000 + 300 + 4'<br>
 
 ```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You will be given a number and you will need to return it as a string in Expanded Form. For example:
 
+NOTE: All numbers will be whole numbers greater than 0.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Integer
+Output: 1 String
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Return given integer into its expanded form as a string object
+  -Given will be a whole number grater than 0
+Implicit:
+  -If a digit in the given integer is zero the return string will not include that, because it is not valid
+
+--------------------------EXAMPLES---------------------------------------
+expanded_form(12); # Should return '10 + 2'
+expanded_form(42); # Should return '40 + 2'
+expanded_form(70304); # Should return '70000 + 300 + 4'
+    70304
+--> 70000
+-->  0000 (not valid)
+-->    300
+-->     00 (not valid)
+-->      4
+
+==> '70000 + 300 + 4' (only valid numbers)
+
+----------------------------ALGO-----------------------------------------
+==> Split the given integer into an array of indivdual numbers based on their first digit and their place within the given integer. Remove any of the numbers that start with 0, join with spaces and a plus sign and return. 
+
+-- method --> expanded_form(integer) --> string
+  -intialize an empty string to 'expanded'
+  -split integer into array of digits
+  -convert array of digits to strings
+  -iterate through the array of strings utilizing index (index)
+    -take each element and based on its position in the array of strings add '0' to the element until it is the length of the array element starting from the elements current position, then push to 'expanded'
+  -remove any string in the array of strings that starts with '0'
+  -join the array of strings with ' + '
+  -return new string
+  
+=end
+
+def expanded_form(number)
+  expanded = []
+  arr_of_strings = number.to_s.chars
+  
+  expanded_arr = arr_of_strings.map.with_index do |num, index|
+    final_str = num
+    length = 1
+    loop do
+      break if length >= arr_of_strings.size - index
+      num << '0'
+      length += 1
+    end
+    
+    num
+  end
+  
+  expanded_arr.select { |str| str[0] != '0' }.join (' + ')
+end
+
+p expanded_form(12) == '10 + 2'
+p expanded_form(42) == '40 + 2'
+p expanded_form(70304) == '70000 + 300 + 4'
 ```
 
 ---
