@@ -100,7 +100,7 @@ Write a method that takes a string, and returns a new string in which every cons
 double_consonants('String') == "SSttrrinngg" \
 double_consonants("Hello-World!") == "HHellllo-WWorrlldd!" \
 double_consonants("July 4th") == "JJullyy 4tthh" \
-double_consonants('') == "" \
+double_consonants('') == ""
 
 ```ruby
 =begin
@@ -150,7 +150,7 @@ rot13("EBG13 rknzcyr.") == "ROT13 example.";
 rot13("This is my first ROT13 excercise!" == "Guvf vf zl svefg EBG13 rkprepvfr!"
 Rot 13 means each letter is replaced by the letter appearing 13 places in the alphabt. after the original letter. Last 13 letters alphabet you start over.
 
--- Problem
+Problem:
 
 Rot 13 means each letter is replaced by the letter appearing 13 places in the alphabt after the original letter
 
@@ -160,7 +160,7 @@ Rot 13 means each letter is replaced by the letter appearing 13 places in the al
   - For this task you're only supposed to substitue characters. Not spaces, punctuation, numbers etc.
   - if there is a number, return it as it is
 
--- Algorithm:
+Algorithm:
 
 - replace the alphabet characters with the ones that comes after 13
 - abcdefghijklm nopqrstuvwxyz
@@ -280,7 +280,7 @@ p longest_palindrome('baabcd') == 4 \
 p longest_palindrome('baab1kj12345432133d') == 9 \
 p longest_palindrome("I like racecars that go fast") == 7 \
 p longest_palindrome("aa aa") == 5 \
-p longest_palindrome('abcde') == 1 \
+p longest_palindrome('abcde') == 1
 
 ```ruby
 =begin
@@ -367,7 +367,7 @@ Legend:
 -Function input: String contains only letters, uppercase letters are unique.
 
 Task:
-Place all people in alphabetical order where Mothers are followed by their children,
+Place all people in alphabetical order where Mothers are followed by their children, \
 i.e. "aAbaBb" => "AaaBbb".
 
 ```ruby
@@ -474,7 +474,7 @@ Examples:
 double_consonants('String') == "SSttrrinngg" \
 double_consonants("Hello-World!") == "HHellllo-WWorrlldd!" \
 double_consonants("July 4th") == "JJullyy 4tthh" \
-double_consonants('') == "" \
+double_consonants('') == ""
 
 ```ruby
 =begin
@@ -560,13 +560,12 @@ p double_consonants('') == ""
 
 Write a method that takes a positive integer as an argument and returns that number with its digits reversed. Examples:
 
-Copy Code
-reversed_number(12345) == 54321
-reversed_number(12213) == 31221
-reversed_number(456) == 654
-reversed_number(12000) == 21 # No leading zeros in return value!
-reversed_number(12003) == 30021
-reversed_number(1) == 1
+reversed_number(12345) == 54321 \
+reversed_number(12213) == 31221 \
+reversed_number(456) == 654 \
+reversed_number(12000) == 21 # No leading zeros in return value! \
+reversed_number(12003) == 30021 \
+reversed_number(1) == 1 \
 Don't worry about arguments with leading zeros - Ruby sees those as octal numbers, which will cause confusing results. For similar reasons, the return value for our fourth example doesn't have any leading zeros.
 
 ```ruby
@@ -651,7 +650,7 @@ center_of('I love ruby') == 'e' \
 center_of('Launch School') == ' ' \
 center_of('Launch') == 'un' \
 center_of('Launchschool') == 'hs' \
-center_of('x') == 'x' \
+center_of('x') == 'x'
 
 ```ruby
 =begin
@@ -816,7 +815,7 @@ rotate_rightmost_digits(735291, 2) == 735219 \
 rotate_rightmost_digits(735291, 3) == 735912 \
 rotate_rightmost_digits(735291, 4) == 732915 \
 rotate_rightmost_digits(735291, 5) == 752913 \
-rotate_rightmost_digits(735291, 6) == 352917 \
+rotate_rightmost_digits(735291, 6) == 352917
 
 ```ruby
 =begin
@@ -887,13 +886,11 @@ Write a method that takes an integer as argument, and returns the maximum rotati
 
 Note that you do not have to handle multiple 0s.
 
-```ruby
-max_rotation(735291) == 321579
-max_rotation(3) == 3
-max_rotation(35) == 53
-max_rotation(105) == 15 # the leading zero gets dropped
+max_rotation(735291) == 321579 \
+max_rotation(3) == 3 \
+max_rotation(35) == 53 \
+max_rotation(105) == 15 # the leading zero gets dropped \
 max_rotation(8_703_529_146) == 7_321_609_845
-```
 
 ```ruby
 =begin
@@ -976,11 +973,11 @@ Write a method that takes one argument, the total number of switches, and return
 
 Example with n = 5 lights:
 
-round 1: every light is turned on
-round 2: lights 2 and 4 are now off; 1, 3, 5 are on
-round 3: lights 2, 3, and 4 are now off; 1 and 5 are on
-round 4: lights 2 and 3 are now off; 1, 4, and 5 are on
-round 5: lights 2, 3, and 5 are now off; 1 and 4 are on
+round 1: every light is turned on \
+round 2: lights 2 and 4 are now off; 1, 3, 5 are on \
+round 3: lights 2, 3, and 4 are now off; 1 and 5 are on \
+round 4: lights 2 and 3 are now off; 1, 4, and 5 are on \
+round 5: lights 2, 3, and 5 are now off; 1 and 4 are on \
 The result is that 2 lights are left on, lights 1 and 4. The return value is [1, 4].
 
 With 10 lights, 3 lights are left on: lights 1, 4, and 9. The return value is [1, 4, 9].
@@ -1168,7 +1165,7 @@ letterCount('arithmetics') #=> {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1,
 
 p letter_count('codewars') == {:a=>1, :c=>1, :d=>1, :e=>1, :o=>1, :r=>1, :s=>1, :w=>1} \
 p letter_count('activity') == {:a=>1, :c=>1, :i=>2, :t=>2, :v=>1, :y=>1} \
-p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2} \
+p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}
 
 ```ruby
 =begin
@@ -1238,21 +1235,21 @@ Notes:
 Array can be empty or contain only one value; in this case return 0 \
 If there are more pairs of a certain number, count each pair only once. \
 E.g.: for [0, 0, 0, 0] the return value is 2 (= 2 pairs of 0s) \
-Random tests: maximum array length is 1000, range of values in array is between 0 and 1000 \
+Random tests: maximum array length is 1000, range of values in array is between 0 and 1000
 
 Examples
 [1, 2, 5, 6, 5, 2]  -->  2 \
 ...because there are 2 pairs: 2 and 5
 
 [1, 2, 2, 20, 6, 20, 2, 6, 2]  -->  4 \
-...because there are 4 pairs: 2, 20, 6 and 2 (again) \
+...because there are 4 pairs: 2, 20, 6 and 2 (again)
 
 p pairs([1, 2, 5, 6, 5, 2]) == 2 \
 p pairs([1, 2, 2, 20, 6, 20, 2, 6, 2]) == 4 \
 p pairs([0, 0, 0, 0, 0, 0, 0]) == 3 \
 p pairs([1000, 1000]) == 1 \
 p pairs([]) == 0 \
-p pairs([54]) == 0 \
+p pairs([54]) == 0
 
 ```ruby
 =begin
@@ -1400,7 +1397,7 @@ Alternate capitalization
 p solve(["abode","ABc","xyzD"]) == [4,3,1] \
 p solve(["abide","ABc","xyz"]) == [4,3,0] \
 p solve(["IAMDEFANDJKL","thedefgh","xyzDEFghijabc"])== [6,5,7] \
-p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3] \
+p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3]
 
 ```ruby
 =begin
@@ -1505,7 +1502,7 @@ p solve("ultrarevolutionariees") == 3 \
 p solve("strengthlessnesses") == 1 \
 p solve("cuboideonavicuare") == 2 \
 p solve("chrononhotonthuooaos") == 5 \
-p solve("iiihoovaeaaaoougjyaw") == 8 \
+p solve("iiihoovaeaaaoougjyaw") == 8
 
 ```ruby
 =begin
@@ -1621,11 +1618,11 @@ For example, in the case of "1341", they are 1, 1, 3, 13, 41, 341, 1341, a total
 
 solve("1341") = 7. See test cases for more examples.
 =end
-p solve("1341") == 7
-p solve("1357") == 10
-p solve("13471") == 12
-p solve("134721") == 13
-p solve("1347231") == 20
+p solve("1341") == 7 \
+p solve("1357") == 10 \
+p solve("13471") == 12 \
+p solve("134721") == 13 \
+p solve("1347231") == 20 \
 p solve("13472315") == 28
 
 ```ruby
@@ -1708,7 +1705,7 @@ For example:
 
 ["yoda", "best", "has"]  -->  "yes" \
   ^        ^        ^ \
-  n=0     n=1     n=2 \
+  n=0     n=1     n=2
 
 Note: Test cases contain valid input only - i.e. a string array or an empty array; and each word will have enough letters.
 
@@ -1716,7 +1713,7 @@ p nth_char(['yoda', 'best', 'has']) == 'yes' \
 p nth_char([]) == '' \
 p nth_char(['X-ray']) == 'X' \
 p nth_char(['No', 'No']) == 'No' \
-p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) ==  'Codewars' \
+p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) ==  'Codewars'
 
 ```ruby
 =begin
@@ -1779,15 +1776,15 @@ For a given nonempty string s find a minimum substring t and the maximum number 
 
 Example #1:
 
-for string `s = "ababab"`
-the answer is `["ab", 3]`
+for string s = "ababab"
+the answer is ["ab", 3]
 
 Example #2:
 
-for string `s = "abcde"` the answer is `"abcde"` because for this string `"abcde"` the minimum substring `t`, such that `s` is `t` repeated `k` times, is itself.
+for string s = "abcde" the answer is "abcde" because for this string "abcde" the minimum substring t, such that s is t repeated k times, is itself.
 
-`p f("ababab") == ["ab", 3]` \
-`p f("abcde") == ["abcde", 1]` \
+p f("ababab") == ["ab", 3] \
+p f("abcde") == ["abcde", 1]
 
 ```ruby
 =begin
@@ -1919,15 +1916,15 @@ Assumptions
 for reference: [here](http://en.wikipedia.org/wiki/Typoglycemia)
 =end
 
-p scramble_words('professionals') == 'paefilnoorsss'
-p scramble_words('i') == 'i'
-p scramble_words('') == ''
-p scramble_words('me') == 'me'
-p scramble_words('you') == 'you'
-p scramble_words('card-carrying') == 'caac-dinrrryg'
-p scramble_words("shan't") == "sahn't"
-p scramble_words('-dcba') == '-dbca'
-p scramble_words('dcba.') == 'dbca.'
+p scramble_words('professionals') == 'paefilnoorsss' \
+p scramble_words('i') == 'i' \
+p scramble_words('') == '' \
+p scramble_words('me') == 'me' \
+p scramble_words('you') == 'you' \
+p scramble_words('card-carrying') == 'caac-dinrrryg' \
+p scramble_words("shan't") == "sahn't" \
+p scramble_words('-dcba') == '-dbca' \
+p scramble_words('dcba.') == 'dbca.' \
 p scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.") == "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth."
 
 ```ruby
@@ -2192,8 +2189,8 @@ on Sundays, made away with three-quarters of his income.""") == ["a", "of", "on"
 A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
 
 Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
-=end
-p panagram?("The quick brown fox jumps over the lazy dog.") == true
+
+p panagram?("The quick brown fox jumps over the lazy dog.") == true \
 p panagram?("This is not a pangram.") == false
 
 ```ruby
@@ -2427,7 +2424,7 @@ Note: you will always receive a valid array containing a random assortment of di
 p is_valid_walk(['n','s','n','s','n','s','n','s','n','s']) == true \
 p is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e']) == false \
 p is_valid_walk(['w']) == false \
-p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false \
+p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false
 
 ```ruby
 =begin
@@ -2566,7 +2563,7 @@ p paired?('{}{}[()') == false \
 p paired?('[({]})') == false \
 p paired?('\left(\begin{array}{cc} \frac{1}{3} & x\\ ' + \
   '\mathrm{e}^{x} &... x^2 \end{array}\right)') == true \
-p paired?('(((185 + 223.85) * 15) - 543)/2') == true \
+p paired?('(((185 + 223.85) * 15) - 543)/2') == true
 
 ```ruby
 =begin
@@ -2672,7 +2669,7 @@ If you liked this kata, check out part 2!!
 
 p expanded_form(12) == '10 + 2' \
 p expanded_form(42) == '40 + 2' \
-p expanded_form(70304) == '70000 + 300 + 4' \
+p expanded_form(70304) == '70000 + 300 + 4'
 
 ```ruby
 =begin
@@ -2762,7 +2759,7 @@ p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"] \
 p wave("codewars") == ["Codewars", "cOdewars", "coDewars", "codEwars", "codeWars", "codewArs", "codewaRs", "codewarS"] \
 p wave("") == [] \
 p wave("two words") == ["Two words", "tWo words", "twO words", "two Words", "two wOrds", "two woRds", "two worDs", "two wordS"] \
-p wave(" gap ") == [" Gap ", " gAp ", " gaP "] \
+p wave(" gap ") == [" Gap ", " gAp ", " gaP "]
 
 ```ruby
 =begin
@@ -2862,7 +2859,7 @@ You can assume there is never an empty array and there will always be an integer
 
 p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2] \
 p sum_consecutives([1,1,7,7,3]) == [2,14,3] \
-p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0] \
+p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
 
 ```ruby
 =begin
@@ -2960,7 +2957,7 @@ Rules
 p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"] \
 p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"] \
 p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"] \
-p wave("") == [] \
+p wave("") == []
 
 ```ruby
 =begin
@@ -3073,7 +3070,7 @@ persistence(4) # returns 0, because 4 is already a one-digit number
 p persistence(39) == 3 \
 p persistence(4) == 0 \
 p persistence(25) == 2 \
-p persistence(999) == 4 \
+p persistence(999) == 4
 
 ```ruby
 =begin
