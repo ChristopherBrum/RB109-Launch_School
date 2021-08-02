@@ -1,3 +1,5 @@
+# RB 109 Live Assessment Practice Problems #
+
 1. [Repeater](#repeater)
 2. [Double Consonants](#double-consonants)
 3. [Rotate 13](#rotate-13)
@@ -34,15 +36,15 @@
 
 ---
 
-1. ## Repeater ##
+## Repeater ##
 
-- ### Difficulty: **easy** ###
-- [x] Problem Completed? 
+- Difficulty: **easy**
+- [x] Problem Completed?
 
 Write a method that takes a string, and returns a new string in which every character is doubled.
 
-p repeater('Hello') == "HHeelllloo"<br>
-p repeater("Good job!") == "GGoooodd  jjoobb!!"<br>
+p repeater('Hello') == "HHeelllloo" \
+p repeater("Good job!") == "GGoooodd  jjoobb!!" \
 p repeater('') == ''
 
 ```ruby
@@ -85,19 +87,18 @@ p repeater('') == ''
 ```
 
 ---
-<br><br>
 
-2. ## Double Consonants ##
+## Double Consonants ##
 
-- ### Difficulty: **easy** ###
-- [ ] Problem Completed? 
+- Difficulty: **easy**
+- [ ] Problem Completed?
 
 Write a method that takes a string, and returns a new string in which every consonant character is doubled. Vowels (a,e,i,o,u), digits, punctuation, and whitespace should not be doubled.
 
-double_consonants('String') == "SSttrrinngg"<br>
-double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"<br>
-double_consonants("July 4th") == "JJullyy 4tthh"<br>
-double_consonants('') == ""<br>
+double_consonants('String') == "SSttrrinngg" \
+double_consonants("Hello-World!") == "HHellllo-WWorrlldd!" \
+double_consonants("July 4th") == "JJullyy 4tthh" \
+double_consonants('') == "" \
 
 ```ruby
 =begin
@@ -122,19 +123,19 @@ double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
 double_consonants("July 4th") == "JJullyy 4tthh"
 double_consonants('') == ""
 ```
+
 ---
-<br><br>
 
-3. ## Rotate 13 ##
+## Rotate 13 ##
 
-- ### Difficulty: **med/hard** ###
-- [ ] Problem Completed? 
+- Difficulty: **med/hard**
+- [ ] Problem Completed?
 
 How can you tell an extrovert from an introvert at NSA? Va gur ryringbef, gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
 
-I found this joke on USENET, but the punchline is scrambled. Maybe you can decipher it? According to Wikipedia, ROT13 (http://en.wikipedia.org/wiki/ROT13) is frequently used to obfuscate jokes on USENET.
+I found this joke on USENET, but the punchline is scrambled. Maybe you can decipher it? According to Wikipedia, [ROT13](http://en.wikipedia.org/wiki/ROT13) is frequently used to obfuscate jokes on USENET.
 
-Hint: For this task you're only supposed to substitue characters. Not spaces, punctuation, numbers etc. 
+Hint: For this task you're only supposed to substitue characters. Not spaces, punctuation, numbers etc.
 
 rot13("EBG13 rknzcyr.") == "ROT13 example.";
 rot13("This is my first ROT13 excercise!" == "Guvf vf zl svefg EBG13 rkprepvfr!"
@@ -147,24 +148,23 @@ rot13("EBG13 rknzcyr.") == "ROT13 example.";
 rot13("This is my first ROT13 excercise!" == "Guvf vf zl svefg EBG13 rkprepvfr!"
 Rot 13 means each letter is replaced by the letter appearing 13 places in the alphabt. after the original letter. Last 13 letters alphabet you start over.
 
-
-
-### Problem: ###
+-- Problem
 
 Rot 13 means each letter is replaced by the letter appearing 13 places in the alphabt after the original letter
 
 - input: string
 - output: string
-- rules: 
+- rules:
   - For this task you're only supposed to substitue characters. Not spaces, punctuation, numbers etc.
   - if there is a number, return it as it is
 
-### Algorithm: ###
-  - replace the alphabet characters with the ones that comes after 13 
-  - abcdefghijklm nopqrstuvwxyz
+-- Algorithm:
 
-  - split the string into array of words
-  - iterate over the characters
+- replace the alphabet characters with the ones that comes after 13
+- abcdefghijklm nopqrstuvwxyz
+
+- split the string into array of words
+- iterate over the characters
   
 ```ruby
 def rot13(string)
@@ -189,18 +189,18 @@ end
 
 # Having a Problem with this Solution
 
+p rot13("Abc") #== "Nop" \
+p rot13("xYz") == "kLm" \
+p rot13("EBG13 rknzcyr.") #== "ROT13 example." \
+p rot13("This is my first ROT13 excercise!") #== "Guvf vf zl svefg EBG13 rkprepvfr!" \
 
-p rot13("Abc") #== "Nop"<br>
-p rot13("xYz") == "kLm"<br>
-p rot13("EBG13 rknzcyr.") #== "ROT13 example."<br>
-p rot13("This is my first ROT13 excercise!") #== "Guvf vf zl svefg EBG13 rkprepvfr!"<br>
-```
+=begin
+-- Ginni's Algorithm
 
-### Ginni's Algorithm: ###
 - Convert the input string into an array of chars
 - Iterate over each char in the array transforming as follows
   - If the current char is a uppercase letter:
-    - Convert to ASCII code 
+    - Convert to ASCII code
     - Add 13 to the ASCII code
     - If this is greater than 90
       - subtract 91 from value
@@ -218,7 +218,6 @@ p rot13("This is my first ROT13 excercise!") #== "Guvf vf zl svefg EBG13 rkprepv
 - Join and return the resulting string
 =end
 
-```ruby
 # Ginni's Solution
 def rot_upper(char)
   value = char.ord
@@ -257,51 +256,69 @@ end
 ```
 
 ---
-<br><br>
 
-4. ## Longest Palindrome ## 
+## Longest Palindrome ##
 
-- ### Difficulty: **easy** ###
-- [x] Problem Completed? 
+- Difficulty: **easy**
+- [x] Problem Completed?
 
 Find the length of the longest substring in the given string that is the same in reverse.
 
-Example:<br>
+Example: \
 longest_palindrome("I like racecars that go fast") == 7
 
 If the length of the input string is 0, return value must be 0
 
------------------------INSTRUCTIONS--------------------------------------<br>
+p longest_palindrome('') == 0 \
+p longest_palindrome('a') == 1 \
+p longest_palindrome('aa') == 2 \
+p longest_palindrome('baa') == 2 \
+p longest_palindrome('aab') == 2 \
+p longest_palindrome('baabcd') == 4 \
+p longest_palindrome('baab1kj12345432133d') == 9 \
+p longest_palindrome("I like racecars that go fast") == 7 \
+p longest_palindrome("aa aa") == 5 \
+p longest_palindrome('abcde') == 1 \
+
+```ruby
+=begin
 Find the length of the longest substring in the given string that is the same in reverse.
 
-Example:<br>
+Example: \
 longest_palindrome("I like racecars that go fast") == 7
 
 If the length of the input string is 0, return value must be 0
 
---------------------------PROBLEM----------------------------------------<br>
-- Questions:<br>
-  - Are whites spaces included or negated?<br>
-- Input: 1 String<br>
-- Output: 1 Integer, length of the longest substring palindrome<br>
+-----------------------INSTRUCTIONS-------------------------------------- \
+Find the length of the longest substring in the given string that is the same in reverse.
 
----------------------------RULES-----------------------------------------<br>
+Example: \
+longest_palindrome("I like racecars that go fast") == 7
+
+If the length of the input string is 0, return value must be 0
+
+--------------------------PROBLEM---------------------------------------- \
+- Questions: \
+  - Are whites spaces included or negated? \
+- Input: 1 String \
+- Output: 1 Integer, length of the longest substring palindrome \
+
+---------------------------RULES----------------------------------------- \
 - Explicit:
   - Find the length of the longest substring in the given string that is the same in reverse.
   - If the length of the input string is 0, return value must be 0
 - Implicit:
-  - 
 
---------------------------EXAMPLES---------------------------------------<br>
-longest_palindrome("I like racecars that go fast") == 7<br>
-'racecar' -> reveresed == -> 'racecar'<br>
-length is 7<br>
-Returns => 7<br>
+--------------------------EXAMPLES--------------------------------------- \
+longest_palindrome("I like racecars that go fast") == 7 \
+'racecar' -> reveresed == -> 'racecar' \
+length is 7 \
+Returns => 7 \
 
-----------------------------ALGO-----------------------------------------<br>
+----------------------------ALGO----------------------------------------- \
 => Find all substrings of the input string. Iterate through substrings and collect all palindromes from within collection. Find the palindrome with the greatest length and return.
 
-- Initialize an empty array to sub_strings 
+- Initialize an empty array to sub_strings
 - Split input string into an array of characters
 - Iterate over the array
   - Find all possible subarrays and push to sub_strings array, join back to strings
@@ -312,7 +329,6 @@ Returns => 7<br>
 
 =end
 
-```ruby
 def longest_palindrome(str)
   return 0 if str.size == 0
   sub_strings = []
@@ -334,13 +350,12 @@ p longest_palindrome("aa aa") == 5
 p longest_palindrome('abcde') == 1
 ```
 
---- 
-<br><br>
+---
 
-5. ## Find Children ##
+## Find Children ##
 
-- ### Difficulty: **easy** ###
-- [x] Problem Completed? 
+- Difficulty: **easy**
+- [x] Problem Completed?
 
 Mothers arranged a dance party for the children in school. At that party, there are only mothers and their children. All are having great fun on the dance floor when suddenly all the lights went out. It's a dark night and no one can see each other. But you were flying nearby and you can see in the dark and have ability to teleport people anywhere you want.
 
@@ -350,7 +365,7 @@ Legend:
 -Function input: String contains only letters, uppercase letters are unique.
 
 Task:
-Place all people in alphabetical order where Mothers are followed by their children, 
+Place all people in alphabetical order where Mothers are followed by their children,
 i.e. "aAbaBb" => "AaaBbb".
 
 ```ruby
@@ -445,19 +460,19 @@ p find_children("") == ""
 
 ---
 
-6. ## Double Consonants Alternative ##
+## Double Consonants Alternative ##
 
-- ### Difficulty: **easy** ###
+- Difficulty: **easy**
 - [x] Problem Completed?
 
 Write a method that takes a string, and returns a new string in which every consonant character is doubled. Vowels (a,e,i,o,u), digits, punctuation, and whitespace should not be doubled.
 
 Examples:
 
-double_consonants('String') == "SSttrrinngg"<br>
-double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"<br>
-double_consonants("July 4th") == "JJullyy 4tthh"<br>
-double_consonants('') == ""<br>
+double_consonants('String') == "SSttrrinngg" \
+double_consonants("Hello-World!") == "HHellllo-WWorrlldd!" \
+double_consonants("July 4th") == "JJullyy 4tthh" \
+double_consonants('') == "" \
 
 ```ruby
 =begin
@@ -536,9 +551,9 @@ p double_consonants('') == ""
 
 ---
 
-7. ## Reversed Number ##
+## Reversed Number ##
 
-- ### Difficulty: **easy** ###
+- Difficulty: **easy**
 - [x] Problem Completed?
 
 Write a method that takes a positive integer as an argument and returns that number with its digits reversed. Examples:
@@ -620,9 +635,9 @@ p reversed_number(1) == 1
 
 ---
 
-8. ## Get The Middle Character ## 
+## Get The Middle Character ##
 
-- ### Difficulty: **easy** ###
+- Difficulty: **easy**
 - [x] Problem Completed?
 
 Write a method that takes a non-empty string argument, and returns the middle character or characters of the argument. If the argument has an odd length, you should return exactly one character. If the argument has an even length, you should return exactly two characters.
@@ -630,11 +645,11 @@ Write a method that takes a non-empty string argument, and returns the middle ch
 Examples:
 
 Copy Code
-center_of('I love ruby') == 'e'<br>
-center_of('Launch School') == ' '<br>
-center_of('Launch') == 'un'<br>
-center_of('Launchschool') == 'hs'<br>
-center_of('x') == 'x'<br>
+center_of('I love ruby') == 'e' \
+center_of('Launch School') == ' ' \
+center_of('Launch') == 'un' \
+center_of('Launchschool') == 'hs' \
+center_of('x') == 'x' \
 
 ```ruby
 =begin
@@ -691,9 +706,9 @@ p center_of('x') == 'x'
 
 ---
 
-9. ## Rotation Pt 1 ##
+## Rotation Pt 1 ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 Write a method that rotates an array by moving the first element to the end of the array. The original array should not be modified.
@@ -781,9 +796,9 @@ p x == [1, 2, 3, 4]                 # => true
 
 ---
 
-10. ## Rotation Pt 2 ##
+## Rotation Pt 2 ##
 
-- ### Difficulty: **medium** ###
+- *Difficulty: **medium**
 - [x] Problem Completed?
 
 Write a method that can rotate the last n digits of a number. For example:
@@ -794,16 +809,12 @@ You may use the rotate_array method from the previous exercise if you want. (Rec
 
 You may assume that n is always a positive integer.
 
-```ruby
-rotate_rightmost_digits(735291, 1) == 735291
-rotate_rightmost_digits(735291, 2) == 735219
-rotate_rightmost_digits(735291, 3) == 735912
-rotate_rightmost_digits(735291, 4) == 732915
-rotate_rightmost_digits(735291, 5) == 752913
-rotate_rightmost_digits(735291, 6) == 352917
-```
-
-
+rotate_rightmost_digits(735291, 1) == 735291 \
+rotate_rightmost_digits(735291, 2) == 735219 \
+rotate_rightmost_digits(735291, 3) == 735912 \
+rotate_rightmost_digits(735291, 4) == 732915 \
+rotate_rightmost_digits(735291, 5) == 752913 \
+rotate_rightmost_digits(735291, 6) == 352917 \
 
 ```ruby
 =begin
@@ -863,9 +874,9 @@ p rotate_rightmost_digits(735291, 6) == 352917
 
 ---
 
-11. ## Rotation pt 3 ##
+## Rotation pt 3 ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 If you take a number like 735291, and rotate it to the left, you get 352917. If you now keep the first digit fixed in place, and rotate the remaining digits, you get 329175. Keep the first 2 digits fixed in place and rotate again to 321759. Keep the first 3 digits fixed in place and rotate again to get 321597. Finally, keep the first 4 digits fixed in place and rotate the final 2 digits to get 321579. The resulting number is called the maximum rotation of the original number.
@@ -952,9 +963,9 @@ p max_rotation(8_703_529_146) == 7_321_609_845
 
 ---
 
-12. ## 1000 Lights ##
+## 1000 Lights ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 You have a bank of switches before you, numbered from 1 to n. Each switch is connected to exactly one light that is initially off. You walk down the row of switches and toggle every one of them. You go back to the beginning, and on this second pass, you toggle switches 2, 4, 6, and so on. On the third pass, you go back again to the beginning and toggle switches 3, 6, 9, and so on. You repeat this process and keep going until you have been through n repetitions.
@@ -1063,9 +1074,9 @@ p switch_lights(5) == [1, 4]
 p switch_lights(10) == [1, 4, 9]
 ```
 
-13. ## Next Largest Num ##
+## Next Largest Num ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 ```ruby
@@ -1141,9 +1152,9 @@ p next_bigger_num(123456789) == 123456798
 
 ---
 
-14. ## Count Letters in String ##
+## Count Letters in String ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 Count letters in string
@@ -1153,10 +1164,9 @@ Example:
 
 letterCount('arithmetics') #=> {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}
 
-p letter_count('codewars') == {:a=>1, :c=>1, :d=>1, :e=>1, :o=>1, :r=>1, :s=>1, :w=>1}<br>
-p letter_count('activity') == {:a=>1, :c=>1, :i=>2, :t=>2, :v=>1, :y=>1}<br>
-p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2}<br>
-
+p letter_count('codewars') == {:a=>1, :c=>1, :d=>1, :e=>1, :o=>1, :r=>1, :s=>1, :w=>1} \
+p letter_count('activity') == {:a=>1, :c=>1, :i=>2, :t=>2, :v=>1, :y=>1} \
+p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>1, :s=>1, :t=>2} \
 
 ```ruby
 =begin
@@ -1214,33 +1224,33 @@ p letter_count('arithmetics') == {:a=>1, :c=>1, :e=>1, :h=>1, :i=>2, :m=>1, :r=>
 
 ---
 
-15. ## Count Pairs in String ##
+## Count Pairs in String ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 You are given array of integers, your task will be to count all pairs in that array and return their count.
 
 Notes:
 
-Array can be empty or contain only one value; in this case return 0<br>
-If there are more pairs of a certain number, count each pair only once.<br> 
-E.g.: for [0, 0, 0, 0] the return value is 2 (= 2 pairs of 0s)<br>
-Random tests: maximum array length is 1000, range of values in array is between 0 and 1000<br>
+Array can be empty or contain only one value; in this case return 0 \
+If there are more pairs of a certain number, count each pair only once. \
+E.g.: for [0, 0, 0, 0] the return value is 2 (= 2 pairs of 0s) \
+Random tests: maximum array length is 1000, range of values in array is between 0 and 1000 \
 
 Examples
-[1, 2, 5, 6, 5, 2]  -->  2<br>
+[1, 2, 5, 6, 5, 2]  -->  2 \
 ...because there are 2 pairs: 2 and 5
 
-[1, 2, 2, 20, 6, 20, 2, 6, 2]  -->  4<br>
-...because there are 4 pairs: 2, 20, 6 and 2 (again)<br>
+[1, 2, 2, 20, 6, 20, 2, 6, 2]  -->  4 \
+...because there are 4 pairs: 2, 20, 6 and 2 (again) \
 
-p pairs([1, 2, 5, 6, 5, 2]) == 2<br>
-p pairs([1, 2, 2, 20, 6, 20, 2, 6, 2]) == 4<br>
-p pairs([0, 0, 0, 0, 0, 0, 0]) == 3<br>
-p pairs([1000, 1000]) == 1<br>
-p pairs([]) == 0<br>
-p pairs([54]) == 0<br>
+p pairs([1, 2, 5, 6, 5, 2]) == 2 \
+p pairs([1, 2, 2, 20, 6, 20, 2, 6, 2]) == 4 \
+p pairs([0, 0, 0, 0, 0, 0, 0]) == 3 \
+p pairs([1000, 1000]) == 1 \
+p pairs([]) == 0 \
+p pairs([54]) == 0 \
 
 ```ruby
 =begin
@@ -1314,9 +1324,9 @@ p pairs([54]) == 0
 
 ---
 
-16. ## Return Substring Instance Count ##
+## Return Substring Instance Count ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 ```ruby
@@ -1362,9 +1372,9 @@ p solution('abbc', 'bb') == 1
 
 ---
 
-17. ## Alphabet Symmetry ##
+## Alphabet Symmetry ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 Alphabet symmetry
@@ -1385,11 +1395,10 @@ Last digit symmetry
 
 Alternate capitalization
 
-p solve(["abode","ABc","xyzD"]) == [4,3,1]<br>
-p solve(["abide","ABc","xyz"]) == [4,3,0]<br>
-p solve(["IAMDEFANDJKL","thedefgh","xyzDEFghijabc"])== [6,5,7]<br>
-p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3]<br>
-
+p solve(["abode","ABc","xyzD"]) == [4,3,1] \
+p solve(["abide","ABc","xyz"]) == [4,3,0] \
+p solve(["IAMDEFANDJKL","thedefgh","xyzDEFghijabc"])== [6,5,7] \
+p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3] \
 
 ```ruby
 =begin
@@ -1480,24 +1489,21 @@ p solve(["encode","abc","xyzD","ABmD"]) == [1, 3, 1, 3]
 
 ---
 
-18. ## Longest Vowel Chain ##
+## Longest Vowel Chain ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
-
 
 The vowel substrings in the word codewarriors are o,e,a,io. The longest of these has a length of 2. Given a lowercase string that has alphabetic characters only and no spaces, return the length of the longest vowel substring. Vowels are any of aeiou.
 
-p solve("codewarriors") == 2<br>
-p solve("suoidea") == 3<br>
-p solve("iuuvgheaae") == 4<br>
-p solve("ultrarevolutionariees") == 3<br>
-p solve("strengthlessnesses") == 1<br>
-p solve("cuboideonavicuare") == 2<br>
-p solve("chrononhotonthuooaos") == 5<br>
-p solve("iiihoovaeaaaoougjyaw") == 8<br>
-    
-
+p solve("codewarriors") == 2 \
+p solve("suoidea") == 3 \
+p solve("iuuvgheaae") == 4 \
+p solve("ultrarevolutionariees") == 3 \
+p solve("strengthlessnesses") == 1 \
+p solve("cuboideonavicuare") == 2 \
+p solve("chrononhotonthuooaos") == 5 \
+p solve("iiihoovaeaaaoougjyaw") == 8 \
 
 ```ruby
 =begin
@@ -1574,7 +1580,7 @@ p solve("iiihoovaeaaaoougjyaw") == 8
 =end
 
 =begin
-### MUCH QUICKER METHOD !!!
+** MUCH QUICKER METHOD !!!
 
 -- main method --> solve(str) --> integer
   -substitute all characters of given string that are not vowels with a space
@@ -1602,9 +1608,9 @@ p solve("iiihoovaeaaaoougjyaw") == 8
 
 ---
 
-19. ## Non Even Substrings  ##
+## Non Even Substrings ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 Given a string of integers, return the number of odd-numbered substrings that can be formed.
@@ -1687,9 +1693,9 @@ p solve("13472315") == 28
 
 ---
 
-20. ## Substring Fun ##
+## Substring Fun ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 Complete the function that takes an array of words.
@@ -1698,19 +1704,17 @@ You must concatenate the nth letter from each word to construct a new word which
 
 For example:
 
-["yoda", "best", "has"]  -->  "yes"<br>
-  ^        ^        ^<br>
-  n=0     n=1     n=2<br>
+["yoda", "best", "has"]  -->  "yes" \
+  ^        ^        ^ \
+  n=0     n=1     n=2 \
 
 Note: Test cases contain valid input only - i.e. a string array or an empty array; and each word will have enough letters.
 
-
-p nth_char(['yoda', 'best', 'has']) == 'yes'<br>
-p nth_char([]) == ''<br>
-p nth_char(['X-ray']) == 'X'<br>
-p nth_char(['No', 'No']) == 'No'<br>
-p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) ==  'Codewars'<br>
-
+p nth_char(['yoda', 'best', 'has']) == 'yes' \
+p nth_char([]) == '' \
+p nth_char(['X-ray']) == 'X' \
+p nth_char(['No', 'No']) == 'No' \
+p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuador', 'Micronesia']) ==  'Codewars' \
 
 ```ruby
 =begin
@@ -1764,9 +1768,9 @@ p nth_char(['Chad', 'Morocco', 'India', 'Algeria', 'Botswana', 'Bahamas', 'Ecuad
 
 ---
 
-21. ## Repeated Substring ##
+## Repeated Substring ##
 
-- ### Difficulty: **medium** ###
+- Difficulty: **medium**
 - [x] Problem Completed?
 
 For a given nonempty string s find a minimum substring t and the maximum number k, such that the entire string s is equal to t repeated k times. The input string consists of lowercase latin letters. Your function should return a tuple (in Python) (t, k) or an array (in Ruby and JavaScript) [t, k]
@@ -1780,9 +1784,8 @@ Example #2:
 
 for string `s = "abcde"` the answer is `"abcde"` because for this string `"abcde"` the minimum substring `t`, such that `s` is `t` repeated `k` times, is itself.
 
-
-`p f("ababab") == ["ab", 3]`<br>
-`p f("abcde") == ["abcde", 1]`<br>
+`p f("ababab") == ["ab", 3]` \
+`p f("abcde") == ["abcde", 1]` \
 
 ```ruby
 =begin
@@ -1885,12 +1888,12 @@ p f("poopspoops") == ["poops", 2]
 
 ---
 
-22. ## Typoglycemia Generator ##
+## Typoglycemia Generator ##
 
-- ### Difficulty: **hard** ###
-- [x] Problem Completed? 
+- Difficulty: **hard**
+- [x] Problem Completed?
 
-There is a message that is circulating via public media that claims a reader can easily read a message where the inner letters of each words is scrambled, as long as the first and last letters remain the same and the word contains all the letters. 
+There is a message that is circulating via public media that claims a reader can easily read a message where the inner letters of each words is scrambled, as long as the first and last letters remain the same and the word contains all the letters.
 
 Another example shows that it is quite difficult to read the text where all the letters are reversed rather than scrambled.
 
@@ -1911,7 +1914,7 @@ Assumptions
 4) for this kata punctuation is limited to 4 characters: hyphen(-), apostrophe('), comma(,) and period(.)
 5) ignore capitalisation
 
-for reference: http://en.wikipedia.org/wiki/Typoglycemia
+for reference: [here](http://en.wikipedia.org/wiki/Typoglycemia)
 =end
 
 p scramble_words('professionals') == 'paefilnoorsss'
@@ -1924,7 +1927,6 @@ p scramble_words("shan't") == "sahn't"
 p scramble_words('-dcba') == '-dbca'
 p scramble_words('dcba.') == 'dbca.'
 p scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.") == "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth."
-
 
 ```ruby
 =begin
@@ -2041,10 +2043,10 @@ p scramble_words("you've gotta dance like there's nobody watching, love like you
 
 ---
 
-23. ## Most Frequently Used Words in a Text ##
+## Most Frequently Used Words in a Text ##
 
-- ### Difficulty: **hard** ###
-- [X] Problem Completed? 
+- Difficulty: **hard**
+- [X] Problem Completed?
 
 Write a function that, given a string of text (possibly with punctuation and line-breaks), returns an array of the top-3 most occurring words, in descending order of the number of occurrences.
 
@@ -2061,33 +2063,32 @@ mind, there lived not long since one of those gentlemen that keep a lance
 in the lance-rack, an old buckler, a lean hack, and a greyhound for
 coursing. An olla of rather more beef than mutton, a salad on most
 nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
-on Sundays, made away with three-quarters of his income.")<br>
+on Sundays, made away with three-quarters of his income.") \
 returns => ["a", "of", "on"]
 
-top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e")<br>
+top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e") \
 returns => ["e", "ddd", "aa"]
 
-top_3_words("  //wont won't won't")<br>
+top_3_words("  //wont won't won't") \
 returns => ["won't", "wont"]
 
-Bonus points (not really, but just for fun):<br>
-Avoid creating an array whose memory footprint is roughly as big as the input text.<br>
+Bonus points (not really, but just for fun): \
+Avoid creating an array whose memory footprint is roughly as big as the input text. \
 Avoid sorting the entire array of unique words.
 
-p top_3_words("a a a  b  c c  d d d d  e e e e e") == ["e", "d", "a"]<br>
-p top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e") == ["e", "ddd", "aa"]<br>
-p top_3_words("  //wont won't won't ") == ["won't", "wont"]<br>
-p top_3_words("  , e   .. ") == ["e"]<br>
-p top_3_words("  ...  ") == []<br>
-p top_3_words("  '  ") == []<br>
-p top_3_words("  '''  ") == []<br>
+p top_3_words("a a a  b  c c  d d d d  e e e e e") == ["e", "d", "a"] \
+p top_3_words("e e e e DDD ddd DdD: ddd ddd aa aA Aa, bb cc cC e e e") == ["e", "ddd", "aa"] \
+p top_3_words("  //wont won't won't ") == ["won't", "wont"] \
+p top_3_words("  , e   .. ") == ["e"] \
+p top_3_words("  ...  ") == [] \
+p top_3_words("  '  ") == [] \
+p top_3_words("  '''  ") == [] \
 p top_3_words("""In a village of La Mancha, the name of which I have no desire to call to
 mind, there lived not long since one of those gentlemen that keep a lance
 in the lance-rack, an old buckler, a lean hack, and a greyhound for
 coursing. An olla of rather more beef than mutton, a salad on most
 nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra
 on Sundays, made away with three-quarters of his income.""") == ["a", "of", "on"]
-
 
 ```ruby
 =begin
@@ -2181,10 +2182,10 @@ on Sundays, made away with three-quarters of his income.""") == ["a", "of", "on"
 
 ---
 
-24. ## Detect Pangram ##
+## Detect Pangram ##
 
-- ### Difficulty: **medium** ###
-- [x] Problem Completed? 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
 A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
 
@@ -2192,7 +2193,6 @@ Given a string, detect whether or not it is a pangram. Return True if it is, Fal
 =end
 p panagram?("The quick brown fox jumps over the lazy dog.") == true
 p panagram?("This is not a pangram.") == false
-
 
 ```ruby
 =begin
@@ -2244,21 +2244,21 @@ p panagram?("This is not a pangram.") == false
 
 ---
 
-25. ## Kebabize ##
+## Kebabize ##
 
-- ### Difficulty: **medium** ###
-- [x] Problem Completed? 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
 Modify the kebabize function so that it converts a camel case string into a kebab case.
 
-kebabize('camelsHaveThreeHumps') // camels-have-three-humps<br>
+kebabize('camelsHaveThreeHumps') // camels-have-three-humps \
 kebabize('camelsHave3Humps') // camels-have-humps
 
 Notes:
 
 the returned string should only contain lowercase letters
 
-p kebabize('myCamelCasedString') == 'my-camel-cased-string'<br>
+p kebabize('myCamelCasedString') == 'my-camel-cased-string' \
 p kebabize('myCamelHas3Humps') == 'my-camel-has-humps'
 
 ```ruby
@@ -2331,12 +2331,12 @@ p kebabize('myCamelHas3Humps') == 'my-camel-has-humps'
 
 ---
 
-26. ## Dubstep ##
+## Dubstep ##
 
-- ### Difficulty: **medium** ###
-- [x] Problem Completed? 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
-Polycarpus works as a Dhttps://www.codewars.com/kata/551dc350bf4e526099000ae5/train/rubyJ in the best Berland nightclub, and he often uses dubstep music in his performance. Recently, he has decided to take a couple of old songs and make dubstep remixes from them.
+Polycarpus works as a [here](Dhttps://www.codewars.com/kata/551dc350bf4e526099000ae5/train/rubyJ) in the best Berland nightclub, and he often uses dubstep music in his performance. Recently, he has decided to take a couple of old songs and make dubstep remixes from them.
 
 Let's assume that a song consists of some number of words (that don't contain WUB). To make the dubstep remix of this song, Polycarpus inserts a certain number of words "WUB" before the first word of the song (the number may be zero), after the last word (the number may be zero), and between words (at least one between any pair of neighbouring words), and then the boy glues together all the words, including "WUB", in one string and plays the song at the club.
 
@@ -2344,16 +2344,16 @@ For example, a song with words "I AM X" can transform into a dubstep remix as "W
 
 Recently, Jonny has heard Polycarpus's new dubstep track, but since he isn't into modern music, he decided to find out what was the initial song that Polycarpus remixed. Help Jonny restore the original song.
 
-Input<br>
+Input \
 The input consists of a single non-empty string, consisting only of uppercase English letters, the string's length doesn't exceed 200 characters
 
-Output<br>
+Output \
 Return the words of the initial song that Polycarpus used to make a dubsteb remix. Separate the words with a space.
 
-Examples<br>
-song_decoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB")  =>  WE ARE THE CHAMPIONS MY FRIEND<br>
-p song_decoder("AWUBBWUBC") == "A B C"<br>
-p song_decoder("AWUBWUBWUBBWUBWUBWUBC") == "A B C"<br>
+Examples \
+song_decoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB")  =>  WE ARE THE CHAMPIONS MY FRIEND \
+p song_decoder("AWUBBWUBC") == "A B C" \
+p song_decoder("AWUBWUBWUBBWUBWUBWUBC") == "A B C" \
 p song_decoder("WUBAWUBBWUBCWUB") == "A B C"
 
 ```ruby
@@ -2413,20 +2413,19 @@ p song_decoder("WUBWEWUBAREWUBWUBTHEWUBCHAMPIONSWUBMYWUBFRIENDWUB") == "WE ARE T
 
 ---
 
-27. ## Take a Ten Minute Walk ##
+## Take a Ten Minute Walk ##
 
-- ### Difficulty: **medium** ###
-- [x] Problem Completed? 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
 You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. ['n', 's', 'w', 'e']). You always walk only a single block in a direction and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
 
 Note: you will always receive a valid array containing a random assortment of direction letters ('n', 's', 'e', or 'w' only). It will never give you an empty array (that's not a walk, that's standing still!).
 
-p is_valid_walk(['n','s','n','s','n','s','n','s','n','s']) == true<br>
-p is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e']) == false<br>
-p is_valid_walk(['w']) == false<br>
-p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false<br>
-
+p is_valid_walk(['n','s','n','s','n','s','n','s','n','s']) == true \
+p is_valid_walk(['w','e','w','e','w','e','w','e','w','e','w','e']) == false \
+p is_valid_walk(['w']) == false \
+p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false \
 
 ```ruby
 =begin
@@ -2480,20 +2479,18 @@ p is_valid_walk(['n','n','n','s','n','s','n','s','n','s']) == false
 
 ---
 
-28. ## Stop gninnipS My sdroW ##
+## Stop gninnipS My sdroW ##
 
-- ### Difficulty: **medium** ###
-- [x] Problem Completed? 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
-(https://www.codewars.com/kata/5264d2b162488dc400000001)
-6 kyu
 Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
 
 Examples: spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw"
 
-p spin_words("Hey fellow warriors") == "Hey wollef sroirraw"<br>
-p spin_words("This is a test") == "This is a test"<br>
-p spin_words("This is another test") == "This is rehtona test"<br>
+p spin_words("Hey fellow warriors") == "Hey wollef sroirraw" \
+p spin_words("This is a test") == "This is a test" \
+p spin_words("This is another test") == "This is rehtona test" \
 p spin_words('test') == 'test'
 
 ```ruby
@@ -2553,21 +2550,21 @@ p spin_words("test") == "test"
 
 ---
 
-29. ## Nested Brackets ##
+## Nested Brackets ##
 
-- ### Difficulty: **hard** ###
-- [x] Problem Completed? 
+- Difficulty: **hard**
+- [x] Problem Completed?
 
 Given a string containing brackets [], braces {}, parentheses (), or any combination thereof, verify that any and all pairs are matched and nested correctly.
 
-p paired?('[]]') == false<br>
-p paired?(']][[') == false<br>
-p paired?('{}{}[()]') == true<br>
-p paired?('{}{}[()') == false<br>
-p paired?('[({]})') == false<br>
-p paired?('\left(\begin{array}{cc} \frac{1}{3} & x\\ ' +<br>
-  '\mathrm{e}^{x} &... x^2 \end{array}\right)') == true<br>
-p paired?('(((185 + 223.85) * 15) - 543)/2') == true<br>
+p paired?('[]]') == false \
+p paired?(']][[') == false \
+p paired?('{}{}[()]') == true \
+p paired?('{}{}[()') == false \
+p paired?('[({]})') == false \
+p paired?('\left(\begin{array}{cc} \frac{1}{3} & x\\ ' + \
+  '\mathrm{e}^{x} &... x^2 \end{array}\right)') == true \
+p paired?('(((185 + 223.85) * 15) - 543)/2') == true \
 
 ```ruby
 =begin
@@ -2654,26 +2651,26 @@ p paired?('(((185 + 223.85) * 15) - 543)/2') == true
 
 ---
 
-30. ## Write Number in Expanded Form ##
+## Write Number in Expanded Form ##
 
-- ### Difficulty: **medium** ###
-- [x] Problem Completed? 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
 Write Number in Expanded Form
-You will be given a number and you will need to return it as a string in Expanded Form. 
+You will be given a number and you will need to return it as a string in Expanded Form.
 
 For example:
 
-expanded_form(12); # Should return '10 + 2'<br>
-expanded_form(42); # Should return '40 + 2'<br>
-expanded_form(70304); # Should return '70000 + 300 + 4'<br>
-NOTE: All numbers will be whole numbers greater than 0.<br>
+expanded_form(12); # Should return '10 + 2' \
+expanded_form(42); # Should return '40 + 2' \
+expanded_form(70304); # Should return '70000 + 300 + 4' \
+NOTE: All numbers will be whole numbers greater than 0. \
 
 If you liked this kata, check out part 2!!
 
-p expanded_form(12) == '10 + 2'<br>
-p expanded_form(42) == '40 + 2'<br>
-p expanded_form(70304) == '70000 + 300 + 4'<br>
+p expanded_form(12) == '10 + 2' \
+p expanded_form(42) == '40 + 2' \
+p expanded_form(70304) == '70000 + 300 + 4' \
 
 ```ruby
 =begin
@@ -2748,22 +2745,22 @@ p expanded_form(70304) == '70000 + 300 + 4'
 
 ---
 
-31. ## Mexican Wave Variation 1 ##
+## Mexican Wave Variation 1 ##
 
-- ### Difficulty: **hard** ###
-- [x] Problem Completed? 
+- Difficulty: **hard**
+- [x] Problem Completed?
 
 In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
 
 Rules
-  1.  The input string will always be lower case but maybe empty.
-  2.  If the character in the string is whitespace then pass over it as if it was an empty seat.
+  The input string will always be lower case but maybe empty. \
+  If the character in the string is whitespace then pass over it as if it was an empty seat.
 
-p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]<br>
-p wave("codewars") == ["Codewars", "cOdewars", "coDewars", "codEwars", "codeWars", "codewArs", "codewaRs", "codewarS"]<br>
-p wave("") == []<br>
-p wave("two words") == ["Two words", "tWo words", "twO words", "two Words", "two wOrds", "two woRds", "two worDs", "two wordS"]<br>
-p wave(" gap ") == [" Gap ", " gAp ", " gaP "]<br>
+p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"] \
+p wave("codewars") == ["Codewars", "cOdewars", "coDewars", "codEwars", "codeWars", "codewArs", "codewaRs", "codewarS"] \
+p wave("") == [] \
+p wave("two words") == ["Two words", "tWo words", "twO words", "two Words", "two wOrds", "two woRds", "two worDs", "two wordS"] \
+p wave(" gap ") == [" Gap ", " gAp ", " gaP "] \
 
 ```ruby
 =begin
@@ -2852,18 +2849,18 @@ p wave(" gap ") == [" Gap ", " gAp ", " gaP "]
 
 ---
 
-32. ## Sum Consecutives ##
+## Sum Consecutives ##
 
-- ### Difficulty: **hard** ###
-- [ ] Problem Completed? 
+- Difficulty: **hard**
+- [ ] Problem Completed?
 
 You are given an array that contains only integers (positive and negative). Your job is to sum only the numbers that are the same and consecutive. The result should be one array.
 
 You can assume there is never an empty array and there will always be an integer.
 
-p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2]<br>
-p sum_consecutives([1,1,7,7,3]) == [2,14,3]<br>
-p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]<br>
+p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2] \
+p sum_consecutives([1,1,7,7,3]) == [2,14,3] \
+p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0] \
 
 ```ruby
 =begin
@@ -2945,10 +2942,10 @@ p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
 
 ---
 
-33. ## Mexican Wave Variation 2 ##
+## Mexican Wave Variation 2 ##
 
-- ### Difficulty: **hard** ###
-- [ ] Problem Completed? 
+- Difficulty: **hard**
+- [ ] Problem Completed?
 
 Your task is to create a method that turns a string into a wave (like at a stadium). You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
 
@@ -2958,10 +2955,10 @@ Rules
  2. If the character in the string is whitespace then pass over it
  3. Leave each fourth letter unaltered—-do not make those letters uppercase
 
-p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]<br>
-p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]<br>
-p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"]<br>
-p wave("") == []<br>
+p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"] \
+p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"] \
+p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"] \
+p wave("") == [] \
 
 ```ruby
 =begin
