@@ -33,6 +33,8 @@
 31. [Mexican Wave Variation 1](#mexican-wave-variation-1)
 32. [Sum Consecutives](#sum-consecutives)
 33. [Mexican Wave Variation 2](#mexican-wave-variation-2)
+34. [Persistent Bugger](#persistent-bugger)
+35. [Title Case](#title-case)
 
 ---
 
@@ -3047,4 +3049,184 @@ p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]
 p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]
 p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"]
 p wave("") == []
+```
+
+---
+
+## Persistent Bugger ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+
+For example:
+
+persistence(39) # returns 3, because 3*9=27, 2*7=14, 1*4=4
+                # and 4 has only one digit
+
+persistence(999) # returns 4, because 9*9*9=729, 7*2*9=126,
+                # 1*2*6=12, and finally 1*2=2
+
+persistence(4) # returns 0, because 4 is already a one-digit number
+
+p persistence(39) == 3 \
+p persistence(4) == 0 \
+p persistence(25) == 2 \
+p persistence(999) == 4 \
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Integer 
+Output: 1 Integer
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Return the number of times the given number must be split into digits and summed until it is a single digit number. 
+  -Given input will be a positive number
+Implicit:
+  -if given number is already a single digit, return 0
+
+--------------------------EXAMPLES---------------------------------------
+persistence(39) # returns 3, because 3*9=27, 2*7=14, 1*4=4
+               # and 4 has only one digit
+39
+3 * 9 --> 27 (1)
+27
+2 * 7 --> 14 (2)
+14
+1 * 4 --> 4 (3)
+4 --> only 1 digit
+
+==> return 3
+
+persistence(999) # returns 4, because 9*9*9=729, 7*2*9=126,
+                # 1*2*6=12, and finally 1*2=2
+
+persistence(4) # returns 0, because 4 is already a one-digit number
+
+----------------------------ALGO-----------------------------------------
+==> Count the number of a times the given integer needs to be split into individual digits and multiplied together until the result is a single-digit integer. 
+
+-- method --> persistence(integer) --> integer
+  -initialize 'current' to 'integer'
+  -initialize 'count' to 0
+  -loop 
+    -break out of loop if 'current' is a single digit 
+    -initialize 'temp' to nil
+    -split current into digits and multiply them together, set to 'current'
+    -increment 'count'
+  -return count
+
+=end
+
+def persistence(given_num)
+  current_num = given_num
+  count = 0
+  
+  loop do 
+    break if current_num.to_s.size <= 1
+      count += 1
+      temp = 1
+      current_num.digits.each { |num| temp *= num }
+      current_num = temp
+  end
+  count
+end
+
+p persistence(39) == 3
+p persistence(4) == 0
+p persistence(25) == 2
+p persistence(999) == 4
+```
+
+---
+
+## Title Case ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+A string is considered to be in title case if each word in the string is either (a) capitalised (that is, only the first letter of the word is in upper case) or (b) considered to be an exception and put entirely into lower case unless it is the first word, which is always capitalised.
+
+Write a function that will convert a string into title case, given an optional list of exceptions (minor words). The list of minor words will be given as a string with each word separated by a space. Your function should ignore the case of the minor words string -- it should behave in the same way even if the case of the minor word string is changed.
+
+p title_case('a clash of KINGS', 'a an the of') == 'A Clash of Kings' \
+p title_case('THE WIND IN THE WILLOWS', 'The In') == 'The Wind in the Willows' \
+p title_case('the quick brown fox') == 'The Quick Brown Fox'
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+A string is considered to be in title case if each word in the string is either (a) capitalised (that is, only the first letter of the word is in upper case) or (b) considered to be an exception and put entirely into lower case unless it is the first word, which is always capitalised.
+
+Write a function that will convert a string into title case, given an optional list of exceptions (minor words). The list of minor words will be given as a string with each word separated by a space. Your function should ignore the case of the minor words string -- it should behave in the same way even if the case of the minor word string is changed.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Strings, first: string to be title cases, second: optional string of minor words
+Output: 1 String, title cased
+
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Title Case if either each word is:
+    -capitalized(only first letter of word uppercased)
+    -considered an exception(entirely in lowercase **unless it is the forst word)
+  -First word in string is always capitalized
+  -if word is not first in string and a minor word, lowercase
+  -otherwise, capitalize
+  -minor words will be given as a string of words separated by a space
+Implicit:
+  -second string argument is optional, if missing all words are capitalized
+  -the case of input strings does not effect the case of the output
+
+--------------------------EXAMPLES---------------------------------------
+title_case('a clash of KINGS', 'a an the of') ==> 'A Clash of Kings'
+sentence to be title cased --> 'a clash of KINGS'
+minor words --> 'a an the of'
+'a'     is first word      --> capitalized
+'clash' not a minor word   --> capitalized
+'of'    a minor wird       --> lowercased
+'KINGS' not a minor words  --> capitalized
+
+==> 'A Clash of Kings'
+
+----------------------------ALGO-----------------------------------------
+
+--method --> title_case(str1, str2(optional)) --> string
+  -initialize title_string to str1 aplit into words and downcased
+  -initialize minor_words to string 2 split into characters and downcased
+  -initialize title_cased to an empty string
+  -iterate through title_words with index using transformation
+    -if index 0 or word not found in minor_words
+      -capitalize word
+    -otherwise
+      -downcase word
+  -join array of cased words and return
+
+=end
+
+def title_case(title, minors='')
+  title_words = title.split.map(&:downcase)
+  minor_words = minors.split.map(&:downcase)
+  
+  title_cased = title_words.map.with_index do |word, index|
+    if index == 0 || !minor_words.include?(word)
+      word.capitalize
+    else
+      word
+    end
+  end
+  
+  title_cased.join(' ')  
+end
+
+p title_case('a clash of KINGS', 'a an the of') == 'A Clash of Kings'
+p title_case('THE WIND IN THE WILLOWS', 'The In') == 'The Wind in the Willows'
+p title_case('the quick brown fox') == 'The Quick Brown Fox'
 ```
