@@ -35,6 +35,7 @@
 33. [Mexican Wave Variation 2](#mexican-wave-variation-2)
 34. [Persistent Bugger](#persistent-bugger)
 35. [Title Case](#title-case)
+36. [Count and Group Character Occurrences in a String](#count-and-group-character-occurrences-in-a-string)
 
 ---
 
@@ -3226,4 +3227,181 @@ end
 p title_case('a clash of KINGS', 'a an the of') == 'A Clash of Kings'
 p title_case('THE WIND IN THE WILLOWS', 'The In') == 'The Wind in the Willows'
 p title_case('the quick brown fox') == 'The Quick Brown Fox'
+```
+---
+
+## Count and Group Character Occurrences in a String ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Write a method that takes a string as an argument and groups the number of times each character appears in the string as a hash sorted by the highest number of occurrences.
+
+The characters should be sorted alphabetically e.g:
+
+get_char_count("cba") => {1=>["a", "b", "c"]} \
+You should ignore spaces, special characters and count uppercase letters as lowercase ones.
+
+p get_char_count("Mississippi") == {4=>["i", "s"], 2=>["p"], 1=>["m"]} \
+p get_char_count("Hello. Hello? HELLO!!") == {6=>["l"], 3=>["e", "h", "o"]} \
+p get_char_count("aaa...bb...c!") == {3=>["a"], 2=>["b"], 1=>["c"]} \
+p get_char_count("aaabbbccc") == {3=>["a", "b", "c"]} \
+p get_char_count("abc123") == {1=>["1", "2", "3", "a", "b", "c"]}
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a method that takes a string as an argument and groups the number of times each character appears in the string as a hash sorted by the highest number of occurrences.
+
+The characters should be sorted alphabetically e.g:
+
+You should ignore spaces, special characters and count uppercase letters as lowercase ones.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Hash, key==> occurances of a letter, value, array containing the letters
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Find the occurances of each letter in a given string and return them in a hash
+    -Hash will be sorted by the highest occurances
+    -The values will be an array of the letters matching the number of occurances sorted alphabetically
+  -Ignore space, spoecial characters
+  -Ignore case when counting letter occurances
+Implicit:
+  -Given string will not be empty
+  -Integer characters are acceptable inputs
+
+--------------------------EXAMPLES---------------------------------------
+get_char_count("cba") => {1=>["a", "b", "c"]}
+"cba"
+"c" --> 1 occurance
+"b" --> 1 occurance
+"a" --> 1 occurance
+returns => { 1 => ['a', 'b', 'c'] }
+
+----------------------------ALGO-----------------------------------------
+==> Breakdown the given string finding the number of occurances of all valid characters. Organize these occurances into a hash where the keys are the number of occurances, and the values are an array of characters that occur a number of times equal to their key. Keys are sorted greatest to elast, and values are sorted alphabetically. 
+
+-- method --> get_char_count(string) --> hash
+  -split given string into characters and iterate using each_with_object (occurances)
+    -if valid_char?
+      -increment the value of the current key
+  -initialize 'final_occurances' as an empty hash
+  -iterate through occurances
+    -pass all keys to an array object if their values are alike, set the value to the new key in final_occurances
+  -return final_occurances
+
+    
+-- method --> valid_char?(string) --> boolean
+  -if character is valid
+    -returns true 
+  -otherwise
+    -returns false
+
+=end
+
+def valid_char?(char)
+  if char == '^'
+    false
+  else
+    /[A-z0-9]/.match?(char)
+  end
+end
+
+def find_occurances(str)
+  str.downcase.chars.each_with_object(Hash.new(0)) do |char, hash|
+    hash[char] += 1 if valid_char?(char)
+  end  
+end
+
+def organize_occurances(occurances)
+  occurances.each_with_object({}) do |(letter, times), organized_hsh|
+    if organized_hsh[times].nil?
+      organized_hsh[times] = [letter]
+    else
+      organized_hsh[times].push(letter)
+    end
+  end
+end
+
+def get_char_count(str)
+  occurances = find_occurances(str)
+  organized_occurances = organize_occurances(occurances)
+  
+  organized_occurances.sort.reverse.to_h.map do |k, v|
+    [k, v.sort]
+  end.to_h
+end
+
+# p valid_char?('a')
+# p valid_char?('!')
+
+p get_char_count("Mississippi") == {4=>["i", "s"], 2=>["p"], 1=>["m"]}
+p get_char_count("Hello. Hello? HELLO!!") == {6=>["l"], 3=>["e", "h", "o"]}
+p get_char_count("aaa...bb...c!") == {3=>["a"], 2=>["b"], 1=>["c"]}
+p get_char_count("aaabbbccc") == {3=>["a", "b", "c"]}
+p get_char_count("abc123") == {1=>["1", "2", "3", "a", "b", "c"]}
+p get_char_count("P%c5Ve6OtTFsh-Y4lnBlpiM5%+beCTdjNiO,nxG.X!jjzp*Jt.7tB^Nt8^VScr.BQ1") == {6=>["t"], 4=>["b", "j", "n"], 3=>["c", "p"], 2=>["5", "e", "i", "l", "o", "s", "v", "x"], 1=>["1", "4", "6", "7", "8", "d", "f", "g", "h", "m", "q", "r", "y", "z"]}
+```
+
+Secondary Solution:
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a method that takes a string as an argument and groups the number of times each character appears in the string as a hash sorted by the highest number of occurrences.
+
+The characters should be sorted alphabetically e.g:
+
+You should ignore spaces, special characters and count uppercase letters as lowercase ones.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Hash, key==> occurances of a letter, value, array containing the letters
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Find the occurances of each letter in a given string and return them in a hash
+    -Hash will be sorted by the highest occurances
+    -The values will be an array of the letters matching the number of occurances sorted alphabetically
+  -Ignore space, spoecial characters
+  -Ignore case when counting letter occurances
+Implicit:
+  -Given string will not be empty
+  -Integer characters are acceptable inputs
+
+--------------------------EXAMPLES---------------------------------------
+get_char_count("cba") => {1=>["a", "b", "c"]}
+"cba"
+"c" --> 1 occurance
+"b" --> 1 occurance
+"a" --> 1 occurance
+returns => { 1 => ['a', 'b', 'c'] }
+
+----------------------------ALGO-----------------------------------------
+==> Breakdown the given string finding the number of occurances of all valid characters. Organize these occurances into a hash where the keys are the number of occurances, and the values are an array of characters that occur a number of times equal to their key. Keys are sorted greatest to elast, and values are sorted alphabetically. 
+
+-- method --> get_char_count(string) --> hash
+  -filter out all unwanted characters from the string
+  -group the collection into a hash
+    -keys are occurances
+    -values are the charatcers with that number of occurances
+  -return the hash
+  
+=end
+
+def get_char_count(str)
+  downcased_str = str.downcase.gsub('^', '')
+  downcased_str.gsub!(/[^A-z0-9]/, '')
+  occurances = downcased_str.chars.group_by { |char| downcased_str.count(char) }
+  occurances.map { |k, v| [k, v.uniq.sort] }.to_h.sort.to_h
+end
+
+p get_char_count("Mississippi") == {4=>["i", "s"], 2=>["p"], 1=>["m"]}
+p get_char_count("Hello. Hello? HELLO!!") == {6=>["l"], 3=>["e", "h", "o"]}
+p get_char_count("aaa...bb...c!") == {3=>["a"], 2=>["b"], 1=>["c"]}
+p get_char_count("aaabbbccc") == {3=>["a", "b", "c"]}
+p get_char_count("abc123") == {1=>["1", "2", "3", "a", "b", "c"]}
+p get_char_count("P%c5Ve6OtTFsh-Y4lnBlpiM5%+beCTdjNiO,nxG.X!jjzp*Jt.7tB^Nt8^VScr.BQ1") == {6=>["t"], 4=>["b", "j", "n"], 3=>["c", "p"], 2=>["5", "e", "i", "l", "o", "s", "v", "x"], 1=>["1", "4", "6", "7", "8", "d", "f", "g", "h", "m", "q", "r", "y", "z"]}
 ```
