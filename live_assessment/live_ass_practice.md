@@ -36,6 +36,13 @@
 34. [Persistent Bugger](#persistent-bugger)
 35. [Title Case](#title-case)
 36. [Count and Group Character Occurrences in a String](#count-and-group-character-occurrences-in-a-string)
+37. [Sum of Squared Divisors a Square](#sum-of-squared-divisors-a-square)
+38. [Find the Mine](#find-the-mine)
+39. [Scramblies](#scramblies)
+40. [Longest Alphabetical Substring](#longest-alphabetical-substring)
+41. [Hashtag Generator](#hashtag-generator)
+42. [Pete the Baker](#pete-the-baker)
+43. [Exponent Method](#exponent-method)
 
 ---
 
@@ -2659,8 +2666,6 @@ p paired?('(((185 + 223.85) * 15) - 543)/2') == true
 Write Number in Expanded Form
 You will be given a number and you will need to return it as a string in Expanded Form.
 
-For example:
-
 expanded_form(12); # Should return '10 + 2' \
 expanded_form(42); # Should return '40 + 2' \
 expanded_form(70304); # Should return '70000 + 300 + 4' \
@@ -3228,12 +3233,13 @@ p title_case('a clash of KINGS', 'a an the of') == 'A Clash of Kings'
 p title_case('THE WIND IN THE WILLOWS', 'The In') == 'The Wind in the Willows'
 p title_case('the quick brown fox') == 'The Quick Brown Fox'
 ```
+
 ---
 
 ## Count and Group Character Occurrences in a String ##
 
 - Difficulty: **medium**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 Write a method that takes a string as an argument and groups the number of times each character appears in the string as a hash sorted by the highest number of occurrences.
 
@@ -3404,4 +3410,806 @@ p get_char_count("aaa...bb...c!") == {3=>["a"], 2=>["b"], 1=>["c"]}
 p get_char_count("aaabbbccc") == {3=>["a", "b", "c"]}
 p get_char_count("abc123") == {1=>["1", "2", "3", "a", "b", "c"]}
 p get_char_count("P%c5Ve6OtTFsh-Y4lnBlpiM5%+beCTdjNiO,nxG.X!jjzp*Jt.7tB^Nt8^VScr.BQ1") == {6=>["t"], 4=>["b", "j", "n"], 3=>["c", "p"], 2=>["5", "e", "i", "l", "o", "s", "v", "x"], 1=>["1", "4", "6", "7", "8", "d", "f", "g", "h", "m", "q", "r", "y", "z"]}
+```
+
+---
+
+## Sum of Squared Divisors a Square ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Divisors of 42 are : 1, 2, 3, 6, 7, 14, 21, 42. These divisors squared are: 1, 4, 9, 36, 49, 196, 441, 1764. The sum of the squared divisors is 2500 which is 50 * 50, a square!
+
+Given two positive integers we want to find all integers between them whose sum of squared divisors is itself a square. 42 is such a number.
+
+The result will be an array of arrays, each subarray having two elements, first the number whose squared divisors is a square and then the sum of the squared divisors.
+
+p list_squared(1, 250) == [[1, 1], [42, 2500], [246, 84100]] \
+p list_squared(42, 250) == [[42, 2500], [246, 84100]] \
+p list_squared(250, 500) == [[287, 84100]]
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+# Divisors of 42 are : 1, 2, 3, 6, 7, 14, 21, 42. These divisors squared are: 1, 4, 9, 36, 49, 196, 441, 1764. The sum of the squared divisors is 2500 which is 50 * 50, a square!
+
+# Given two positive integers we want to find all integers between them whose sum of squared divisors is itself a square. 42 is such a number.
+
+# The result will be an array of arrays, each subarray having two elements, first the number whose squared divisors is a square and then the sum of the squared divisors.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Integers, representing a range of numbers
+Output: 1 Array of arrays, each sub_array will contain; 
+          -the numbers whose squared divisors is a square
+          -sum of the squared divisors
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Given integers will be positive
+  -find all integers between given integers whose sum of squared divisors is a square
+    -find all divisors of a number
+    -find the sum of all divisors squared
+    -if the sum if a perfect square --> include array of number and sum of squared divisors
+Implicit:
+  -inputs will not be empty
+  -will always be a integer (whole number)
+
+--------------------------EXAMPLES---------------------------------------
+p list_squared(42, 250) == [[42, 2500], [246, 84100]]
+42..250
+42 divisors --> 1, 2, 3, 6, 7, 14, 21, 42
+squares of divisors --> 1, 4, 9, 36, 49, 196, 441, 1764
+sum of squared divisors --> 2500
+2500 if a square of 50! (50 * 50 == 2500)
+returns ==> [42, 2500]
+
+----------------------------ALGO-----------------------------------------
+==> For each integer within the range of integers given as arguments, check to see if all of the divisors of the integers, when squared and added together is the product of a square. 
+
+-- method --> list_squared(integer1, integer2) --> 1 Array of Arrays
+  -intialize 'squared' to an empty array
+  -iterate through the range of numbers given as arguments
+    -find divisors of the current integer (divisors)
+    -if divisors squared and added together form the product of a square
+      -push sub_array to 'squared'
+  -return 'squared'
+    
+-- method --> find_divisors(integer) --> array
+  -initialize 'divisors' as empty array
+  -iterate through all numbers between 1 and the given integer
+    -initialize 'square' to current number can be divided evenly into given number
+    -if 'square' is truthy
+      -push current element and square to 'divisors'
+  -return 'divisors'
+  
+-- method --> square_product(array) --> integer or nil
+  -transform all elements of given array to themselves squared
+  -find sum of all sqaured divisors
+  -if sum is a product of aperfect square
+    -return square
+  -otherwise
+    -return nil
+
+=end
+
+def find_divisors(num)
+  divisors = []
+  1.upto(num) do |current_num|
+    divisors << current_num if num % current_num == 0
+  end
+  divisors
+end
+
+def square_product(array)
+  squared = array.map { |num| num * num }.sum
+  if Math.sqrt(squared) % 1 == 0
+    squared
+  end
+end
+
+def list_squared(start_num, end_num)
+  squared = []
+  start_num.upto(end_num) do |num|
+    divisors = find_divisors(num)
+    if square_product(divisors)
+      squared << [num, square_product(divisors)]
+    end
+  end
+  squared
+end
+
+p list_squared(1, 250) == [[1, 1], [42, 2500], [246, 84100]]
+p list_squared(42, 250) == [[42, 2500], [246, 84100]]
+p list_squared(250, 500) == [[287, 84100]]
+```
+
+---
+
+## Find the Mine ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+You've just discovered a square (NxN) field and you notice a warning sign. The sign states that there's a single bomb in the 2D grid-like field in front of you.
+
+Write a function mineLocation/MineLocation that accepts a 2D array, and returns the location of the mine. The mine is represented as the integer 1 in the 2D array. Areas in the 2D array that are not the mine will be represented as 0s.
+
+The location returned should be an array where the first element is the row index, and the second element is the column index of the bomb location (both should be 0 based). All 2D arrays passed into your function will be square (NxN), and there will only be one mine in the array.
+
+p mine_location( [ [1, 0, 0], [0, 0, 0], [0, 0, 0] ] ) == [0, 0] \
+p mine_location( [ [0, 0, 0], [0, 1, 0], [0, 0, 0] ] ) == [1, 1] \
+p mine_location( [ [0, 0, 0], [0, 0, 0], [0, 1, 0] ] ) == [2, 1] \
+p mine_location([ [1, 0], [0, 0] ]) == [0, 0] \
+p mine_location([ [1, 0, 0], [0, 0, 0], [0, 0, 0] ]) == [0, 0] \
+p mine_location([ [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0] ]) == [2, 2]
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You've just discovered a square (NxN) field and you notice a warning sign. The sign states that there's a single bomb in the 2D grid-like field in front of you.
+
+Write a function mineLocation/MineLocation that accepts a 2D array, and returns the location of the mine. The mine is represented as the integer 1 in the 2D array. Areas in the 2D array that are not the mine will be represented as 0s.
+
+The location returned should be an array where the first element is the row index, and the second element is the column index of the bomb location (both should be 0 based). All 2D arrays passed into your function will be square (NxN), and there will only be one mine in the array.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Array, with nested arrays within
+Output: 1 Array, location of the 1 (bomb)
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -integer 1 represents the bomb
+  -return the location of the bomb in the form of an array;
+    -first element is the index of the nested array that contains 1
+    -second element is the index within the nested array of 1
+    
+Implicit:  
+  -There will be no empty inputs
+  -all nested array will be of the same length
+  -there is only one 1 in the array
+
+--------------------------EXAMPLES---------------------------------------
+p mineLocation( [ [0, 0, 0], [0, 1, 0], [0, 0, 0] ] ) == [1, 1]
+field = [ [0, 0, 0], [0, 1, 0], [0, 0, 0] ]
+field[1] --> [0, 1, 0]
+field[1][1] --> 1
+returns --> [1, 1]
+
+----------------------------ALGO-----------------------------------------
+==> find the index of the nested array containing the 1 and then find the index within the nexted array where the 1 is located and return these indices in an array
+
+-- method --> mine_location(array) --> array
+  -initialize 'mine_location' to an empty array
+  -iterate through the given array
+    -if the sub_array contains a 1
+      -push the index of the sub_array to mine_location
+      -push the index of the 1 found in the sub_array to mine_location
+  -return mine_location
+
+=end
+
+MINE = 1
+
+def mine_location(arr)
+  mine_location = []
+  arr.each_with_index do |sub_arr, index|
+    if sub_arr.include?(MINE)
+      mine_location << index
+      mine_location << sub_arr.index(MINE)
+    end
+  end
+  mine_location
+end
+
+p mine_location( [ [1, 0, 0], [0, 0, 0], [0, 0, 0] ] ) == [0, 0]
+p mine_location( [ [0, 0, 0], [0, 1, 0], [0, 0, 0] ] ) == [1, 1]
+p mine_location( [ [0, 0, 0], [0, 0, 0], [0, 1, 0] ] ) == [2, 1]
+p mine_location([ [1, 0], [0, 0] ]) == [0, 0]
+p mine_location([ [1, 0, 0], [0, 0, 0], [0, 0, 0] ]) == [0, 0]
+p mine_location([ [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0] ]) == [2, 2]
+```
+
+---
+
+## Scramblies ##
+
+- Difficulty: **easy**
+- [ ] Problem Completed?
+
+Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+
+Notes:
+
+Only lower case letters will be used (a-z). No punctuation or digits will be included. \
+Performance needs to be considered \
+Input strings s1 and s2 are null terminated.
+
+p scramble('rkqodlw', 'world') == true \
+p scramble('cedewaraaossoqqyt', 'codewars') == true \
+p scramble('katas', 'steak') == false \
+p scramble('rkqodlw','world') == true \
+p scramble('cedewaraaossoqqyt','codewars') == true \
+p scramble('katas','steak') == false \
+p scramble('scriptjava','javascript') == true \
+p scramble('scriptingjava','javascript') == true
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+
+Notes:
+
+Only lower case letters will be used (a-z). No punctuation or digits will be included.
+Performance needs to be considered
+Input strings s1 and s2 are null terminated.
+
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Strings
+Output: boolean
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Return true if a portion of str1 can be rearranged to match str2
+  -otherwise return false
+  -only lowercase letters will be used (a-z)
+  -no punctuation or digits
+  -consider performance
+  
+Implicit:  
+  -no empty inputs
+  -str2 will never be longer than str1
+ 
+--------------------------EXAMPLES---------------------------------------
+p scramble('rkqodlw', 'world') == true
+str1 --> 'rkqodlw'
+str2 --> 'world'
+r  - 'r' from world
+k  - not in str2
+q  - not in str2
+o  - 'o' from world
+d  - 'd' from world
+l  - 'l' from world
+w  - 'w' from world
+
+returns true because all characters from str2 are found in str1
+
+----------------------------ALGO-----------------------------------------
+==> return true if all the characters in str2 are found in str1
+
+-- method --> scramble(string, string) --> boolean
+  -split str1 into array of characters
+  -initialize 'index' to 0
+  -loop
+    -break if index greater than str2 length - 1 
+    -return false if str1 doesn't include the character at current index
+    -increment index by 1
+    -delete element from str1 that matches index of str2
+  -return true
+    
+
+=end
+
+def scramble(str1, str2)
+  str1_arr = str1.chars
+  index = 0
+  
+  loop do 
+    break if index >= str2.size
+    if str1_arr.include?(str2[index])
+      str1_arr = str1_arr.join.sub(str2[index], '').chars
+      # p str1_arr, str2
+      index += 1
+    else
+      return false
+    end
+  end
+  true
+end
+
+p scramble('rkqodlw', 'world') == true
+p scramble('cedewaraaossoqqyt', 'codewars') == true
+p scramble('katas', 'steak') == false
+p scramble('rkqodlw','world') == true
+p scramble('cedewaraaossoqqyt','codewars') == true
+p scramble('katas','steak') == false
+p scramble('scriptjava','javascript') == true
+p scramble('scriptingjava','javascript') == true
+p scramble("scriptjavx", "javascript") == false
+p scramble("aabbcamaomsccdd", "commas") == true
+
+## Still isn't passing codewars efficiency tests
+```
+
+---
+
+## Longest Alphabetical Substring ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Find the longest substring in alphabetical order.
+
+Example: the longest alphabetical substring in "asdfaaaabbbbcttavvfffffdf" is "aaaabbbbctt".
+
+There are tests with strings up to 10 000 characters long so your code will need to be efficient.
+
+The input will only consist of lowercase characters and will be at least one letter long.
+
+If there are multiple solutions, return the one that appears first.
+
+p longest('asd') == 'as' \
+p longest('nab') == 'ab' \
+p longest('abcdeapbcdef') == 'abcde' \
+p longest('asdfaaaabbbbcttavvfffffdf') == 'aaaabbbbctt' \
+p longest('asdfbyfgiklag') =='fgikl' \
+p longest('z') == 'z'
+p longest('zyba') == 'z'
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Find the longest substring in alphabetical order.
+
+There are tests with strings up to 10 000 characters long so your code will need to be efficient.
+
+The input will only consist of lowercase characters and will be at least one letter long.
+
+If there are multiple solutions, return the one that appears first.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+  if given string is alphabetical already will that be the correct output?
+Input: 1 String
+Output: 1 String
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Find the longest alphabetical substring in the given string
+  -given string will contain only lowercase letters at least one character long
+  -if multiple solutions return the first in the order they appear
+Implicit:  
+  -a single character input string will output itself
+  
+ 
+--------------------------EXAMPLES---------------------------------------
+Example: the longest alphabetical substring in "asdfaaaabbbbcttavvfffffdf" is "aaaabbbbctt".
+"asdfaaaabbbbcttavvfffffdf"
+asdf
+aaaabbbbctt --> longest alphabetical substring
+avv
+fffff
+df
+d
+
+----------------------------ALGO-----------------------------------------
+==> find all alphabetical substring within the given string and save to an array object. Find the longest alphabetical substring within the array and return. If there are multiple of the same length, return the first in the order. 
+
+-- method --> longest(string) --> string
+  -initialize 'alpha_subs' to an array of alphabetical substrings (find_alpha_subs(string))
+  -find the longest substring in alpha_subs and return
+
+-- method --> find_alpha_subs(string) --> array
+  -initialized 'alpha_subs' to an empty array
+  -split string into an array of characters
+  -iterate through 1 upto the length of the array (length)
+    -iterate through the array of strings based on the given 'length'
+      -finding consective substrings that are alphabetical and pushinig them to alpha_subs
+  -return alpha_subs
+
+=end
+
+
+### My way, not fast enough to pass on Codewars
+
+def find_alpha_subs(str)
+  alpha_subs = []
+  1.upto(str.size) do |length|
+    str.chars.each_cons(length) do |sub_arr|
+      alpha_subs << sub_arr.join if sub_arr == sub_arr.sort
+    end
+  end
+  alpha_subs
+end
+
+def longest(string)
+  alpha_subs = find_alpha_subs(string)
+  alpha_subs.max_by { |alpha_str| alpha_str.size }
+end
+
+
+### Faster way found on Codewars
+
+# def longest(str)
+#   p str.chars.slice_when { |a, b| a > b }
+#              .max_by(&:size)
+#              .join
+# end
+
+
+# p find_alpha_subs('nab')
+
+p longest('asd') == 'as'
+p longest('nab') == 'ab'
+p longest('abcdeapbcdef') == 'abcde'
+p longest('asdfaaaabbbbcttavvfffffdf') == 'aaaabbbbctt'
+p longest('asdfbyfgiklag') =='fgikl'
+p longest('z') == 'z'
+p longest('zyba') == 'z'
+```
+
+---
+
+## Hashtag Generator ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+The marketing team is spending way too much time typing in hashtags.
+Let's help them with our own Hashtag Generator!
+
+Here's the deal:
+
+It must start with a hashtag (#). \
+All words must have their first letter capitalized. \
+If the final result is longer than 140 chars it must return false. \
+If the input or the result is an empty string it must return false. \
+
+Examples
+" Hello there thanks for trying my Kata"  =>  "#HelloThereThanksForTryingMyKata" \
+"    Hello     World   "                  =>  "#HelloWorld" \
+""                                        =>  false
+
+p generateHashtag("") == false \
+p generateHashtag(" "*200) == false \
+p generateHashtag("Do We have A Hashtag") == "#DoWeHaveAHashtag" \
+p generateHashtag("Codewars") == "#Codewars" \
+p generateHashtag("Codewars Is Nice") ==  "#CodewarsIsNice" \
+p generateHashtag("Codewars is nice") == "#CodewarsIsNice" \
+p generateHashtag("code" + " "* 140 + "wars") == "#CodeWars" \
+p generateHashtag("Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong Cat") == false \
+p generateHashtag("a" * 139) == "#A" + "a"* 138 \
+p generateHashtag("a" * 140) == false
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+The marketing team is spending way too much time typing in hashtags.
+Let's help them with our own Hashtag Generator!
+
+Here's the deal:
+
+It must start with a hashtag (#).
+All words must have their first letter capitalized.
+If the final result is longer than 140 chars it must return false.
+If the input or the result is an empty string it must return false.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -output string must begin with a '#'
+  -all words in hashtag must have their first letter capitalized
+  -return false if output string is > 140 characters
+  -if input or output string is empty return false
+Implicit:  
+  -A hashtag begins with a '#' and every word capitalized with no spaces
+  -
+
+--------------------------EXAMPLES---------------------------------------
+Examples
+" Hello there thanks for trying my Kata"  =>  "#HelloThereThanksForTryingMyKata"
+"    Hello     World   "                  =>  "#HelloWorld"
+""                                        =>  false
+
+----------------------------ALGO-----------------------------------------
+==> Break down given string into words, capitalize each words, remove all spaces and add '#' to the begining. 
+
+-- method --> generate_hashtag(string) --> string or boolean object
+  -return false if given string is empty
+  -split string into array of words, removing all whitespace
+  -transform array of words by capitalizing each word
+  -add '#' to the beginning of the array
+  -join array with ''
+  -return false if new_string is greater than 140 characters
+
+=end
+
+def generate_hashtag(str)
+  split_str = str.split
+  return false if split_str.size == 0
+  hashtagged = split_str.map(&:capitalize).unshift('#').join
+  hashtagged.size > 140 ? false : hashtagged
+end
+
+p generate_hashtag("") == false
+p generate_hashtag(" " * 200) == false
+p generate_hashtag("Do We have A Hashtag") == "#DoWeHaveAHashtag"
+p generate_hashtag("Codewars") == "#Codewars"
+p generate_hashtag("Codewars Is Nice") ==  "#CodewarsIsNice"
+p generate_hashtag("Codewars is nice") == "#CodewarsIsNice"
+p generate_hashtag("code" + " " * 140 + "wars") == "#CodeWars"
+p generate_hashtag("Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong Cat") == false
+p generate_hashtag("a" * 139) == "#A" + "a" * 138
+p generate_hashtag("a" * 140) == false
+```
+
+---
+
+## Pete the Baker ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Pete likes to bake some cakes. He has some recipes and ingredients. Unfortunately he is not good in maths. Can you help him to find out, how many cakes he could bake considering his recipes?
+
+Write a function cakes(), which takes the recipe (object) and the available ingredients (also an object) and returns the maximum number of cakes Pete can bake (integer). For simplicity there are no units for the amounts (e.g. 1 lb of flour or 200 g of sugar are simply 1 or 200). Ingredients that are not present in the objects, can be considered as 0.
+
+Examples:
+
+// must return 2 \
+cakes({flour: 500, sugar: 200, eggs: 1}, {flour: 1200, sugar: 1200, eggs: 5, milk: 200});
+
+// must return 0 \
+cakes({apples: 3, flour: 300, sugar: 150, milk: 100, oil: 100}, {sugar: 500, flour: 2000, milk: 2000});
+
+p cakes({"flour"=>500, "sugar"=>200, "eggs"=>1},{"flour"=>1200, "sugar"=>1200, "eggs"=>5, "milk"=>200}) == 2 \
+p cakes({"cream"=>200, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>1700, "flour"=>20000, "milk"=>20000, "oil"=>30000, "cream"=>5000}) == 11 \
+p cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000}) == 0 \
+p cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000, "apples"=>15, "oil"=>20}) == 0 \
+p cakes({"eggs"=>4, "flour"=>400},{}) == 0 \
+p cakes({"cream"=>1, "flour"=>3, "sugar"=>1, "milk"=>1, "oil"=>1, "eggs"=>1},{"sugar"=>1, "eggs"=>1, "flour"=>3, "cream"=>1, "oil"=>1, "milk"=>1}) == 1
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Pete likes to bake some cakes. He has some recipes and ingredients. Unfortunately he is not good in maths. Can you help him to find out, how many cakes he could bake considering his recipes?
+
+Write a function cakes(), which takes the recipe (object) and the available ingredients (also an object) and returns the maximum number of cakes Pete can bake (integer). For simplicity there are no units for the amounts (e.g. 1 lb of flour or 200 g of sugar are simply 1 or 200). Ingredients that are not present in the objects, can be considered as 0.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Hashes, recipe requirements, ingredients had
+Output: 1 Integer
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Find out the maximum number of cakes that can be made based on;
+    -recipes requirements
+    -ingredients available
+  -return number of cakes that be made
+  -an ingredient not within the given hash equals 0
+Implicit:  
+  -inputs will not be blank
+
+--------------------------EXAMPLES---------------------------------------
+cakes({flour: 500, sugar: 200, eggs: 1}, {flour: 1200, sugar: 1200, eggs: 5, milk: 200}); 
+reciped requirements --> {flour: 500,  sugar: 200,  eggs: 1}
+ingredients had      --> {flour: 1200, sugar: 1200, eggs: 5, milk: 200}
+ingredients had / recipe         2            6           5
+
+maximum cakes that can be made --> 2
+
+----------------------------ALGO-----------------------------------------
+==> Divide the ingredients had by the recipe requirements and return the smallest value
+
+-- method --> cakes(hash, hash) --> integer
+  -iterate through the recipe hash initialize max_cakes to return value
+    -divide the value of the recipe hash by the corrisponding ingredients value
+    -push result to max_cakes
+    -push 0 if value is not found in ingredients hash
+  -find minimum value within max_cakes and return
+  
+=end
+
+def cakes(recipe, ingredients)
+  max_cakes = recipe.map do |component, amount|
+    ingredients[component].to_i / amount
+  end
+  max_cakes.min
+end
+
+
+p cakes({"flour"=>500, "sugar"=>200, "eggs"=>1},{"flour"=>1200, "sugar"=>1200, "eggs"=>5, "milk"=>200}) == 2
+p cakes({"cream"=>200, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>1700, "flour"=>20000, "milk"=>20000, "oil"=>30000, "cream"=>5000}) == 11
+p cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000}) == 0
+p cakes({"apples"=>3, "flour"=>300, "sugar"=>150, "milk"=>100, "oil"=>100},{"sugar"=>500, "flour"=>2000, "milk"=>2000, "apples"=>15, "oil"=>20}) == 0
+p cakes({"eggs"=>4, "flour"=>400},{}) == 0
+p cakes({"cream"=>1, "flour"=>3, "sugar"=>1, "milk"=>1, "oil"=>1, "eggs"=>1},{"sugar"=>1, "eggs"=>1, "flour"=>3, "cream"=>1, "oil"=>1, "milk"=>1}) == 1
+
+```
+
+---
+
+## Mean Square Error ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Complete the function that
+
+accepts two integer arrays of equal length \
+compares the value each member in one array to the corresponding member in the other \
+squares the absolute value difference between those two values \
+and returns the average of those squared absolute value difference between each member pair.
+
+Examples \
+[1, 2, 3], [4, 5, 6]              -->   9   because (9 + 9 + 9) / 3 \
+[10, 20, 10, 2], [10, 25, 5, -2]  -->  16.5 because (0 + 25 + 25 + 16)  / 4 \
+[-1, 0], [0, -1]                  -->   1   because (1 + 1) / 2 \
+
+p solution([1, 2, 3], [4, 5, 6]) == 9 \
+p solution([10, 20, 10, 2], [10, 25, 5, -2]) == 16.5 \
+p solution([-1, 0], [0, -1]) == 1
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the function that
+
+accepts two integer arrays of equal length
+compares the value each member in one array to the corresponding member in the other
+squares the absolute value difference between those two values
+and returns the average of those squared absolute value difference between each member pair.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input:  2 Arrays
+Output: 1 Integer or Float
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -given array object will be of equal length
+  -compares the elements at equal indices
+  -find square of absolute value of element of array 2 subtracted from element of array 1
+  -find and return the average between all elements
+Implicit:  
+  -positive and negative numbers accepted in given arrays
+  -given arrays will not be empty
+
+--------------------------EXAMPLES---------------------------------------
+Examples
+[1, 2, 3], [4, 5, 6]              -->   9   because (9 + 9 + 9) / 3
+1 - 4 = -3 (AV) --> 3 * 3 --> 9
+2 - 5 = -3 (AV) --> 3 * 3 --> 9
+3 - 6 = -3 (AV) --> 3 - 3 --> 9
+                          -------
+                             27 / 3 --> 9
+                             
+----------------------------ALGO-----------------------------------------
+
+-- method --> solution(array, array) --> integer
+  -intialize 'sum' to an empty array
+  -initialize 'index' to 0
+  -loop
+    -subtract element of arr1 from arr2 at current index
+    -square the absolute value of result
+    -push result to 'sum'
+    -increment index by 1
+    -break if index > arr1 length
+  -find sum of 'sum' array and divide by length of arr1
+  -return result
+  
+=end
+
+def solution(arr1, arr2)
+  sum = []
+  index = 0
+  
+  loop do 
+    product = arr1[index] - arr2[index]
+    sum << product * product
+    index +=1
+    break if index >= arr1.size
+  end
+  
+  sum.map(&:to_f).sum / arr1.size
+end
+
+### ALTERNATIVE
+
+# -- method --> solution(array, array) --> integer
+#   -transpose the two arrays
+#   -iterate through the new array (transformation)
+#     -subtract second el from first
+#     -square the result
+#   -find sum of new array and divide it by length of arr1
+
+def solution(arr1, arr2)
+  [arr1, arr2].transpose.map.with_index do |num, index|
+    (num[0] - num[1]) ** 2
+  end.sum.to_f / arr1.size
+end
+
+
+p solution([1, 2, 3], [4, 5, 6]) == 9
+p solution([10, 20, 10, 2], [10, 25, 5, -2]) == 16.5
+p solution([-1, 0], [0, -1]) == 1
+```
+
+---
+
+## Exponent Method ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Create a method called "power" that takes two integers and returns the value of the first argument raised to the power of the second. Return nil if the second argument is negative.
+
+Note: The ** operator has been disabled.
+
+Examples:
+
+p power(2, 3) == 8 \
+p power(10, 0) == 1 \
+p power(-5, 3) == -125 \
+p power(-4, 2) == 16 \
+p power(10, 0) == 1 \
+p power(2, 3) == 8 \
+p power(3, 2) == 9 \
+p power(-5, 3) == -125 \
+p power(-4, 2) == 16 \
+p power(8, -2) == nil
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Create a method called "power" that takes two integers and returns the value of the first argument raised to the power of the second. Return nil if the second argument is negative.
+
+Note: The ** operator has been disabled.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Integers
+Output: 1 integer
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Multiply the first input integer by itself number of times equal to the second input integer
+  -do not use the ** operator
+  -return nil if the second integer input is negative
+Implicit:  
+  -if the second input integer is 0 return 1
+
+--------------------------EXAMPLES---------------------------------------
+p power(2, 3) == 8
+2 * 2 = 4 (2 times)
+4 * 2 = 8 (3rd time)
+
+==> 8
+                             
+----------------------------ALGO-----------------------------------------
+
+-- method --> power(integer, integer) --> integer
+  -return nil if num2 < 0
+  -initialize current to num1
+  -iterate through numbers starting at 1 upto num2
+    -current is equal to current * num1
+  -return current
+  
+=end
+
+def power(num1, num2)
+  return nil if num2 < 0
+  return 1 if num2 == 0
+  current = num1
+  
+  2.upto(num2) do
+    current = current * num1
+  end
+  
+  current
+end
+
+p power(2, 3) == 8
+p power(10, 0) == 1
+p power(-5, 3) == -125
+p power(-4, 2) == 16
+p power(10, 0) == 1
+p power(2, 3) == 8
+p power(3, 2) == 9
+p power(-5, 3) == -125
+p power(-4, 2) == 16
+p power(8, -2) == nil
 ```
