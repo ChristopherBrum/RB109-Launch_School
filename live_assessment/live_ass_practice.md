@@ -43,6 +43,11 @@
 41. [Hashtag Generator](#hashtag-generator)
 42. [Pete the Baker](#pete-the-baker)
 43. [Exponent Method](#exponent-method)
+44. [Where My Anagrams At?](#where-my-anagrams-at)
+45. [Determine Missing Letters](#determine-missing-letters)
+46. [Find Primes](#find-primes)
+47. [Find Some Substrings](#find-some-substrings)
+48. [Next Bigger Number](#next-bigger-number)
 
 ---
 
@@ -3870,7 +3875,7 @@ p generateHashtag("Codewars Is Nice") ==  "#CodewarsIsNice" \
 p generateHashtag("Codewars is nice") == "#CodewarsIsNice" \
 p generateHashtag("code" + " "* 140 + "wars") == "#CodeWars" \
 p generateHashtag("Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong Cat") == false \
-p generateHashtag("a" * 139) == "#A" + "a"* 138 \
+p generateHashtag("a" *139) == "#A" + "a"* 138 \
 p generateHashtag("a" * 140) == false
 
 ```ruby
@@ -4213,3 +4218,322 @@ p power(-5, 3) == -125
 p power(-4, 2) == 16
 p power(8, -2) == nil
 ```
+
+---
+
+## Where my Anagrams At ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+What is an anagram? Well, two words are anagrams of each other if they both contain the same letters. For example:
+
+'abba' & 'baab' == true
+
+'abba' & 'bbaa' == true
+
+'abba' & 'abbba' == false
+
+'abba' & 'abca' == false
+
+Write a function that will find all the anagrams of a word from a list. You will be given two inputs a word and an array with words. You should return an array of all the anagrams or an empty array if there are none. For example:
+
+p anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']) == ['aabb', 'bbaa'] \
+p anagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) == ['carer', 'racer'] \
+p anagrams('laser', ['lazing', 'lazy',  'lacer']) == []
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+What is an anagram? Well, two words are anagrams of each other if they both contain the same letters. 
+
+Write a function that will find all the anagrams of a word from a list. You will be given two inputs a word and an array with words. You should return an array of all the anagrams or an empty array if there are none. 
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String, and 1 Array
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Find any anagrams of the given string input contained within the given array. 
+  -Any found anagrams should be returned in an array
+  -return an empty array if there are no anagrams
+Implicit:  
+  -Inputs will not be empty
+  -only lowercase letters will used in string inputs
+
+--------------------------EXAMPLES---------------------------------------
+'abba' & 'baab' == true
+--> both strings contain the letters 'a' 'a' 'b' 'b' ==> ['baab']
+
+'abba' & 'bbaa' == true
+--> both strings contain the letters 'a' 'a' 'b' 'b' ==> ['bbaa']
+
+'abba' & 'abbba' == false
+--> 'abbba' has more letters than 'abba' ==> []
+
+'abba' & 'abca' == false
+the two strings do not have the same letters => []
+
+----------------------------ALGO-----------------------------------------
+
+--method --> anagrams(string, array) --> array
+  -initialize 'anagrams' to an empty string
+  -set 'input_str' to given string split into array of characters and sorted
+  -iterate through given array
+    -
+  
+=end
+
+p anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']) == ['aabb', 'bbaa']
+p anagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) == ['carer', 'racer']
+p anagrams('laser', ['lazing', 'lazy',  'lacer']) == []
+
+```
+
+---
+
+## Determine Missing Letters ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array.
+
+You will always get an valid array. And it will be always exactly one letter be missing. The length of the array will always be at least 2.
+The array will always contain letters in only one case.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Array
+Output:  1 string
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Find the missing character in the array of consecutive strings
+  -Array will always be valid
+  -There will always be exactly 1 letter missing
+  -Array length will always be at least 2
+  -ALl letters in the array will be cased the same
+Implicit:  
+  -
+
+--------------------------EXAMPLES---------------------------------------
+['O','Q','R','S'] == 'P'
+    ^
+The 'P' is missing from this sequence
+Returns 'P'
+
+----------------------------ALGO-----------------------------------------
+
+--> method --> determine_missing_letter(array) --> string
+  -initialize 'alpha' to an array of upper and lowercase letters
+  -intialize 'current_index' to the index of the first char in given array within the alpha array
+  -iterate through the given array utilizing index
+    -if index is 0 go to next
+    -if current elements index within the alpha array is not equal to 'current_index' plus 1
+      -return the character from alpha at 'current_index' plus 1  
+=end
+
+def determine_missing_letter(arr)
+  alpha = ('A'..'z').to_a
+  current_index = alpha.index(arr.first)
+  arr.each_with_index do |char, index|
+    next if index == 0
+    if alpha.index(char) != current_index + 1
+      return alpha[current_index + 1]
+    end
+    current_index += 1
+  end
+end
+
+# Alternative Solution using #next
+
+def determine_missing_letter(arr)
+  arr.each_with_index do |char, index|
+    return char.next if char.next != arr[index + 1]
+  end
+end
+
+p determine_missing_letter(['a','b','c','d','f']) == 'e' 
+p determine_missing_letter(['O','Q','R','S']) == 'P'
+p determine_missing_letter(["a","b","c","d","f"]) == "e"
+p determine_missing_letter(["O","Q","R","S"]) == "P"
+```
+
+---
+
+## Find Primes ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Write a method that takes two numbers. Return an array containing all primes between the two numbers (include the two given numbers in your answer if they are prime). Don't use Ruby's 'prime' class.
+
+p find_primes(3, 10) == [3, 5, 7]
+p find_primes(11, 20) == [11, 13, 17, 19]
+p find_primes(100, 101) == [101]
+p find_primes(1, 100) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+p find_primes(1, 2) == [2]
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a method that takes two numbers. Return an array containing all primes between the two numbers (include the two given numbers in your answer if they are prime). Don't use Ruby's 'prime' class.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Integers
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -return all prime numbers between the 2 given integers, within an array
+  -don't use Ruby's prime class
+Implicit:  
+  -given integers will always start greater than 0
+  -given integers will be whole numbers
+
+--------------------------EXAMPLES---------------------------------------
+p find_primes(3, 10) == [3, 5, 7]
+3..10 --> 3, 4, 5, 6, 7, 8, 9, 10
+3 is prime
+5 is prime
+7 is prime
+
+return ==> [3, 5, 7]
+
+----------------------------ALGO-----------------------------------------
+==> Find all prime numbers between the first and second integers given, including the given numbers. Return them in an array. 
+
+-- method --> find_primes(integer, integer) --> array
+  -initialize 'primes' to an empty array
+  -iterate through num1 upto num2 (outer_num)
+    -initialize 'divisors' to an empty array
+    -iterate through all numbers starting from 1 upto the (current_num)
+      -if inner_num is evenly divisible by outer num
+        -push to divisors
+    -if divisors is 2 or less elements long
+      -push last element of divisors to primes
+  -return primes
+  
+=end
+
+def find_primes(num1, num2)
+  primes = []
+  num1.upto(num2) do |outer_num|
+    divisors = []
+    1.upto(outer_num) do |inner_num|
+      divisors << inner_num if (outer_num % inner_num) == 0
+    end
+    primes << divisors.last if divisors.size <= 2 && divisors.last!= 1
+  end
+  primes
+end
+
+p find_primes(3, 10) == [3, 5, 7]
+p find_primes(11, 20) == [11, 13, 17, 19]
+p find_primes(100, 101) == [101]
+p find_primes(1, 100) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+p find_primes(1, 2) == [2]
+```
+
+---
+
+## Find Some Substrings ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given two arrays of strings a1 and a2 return a sorted array r in alphabetical order of the strings of a1 which are substrings of strings of a2.
+
+substrings(["arp", "live", "strong"], ["lively", "alive", "harp", "sharp", "armstrong"]) == ["arp", "live", "strong"] \
+substrings(["tarp", "mice", "bull"], ["lively", "alive", "harp", "sharp", "armstrong"]) == [] \
+substrings(["delta", "gamma", "alpha", "beta"], ["alphabetical", "beta-carotene", "gamma rays", "deltoid"]) == ["alpha", "beta", "gamma"] \
+substrings(["albe", "negam"], ["alphabetical", "beta-carotene", "gamma rays", "deltoid"]) == []
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+# Given two arrays of strings a1 and a2 return a sorted array r in alphabetical order of the strings of a1 which are substrings of strings of a2.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Arrays
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -Return a sorted alphabetically array of all strings within arr1, that are substrings of the strings in arr2. 
+  -
+Implicit:  
+  -all array arguments will contain strings/not be empty
+  -all strings will be lowercase
+  -strings may contain some special characters
+
+--------------------------EXAMPLES---------------------------------------
+["arp", "live", "strong"], ["lively", "alive", "harp", "sharp", "armstrong"]
+'arp' is a substring of 'harp'
+'live' is a substring of 'lively'
+'strong' is a substring of 'armstrong'
+
+==> ["arp", "live", "strong"]
+
+----------------------------ALGO-----------------------------------------
+
+-- method --> substrings(array, array) --> array
+  -initialize 'subs' to an empty array
+  -iterate through the second array (full_str)
+    -iterate through the first array (small_str)
+      -if the full_str contains the current small_str
+        -push small_str to subs
+  -return all unique strings in subs sorted alphabetically
+
+=end
+
+def substrings(arr1, arr2)
+  subs = []
+  arr2.each do |full_str|
+    arr1.each do |small_str|
+      subs << small_str if full_str.include?(small_str)
+    end
+  end
+  subs.uniq.sort
+end
+
+p substrings(["arp", "live", "strong"], ["lively", "alive", "harp", "sharp", "armstrong"]) == ["arp", "live", "strong"]
+p substrings(["tarp", "mice", "bull"], ["lively", "alive", "harp", "sharp", "armstrong"]) == []
+p substrings(["delta", "gamma", "alpha", "beta"], ["alphabetical", "beta-carotene", "gamma rays", "deltoid"]) == ["alpha", "beta", "gamma"]
+p substrings(["albe", "negam"], ["alphabetical", "beta-carotene", "gamma rays", "deltoid"]) == []
+```
+
+---
+
+## Next Bigger Number ##
+
+- Difficulty: **hard**
+- [ ] Problem Completed?
+
+You have to create a method that takes a positive integer number and returns the next bigger number formed by the same digits:
+
+12 ==> 21 \
+513 ==> 531 \
+2017 ==> 2071 \
+If no bigger number can be composed using those digits, return -1: \
+9 ==> -1 \
+111 ==> -1 \
+531 ==> -1
+
+p next_bigger_num(9) == -1 \
+p next_bigger_num(12) == 21 \
+p next_bigger_num(513) == 531 \
+p next_bigger_num(2017) == 2071 \
+p next_bigger_num(111) == -1 \
+p next_bigger_num(531) == -1 \
+p next_bigger_num(123456789) == 123456798
+
+```ruby
+
+```
+
+---
