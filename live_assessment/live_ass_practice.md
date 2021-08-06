@@ -1,6 +1,6 @@
 # RB 109 Live Assessment Practice Problems #
 
-1. [Repeater](#repeater)
+1. [x] [Repeater](#repeater)
 2. [Double Consonants](#double-consonants)
 3. [Rotate 13](#rotate-13)
 4. [Longest Palindrome](#longest-palindrome)
@@ -48,6 +48,7 @@
 46. [Find Primes](#find-primes)
 47. [Find Some Substrings](#find-some-substrings)
 48. [Next Bigger Number](#next-bigger-number)
+49. [Split Strings](#split-strings)
 
 ---
 
@@ -4534,6 +4535,86 @@ p next_bigger_num(123456789) == 123456798
 
 ```ruby
 
+### SOLUTION TAKEN FROM CODEWARS
+
+def next_bigger(value)
+
+  # This brute force method works nicely for numbers with < 6 digits ...
+  # 
+  #  sorted_permutations =
+  #    value.to_s
+  #         .chars
+  #         .map(&:to_i)
+  #         .permutation.map{|a| a.join.to_i}
+  #         .uniq
+  #         .sort
+  #         
+  #  sorted_permutations[sorted_permutations.index(value) + 1] || -1
+
+  # But with larger numbers its time complexity is clearly not suited.
+  # So, I used this algorithm:
+  # https://www.quora.com/How-do-I-write-a-code-to-find-the-next-highest-number-formed-by-the-digits-of-a-given-number
+
+  
+  # Convert the number into an array of digits and reverse it for easier iterating
+  a = value.to_s.chars.map(&:to_i).reverse
+   
+  # The approach is to start with the tens digit, and iterate up, searching the digits
+  # to the left of the current digit, for one that has a greater value than the current digit.
+  # If found, then the current digit will be swapped with the digit found among those to the left,
+  # that is the lowest value, but greater than the current digit. The leftmost such digit will be
+  # swapped if its value is duplicated in the group. 
+  1.upto(a.size - 1) do |i|
+    left_digits = a.take(i)    
+    swap_digit_index = find_min_value_greater_than left_digits, a[i]
+    
+    if swap_digit_index
+          
+      # Now swap the digits in the array
+      a[swap_digit_index], a[i] = a[i], a[swap_digit_index]
+      
+      # Now arrange all of the digits on the left into descending order
+      left_digits = a.shift(i).sort.reverse
+     
+      # Now reverse the entire array, and return it as an integer
+      return (left_digits + a).reverse.map(&:to_s).join.to_i
+    end
+  end
+  
+  # Couldn't find a bigger number
+  -1
+end
+
+# Searches through an array of integers, and
+#  returns the index of the first minimum value that is also 
+#  greater than the specified value.
+# @param [Array<Integer>] values
+# @param [Integer] subject the value
+# @return [Integer,nil] returns the index of the element
+#  that meets the above conditions or nil if none found.
+def find_min_value_greater_than(array, value)
+  return nil unless array.any? { |v| v > value }
+  index = nil
+  array.each_with_index do |v, i|
+    if v > value
+      index = index.nil? ? i : (v < array[index] ? i : index)
+    end
+  end
+  index
+end
 ```
 
 ---
+
+## Split Strings ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+
+p solution('abc') == ['ab', 'c_'] \
+p solution('abcdef') == ['ab', 'cd', 'ef'] \
+p solution("abcdef") == ["ab", "cd", "ef"] \
+p solution("abcdefg") == ["ab", "cd", "ef", "g_"] \
+p solution("") == []
