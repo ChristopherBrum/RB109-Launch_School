@@ -1,6 +1,6 @@
 # RB 109 Live Assessment Practice Problems #
 
-1. [x] [Repeater](#repeater)
+1. - [x] [Repeater](#repeater)
 2. [Double Consonants](#double-consonants)
 3. [Rotate 13](#rotate-13)
 4. [Longest Palindrome](#longest-palindrome)
