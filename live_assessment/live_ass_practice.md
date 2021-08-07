@@ -48,7 +48,12 @@
 46. - [x] [Find Primes](#find-primes)
 47. - [x] [Find Some Substrings](#find-some-substrings)
 48. - [ ] [Next Bigger Number](#next-bigger-number)
-49. - [ ] [Split Strings](#split-strings)
+49. - [x] [Split Strings](#split-strings)
+50. - [x] [Record Temps](#record-temps)
+51. - [ ] [Anagram Difference](#anagram-difference)
+52. - [x] [Highest Scoring Word](#highest-scoring-word)
+53. - [x] [Replace with Alphabet Position](#replace-with-alphabet-position)
+54. - [ ] [Sherlock on Pockets](#sherlock-on-pockets)
 
 ---
 
@@ -4618,3 +4623,392 @@ p solution('abcdef') == ['ab', 'cd', 'ef'] \
 p solution("abcdef") == ["ab", "cd", "ef"] \
 p solution("abcdefg") == ["ab", "cd", "ef", "g_"] \
 p solution("") == []
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the solution so that it splits the string into pairs of two characters. If the string contains an odd number of characters then it should replace the missing second character of the final pair with an underscore ('_').
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Split string into pairs of 2 characters
+  -if string has an odd number of integers the last element should be `_`
+Implicit:
+  -empty string is an acceptable input
+  -only lowercase letters will be used in given strings
+--------------------------EXAMPLES---------------------------------------
+p solution('abc') == ['ab', 'c_']
+'abc'
+--> ['ab', 'c_']
+----------------------------ALGO-----------------------------------------
+-- method --> solution(string) --> array
+  -if string length is ogg?
+    -push '_' to string
+  -split string into array of characters and group the characters in pairs
+=end
+def solution(str)
+  str << '_' if str.size.odd?
+  str.chars.each_slice(2).t o_a.map(&:join)
+end
+p solution('abc') == ['ab', 'c_']
+p solution('abcdef') == ['ab', 'cd', 'ef']
+p solution("abcdef") == ["ab", "cd", "ef"]
+p solution("abcdefg") == ["ab", "cd", "ef", "g_"]
+p solution("") == []
+```
+
+---
+
+## Record Temps ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+You are given two arrays that each contain data that represents the min and max weather temperatures for each day of the week.
+
+The first array, the records array, contains the all-time record low/high temperatures for that day of the week.
+e.g. [[record low, record high], ...]
+
+The second array, the current week array contains the daily low/high temperatures for each day of the current week.
+e.g. [[daily low, daily high], ...]
+
+A daily high temperature is considered a new record high if it is higher than the record high for that day of the week. A daily low temperature is considered a new record low if it is lower than the record low for that day of the week.
+
+Compare the daily low/high temperatures of the current week to the record lows/highs and return an array with the updated record temperatures.
+
+There may be multiple record temperatures in a week.
+If there are no broken records return the original records array.
+
+                sun        mon      tues       wed      thur      fri       sat
+record_temps([[34, 82], [24, 82], [20, 89],  [5, 88],  [9, 88], [26, 89], [27, 83]],
+             [[44, 72], [19, 70], [40, 69], [39, 68], [33, 64], [36, 70], [38, 69]])
+➞            [[34, 82], [19, 82], [20, 89], [5, 88], [9, 88], [26, 89], [27, 83]]
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You are given two arrays that each contain data that represents the min and max weather temperatures for each day of the week.
+The first array, the records array, contains the all-time record low/high temperatures for that day of the week.
+e.g. [[record low, record high], ...]
+The second array, the current week array contains the daily low/high temperatures for each day of the current week.
+e.g. [[daily low, daily high], ...]
+A daily high temperature is considered a new record high if it is higher than the record high for that day of the week. A daily low temperature is considered a new record low if it is lower than the record low for that day of the week.
+Compare the daily low/high temperatures of the current week to the record lows/highs and return an array with the updated record temperatures.
+There may be multiple record temperatures in a week.
+If there are no broken records return the original records array.
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 2 Arrays, 1st --> records array, 2nd --> current array
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:  
+  -First input array is the record low and high temps for this week
+  -second input array is the current low and high temps for this week
+  -compare the record low/high and the current low/high and return a new array containing all record lows/highs, including any records set this week. 
+  -if no new records are set return the old records array
+Implicit:  
+  -input temps will always be whole numbers
+--------------------------EXAMPLES---------------------------------------
+#             sun       mon      tues       wed      thur      fri       sat
+record_temps([[34, 82], [24, 82], [20, 89],  [5, 88],  [9, 88], [26, 89], [27, 83]],
+            [[44, 72], [19, 70], [40, 69], [39, 68], [33, 64], [36, 70], [38, 69]])
+➞           [[34, 82], [19, 82], [20, 89], [5, 88], [9, 88], [26, 89], [27, 83]]
+=begin
+----------------------------ALGO-----------------------------------------
+==> Run the through the record low/high temps and compare the low/highs for this week, replacing any new records set this week and return the new records. 
+-- method --> record_temps(array, array) --> array
+  -iterate through the records array using transformation and the index 
+    -initialize 'current_record' to an empty array
+    
+    -push the return value of record_low to current_record
+    -push the return value of record_high to current_record
+    -returns current_record
+    
+  -returns transfortmed array
+    
+-- method --> record_high(integer, integer) --> boolean
+  -return higher value between record high and current high
+-- method --> record_low(integer, integer) --> boolean
+  -return lower value between record low and record low
+    
+=end
+def record_low(record, temp)
+  temp < record ? temp : record
+end
+def record_high(record, temp)
+  temp > record ? temp : record
+end
+def record_temps(records, weeks_temps)
+  records.map.with_index do |day_rec, index|
+    record_low_and_high = []
+    record_low_and_high << record_low(day_rec.first, weeks_temps[index].first)
+    record_low_and_high << record_high(day_rec.last, weeks_temps[index].last)
+  end
+end
+p record_temps([[34, 82], [24, 82], [20, 89],  [5, 88],  [9, 88], [26, 89], [27, 83]], [[44, 72], [19, 70], [40, 69], [39, 68], [33, 64], [36, 70], [38, 69]]) == [[34, 82], [19, 82], [20, 89], [5, 88], [9, 88], [26, 89], [27, 83]]
+```
+
+---
+
+## Anagram Difference ##
+
+- Difficulty: **hard**
+- [ ] Problem Completed?
+
+Given two words, how many letters do you have to remove from them to make them anagrams?
+
+Example
+First word : c od e w ar s (4 letters removed) \
+Second word : ha c k er r a nk (6 letters removed) \
+Result : 10 \
+Hints \
+A word is an anagram of another word if they have the same letters (usually in a different order). \
+Do not worry about case. All inputs will be lowercase.
+
+p anagram_difference('', '') == 0 \
+p anagram_difference('a', '') == 1 \
+p anagram_difference('', 'a') == 1 \
+p anagram_difference('ab', 'a') == 1 \
+p anagram_difference('ab', 'ba') == 0 \
+p anagram_difference('ab', 'cd') == 4 \
+p anagram_difference('aab', 'a') == 2 \
+p anagram_difference('a', 'aab') == 2 \
+p anagram_difference('codewars', 'hackerrank') == 10
+
+---
+
+## Highest Scoring Word ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given a string of words, you need to find the highest scoring word.
+
+Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+
+You need to return the highest scoring word as a string.
+
+If two words score the same, return the word that appears earliest in the original string.
+
+All letters will be lowercase and all inputs will be valid.
+
+p high('man i need a taxi up to ubud') == 'taxi' \
+p high('what time are we climbing up the volcano') == 'volcano' \
+p high('take me to semynak') == 'semynak' \
+p high('aaa b') == 'aaa'
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string of words, you need to find the highest scoring word.
+Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+You need to return the highest scoring word as a string.
+If two words score the same, return the word that appears earliest in the original string.
+All letters will be lowercase and all inputs will be valid.
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Of the given string, find the word with the highest score
+  -Scores are based on the position the lettter is found in the alphabet
+  -return the highest scoring word
+  -if more than one word has the highest score, return the one that appears first in the given string
+  -letters will be downcased
+  -all inputs will be valid
+Implicit:
+  -no empty strings passed in
+--------------------------EXAMPLES---------------------------------------
+p high('aaa b') == 'aaa'
+'aaa' ==> 'a' equals 1 because it's the first letter in the alphabet. Total => 3
+'b'   ==> 'b' equals 2 because it's the second letter in the alphabet. Total => 2
+==> returns 'aaa'
+----------------------------ALGO-----------------------------------------
+==> Take the individual words found in the given string, evaluate their score, compare all scores, return the word with the greatest score.
+-- method --> high(string) --> string
+  -initialize 'word_scores' to an empty array
+  -split sentence into an array of words
+    -set the word as key and return value of get_score as the value to the word_scores hash
+  -find the max value in the hash and return the associated key
+    
+    
+-- method --> get_score(string) --> integer
+  -initialize 'alpha' to an array of all letters in an array
+  -initialize 'score' to 0
+  -split string into array of characters
+  -iterate through the array 
+    -find the index of the character from the 'alpha' array
+    -add 1 to the index and ncrement the score by product
+=end
+def get_score(word)
+  alpha = ('a'..'z').to_a
+  score = 0
+  word.chars.each { |char| score += alpha.index(char) + 1 }
+  score
+end
+def high(sentence)
+  word_scores = sentence.split.each_with_object({}) do |word, scores|
+    scores[word] = get_score(word)
+  end
+  
+  word_scores.max_by { |k, v| v }.first
+end
+# p get_score('man')
+p high('man i need a taxi up to ubud') == 'taxi'
+p high('what time are we climbing up the volcano') == 'volcano'
+p high('take me to semynak') == 'semynak'
+p high('aaa b') == 'aaa'
+```
+
+---
+
+## Replace with ALphabet Position ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+In this kata you are required to, given a string, replace every letter with its position in the alphabet.
+
+If anything in the text isn't a letter, ignore it and don't return it.
+
+"a" = 1, "b" = 2, etc.
+
+Example
+alphabet_position("The sunset sets at twelve o' clock.") \
+Should return "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11" (as a string)
+
+p alphabet_position("The sunset sets at twelve o' clock.") == "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11" \
+p alphabet_position("-.-'") == ""
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+In this kata you are required to, given a string, replace every letter with its position in the alphabet.
+If anything in the text isn't a letter, ignore it and don't return it.
+"a" = 1, "b" = 2, etc.
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+---------------------------RULES-----------------------------------------
+Explicit:
+  -replace every letter in the given string with its position in the alphabet
+  -ignore anything that isn't a letter
+Implicit:
+  -case insensitive
+--------------------------EXAMPLES---------------------------------------
+alphabet_position("The sunset sets at twelve o' clock.")
+Should return "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11" (as a string)
+----------------------------ALGO-----------------------------------------
+-- method --> alphabet_position(string) --> string
+  -downcase strings and remove any non-letter characters
+  -initialize 'alpha' to an array of all alphabetical characters
+  -split string into array of characters and iterate using transformation
+    -find index of current letter in alpha, add 1 and return
+  -join array returns by transformation with ' '
+=end
+def alphabet_position(sentence)
+  char_arr = sentence.downcase.gsub(/[^a-z]/, '').chars
+  alpha = ('a'..'z').to_a
+  
+  char_arr.map do |letter|
+    (alpha.index(letter) + 1).to_s
+  end.join(' ')
+end
+p alphabet_position("The sunset sets at twelve o' clock.") == "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11"
+p alphabet_position("-.-'") == ""
+```
+
+---
+
+## Sherlock on Pockets ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Sherlock has to find suspects on his latest case. He will use your method, dear Watson. Suspect in this case is a person which has something not allowed in his/her pockets.
+
+Allowed items are defined by array of numbers.
+
+Pockets contents are defined by map entries where key is a person and value is one or few things represented by an array of numbers (can be nil or empty array if empty), example:
+
+pockets = { \
+  bob: [1], \
+  tom: [2, 5], \
+  jane: [7] \
+} 
+
+Write a method which helps Sherlock to find suspects. If no suspect is found or there are no pockets (pockets == nil), the method should return nil.
+
+p find_suspects(pockets, [1, 2]) == [:tom, :jane] \
+p find_suspects(pockets, [1, 7, 5, 2]) == nil \
+p find_suspects(pockets, []) == [:bob, :tom, :jane] \
+p find_suspects(pockets, [7]) == [:bob, :tom]
+
+```ruby
+=begin
+DOESN"T PASS CODEWARS TESTS BUT GETS ALL TRUES BY SELF ????
+-----------------------INSTRUCTIONS--------------------------------------
+Sherlock has to find suspects on his latest case. He will use your method, dear Watson. Suspect in this case is a person which has something not allowed in his/her pockets.
+Allowed items are defined by array of numbers.
+Pockets contents are in a hash where key is a person and value is one or few things represented by an array of numbers (can be nil or empty array if empty), example:
+pockets = { 
+  bob: [1],
+  tom: [2, 5],
+  jane: [7]
+} 
+Write a method which helps Sherlock to find suspects. If no suspect is found or there are no pockets (pockets == nil), the method should return nil.
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 hash, 1 Array
+Output: 1 Array
+---------------------------RULES-----------------------------------------
+Explicit:
+  -return an array of the suspects who have something in their pocket not on the list of allowed items
+  -if there are no pockets or suspects return nil
+Implicit:
+  -empty array argument is valid
+  -if a person has one allowed thing and one non-allowed thing in their pocket they are still a suspect
+--------------------------EXAMPLES---------------------------------------
+find_suspects(pockets, [1, 2]) == [:tom, :jane]
+1 and 2 are allowed items
+bob has 1 in his pocket --> not a suspect
+tom has 1 allowed and unallowd item in pocket --> suspect
+jane has 1 not allowed item in pocket --> suspect
+[:tom, :jane]
+----------------------------ALGO-----------------------------------------
+-- method --> find_suspects(hash, array) --> array or nil
+  -initialize suspects as an empty array
+  -iterate through the pockets hash
+    -if all of the items in a persons pockets are not found in the allowed items array
+      -push persons name to suspects
+  -return suspects
+  
+=end
+def find_suspects(pockets, allowed)
+  return pockets.keys if allowed.empty?
+  suspects = []
+  
+  pockets.each do |name, items|
+    suspects << name unless items.all? { |item| allowed.include?(item) }
+  end
+  
+  suspects.empty? ? nil : suspects
+end
+pockets = { 
+  bob: [1],
+  tom: [2, 5],
+  jane: [7]
+} 
+pockets2 = {:meg=>[3], :tom=>[5]}
+    
+p find_suspects(pockets, [1, 2]) == [:tom, :jane]
+p find_suspects(pockets, [1, 7, 5, 2]) == nil
+p find_suspects(pockets, []) == [:bob, :tom, :jane]
+p find_suspects(pockets, [7]) == [:bob, :tom]
+p find_suspects(pockets2, []) == [:meg, :tom]
+```
