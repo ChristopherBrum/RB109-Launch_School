@@ -53,7 +53,8 @@
 51. - [ ] [Anagram Difference](#anagram-difference)
 52. - [x] [Highest Scoring Word](#highest-scoring-word)
 53. - [x] [Replace with Alphabet Position](#replace-with-alphabet-position)
-54. - [ ] [Sherlock on Pockets](#sherlock-on-pockets)
+54. - [x] [Sherlock on Pockets](#sherlock-on-pockets)
+55. - [x] [Capitalize Second of Third](#capitalize-second-of-third)
 
 ---
 
@@ -4928,7 +4929,7 @@ p alphabet_position("-.-'") == ""
 ## Sherlock on Pockets ##
 
 - Difficulty: **medium**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 Sherlock has to find suspects on his latest case. He will use your method, dear Watson. Suspect in this case is a person which has something not allowed in his/her pockets.
 
@@ -4940,7 +4941,7 @@ pockets = { \
   bob: [1], \
   tom: [2, 5], \
   jane: [7] \
-} 
+}
 
 Write a method which helps Sherlock to find suspects. If no suspect is found or there are no pockets (pockets == nil), the method should return nil.
 
@@ -4951,7 +4952,9 @@ p find_suspects(pockets, [7]) == [:bob, :tom]
 
 ```ruby
 =begin
+
 DOESN"T PASS CODEWARS TESTS BUT GETS ALL TRUES BY SELF ????
+
 -----------------------INSTRUCTIONS--------------------------------------
 Sherlock has to find suspects on his latest case. He will use your method, dear Watson. Suspect in this case is a person which has something not allowed in his/her pockets.
 Allowed items are defined by array of numbers.
@@ -5012,3 +5015,79 @@ p find_suspects(pockets, []) == [:bob, :tom, :jane]
 p find_suspects(pockets, [7]) == [:bob, :tom]
 p find_suspects(pockets2, []) == [:meg, :tom]
 ```
+
+---
+
+## Capitalize Second of Third ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Capitalize every second character of every third word of a given string.
+
+p to_weird_case("Lorem Ipsum is simply dummy text of the printing") == "Lorem Ipsum iS simply dummy tExT of the pRiNtInG" \
+p to_weird_case("It is a long established fact that a reader will be distracted") == "It is a long established fAcT that a rEaDeR will be dIsTrAcTeD" \
+p to_weird_case("aaA bB c") == "aaA bB c" \
+p to_weird_case("Miss Mary Poppins word is supercalifragilisticexpialidocious") == "Miss Mary POpPiNs word is sUpErCaLiFrAgIlIsTiCeXpIaLiDoCiOuS"
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Capitalize every second character of every third word of a given string.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Return a variation of the given string, where every second letter of every third word is capitalized
+Implicit:
+  -Input will be uppercase and lowercase letters
+  -Whitespace separating words in given string
+
+--------------------------EXAMPLES---------------------------------------
+"Lorem Ipsum is simply dummy text of the printing"
+             x                x             x
+             iS              tExT        pRiNtInG
+
+==> "Lorem Ipsum iS simply dummy tExT of the pRiNtInG"
+
+----------------------------ALGO-----------------------------------------
+==> FOr each 3rd word within the given string, uppercase eavery 2nd letter.
+
+-- method --> to_weird_case(string) --> string
+  -split given string into an array of words
+  -itereate through the array utilizing index and transformation
+    -if the current word is in the 3rd or subsequent 3rd position
+      -iterate through the characters of the word usiing transformation
+        -capitalize every second character in the word
+  -join the transformed words and return
+
+=end
+
+def to_weird_case(sentence)
+  words_array = sentence.split
+  
+  words_array.map.with_index do |word, index|
+    if (index + 1) % 3 == 0
+      word.chars.map.with_index { |char, idx| idx.odd? ? char.upcase : char }.join
+    else
+      word
+    end
+  end.join(' ')
+end
+
+p to_weird_case("Lorem Ipsum is simply dummy text of the printing") == "Lorem Ipsum iS simply dummy tExT of the pRiNtInG"
+p to_weird_case("It is a long established fact that a reader will be distracted") == "It is a long established fAcT that a rEaDeR will be dIsTrAcTeD"
+p to_weird_case("aaA bB c") == "aaA bB c"
+p to_weird_case("Miss Mary Poppins word is supercalifragilisticexpialidocious") == "Miss Mary POpPiNs word is sUpErCaLiFrAgIlIsTiCeXpIaLiDoCiOuS"
+```
+
+---
+
+##  ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
