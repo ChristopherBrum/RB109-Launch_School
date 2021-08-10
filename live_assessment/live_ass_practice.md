@@ -55,6 +55,7 @@
 53. - [x] [Replace with Alphabet Position](#replace-with-alphabet-position)
 54. - [x] [Sherlock on Pockets](#sherlock-on-pockets)
 55. - [x] [Capitalize Second of Third](#capitalize-second-of-third)
+56. - [x] [Difference of Two](#difference-of-two)
 
 ---
 
@@ -5087,7 +5088,265 @@ p to_weird_case("Miss Mary Poppins word is supercalifragilisticexpialidocious") 
 
 ---
 
-##  ##
+## Difference of Two ##
 
 - Difficulty: **medium**
-- [ ] Problem Completed?
+- [x] Problem Completed?
+
+The objective is to return all pairs of integers from a given array of integers
+that have a difference of 2. The result array should be sorted in ascending order of values. Assume there are no duplicate integers in the array. The order of the integers in the input array should not matter.
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Difference of Two: The objective is to return all pairs of integers from a given array of integers
+that have a difference of 2. The result array should be sorted in ascending order of values. Assume there are no duplicate integers in the array. The order of the integers in the input array should not matter.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Array
+Output: 1 Array (nested, if applicable)
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -return all pairs of integers that have a difference of 2
+  -the return array should be sorted in ascending order
+  -the given array will have no duplicate integers
+  -the order of the given array should not matter
+Implicit:
+  -an integer within the given array can be used more than once in the return array
+  -all integers are positive
+
+--------------------------EXAMPLES---------------------------------------
+[4, 1, 2, 3] == [[1, 3], [2, 4]]
+1, 2, 3, 4
+1 & 3 are have a dif of 2
+2 & 4 have a dif of 2
+1 & 2 do not
+1 & 4 do not
+returns => [[1, 3], [2, 4]]
+
+----------------------------ALGO-----------------------------------------
+High-Level --> Sort the given array and then iterate through it to find all pairs that have a difference of 2. Return as an array of arrays.
+
+-- method --> difference_of_two(array) --> array
+  -initialize 'pairs' to an empty array
+  -sort the given array
+  -iterate through the array (num)
+    -iterate through the array again (second_num)
+      -initialize 'pair' as an empty array
+      -if the difference between num and second_num is 2
+        -push both numbers to pair
+        -sort pair and push to 'pairs'
+  -return pairs
+
+=end
+
+def difference_of_two(arr)
+  pairs = []
+  sorted_arr = arr.sort
+
+  sorted_arr.each do |num|
+    sorted_arr.each do |second_num|
+      pair = []
+      if num - second_num == 2
+        pairs << pair.push(num, second_num).sort 
+      end
+    end
+  end
+  
+  pairs.uniq
+end
+
+difference_of_two([1, 2, 3, 4]) == [[1, 3], [2, 4]]
+difference_of_two([4, 1, 2, 3]) == [[1, 3], [2, 4]]
+difference_of_two([1, 23, 3, 4, 7]) == [[1, 3]]
+difference_of_two([4, 3, 1, 5, 6]) == [[1, 3], [3, 5], [4, 6]]
+difference_of_two([2, 4]) == [[2, 4]]
+difference_of_two([1, 4, 7, 10, 13]) == []
+```
+ 
+
+
+
+
+
+
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You need to play around with the provided string (s).
+# Move consonants forward 9 places through the alphabet. If they pass ‘z’, start
+# again at ‘a’. Move vowels back 5 places through the alphabet. If they pass ‘a’,
+# start again at ‘z’.  Provided string will always be lower case, won’t be empty
+# and will have no special characters.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 String
+Output: 1 String
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Move consonants FORWARD 9 places
+  -move vowels BACK 5 places
+  -if either get to the end of the alphabet start continue from the opposite end
+  -Given string will always be lowercase
+  -Given string will not be empty
+  -Given string will have no special characters
+Implicit:
+  -
+
+--------------------------EXAMPLES---------------------------------------
+"testcase" == "czbclvbz"
+t -> forward   9 places --> 'c' (t to z is 6 places, 3 more places from the beginning of the alphabet is 'c')
+e -> backwards 5 places --> 'z'
+s -> forward   9 places -->...
+t -> forward   9 places
+c -> forward   9 places
+a -> backwards 5 places
+s -> forward   9 places
+e -> backwards 5 places
+
+==> "czbclvbz"
+
+----------------------------ALGO-----------------------------------------
+==> Break given string into array of characters, go through each character and find the charatcer 9 places ahead for a consonant and 5 places back for a vowel, then return string.
+
+-- method --> vowel_back(string) --> string
+  -initialize constants 'vowels' and 'consonants' to these specific letters as an array 
+  -split given string into characters
+  -interate over characters using transformation (char)
+    -if char is a consonant
+      -return the value form find_consonant(char)
+    -if char is a vowel
+      -return the value from find_vowel(char)
+  -join the array returned by my iterative transformation
+
+-- method --> find_consonant(string) --> string
+  -if strings ord value plus 9 >= 122
+    -return string ord value plus 9 to a character
+  -otherwise
+    -subtract strings ord value from 122, 
+    -then subtract that value from 9, and add to 96, 
+    -then turn into character and return
+
+-- method --> find_vowel(string) --> string
+  -if strings ord value minus 5 >= 97 
+    -return string ord value minuis 5 to a character
+  -otherwise
+    -subtract 96 from strings ord value,
+    -then subtract that value from 5, and subtract that value from 122, 
+    -then turn into character and return
+
+=end
+
+# CONSONANTS = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
+# VOWELS = ['a', 'e', 'i', 'o', 'u']
+
+# def find_consonant(char)
+#   if (char.ord + 9) <= 122
+#     (char.ord + 9).chr
+#   else
+#     ((9 - (122 - char.ord)) + 96).chr
+#   end
+# end
+
+# def find_vowel(char)
+#   if (char.ord - 5) >= 97
+#     (char.ord - 5).chr
+#   else
+#     (122 - (5 - (char.ord - 96))).chr
+#   end
+# end
+
+# def vowel_back(str)
+#   str.chars.map do |char|
+#     if CONSONANTS.include?(char)
+#       find_consonant(char)
+#     else
+#       find_vowel(char)
+#     end
+#   end.join
+# end
+
+
+def vowel_back(str)
+  p const = ("a".."z").to_a + ("a".."z").to_a
+  str.chars.map do |l|
+    i = const.index(l)
+    "aeiou".include?(l) ? const[i - 5] : const[i + 9]
+  end.join
+end
+
+p vowel_back("testcase") == "czbclvbz"
+p vowel_back("codewars") == "ljmzfvab" 
+p vowel_back("exampletesthere") == "zgvvyuzczbcqzaz"
+p vowel_back("returnofthespacecamel") == "azcpawjocqzbyvlzlvvzu"
+p vowel_back("bringonthebootcamp") == "kadwpjwcqzkjjclvvy"
+p vowel_back("weneedanofficedog") == "fzwzzmvwjoodlzmjp"
+```
+
+
+
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Difference of Two: The objective is to return all pairs of integers from a given array of integers
+that have a difference of 2. The result array should be sorted in ascending order of values. Assume there are no duplicate integers in the array. The order of the integers in the input array should not matter.
+
+--------------------------PROBLEM----------------------------------------
+Questions:
+Input: 1 Array
+Output: 1 Array (nested, if applicable)
+
+---------------------------RULES-----------------------------------------
+Explicit:
+  -return all pairs of integers that have a difference of 2
+  -the return array should be sorted in ascending order
+  -the given array will have no duplicate integers
+  -the order of the given array should not matter
+Implicit:
+  -an integer within the given array can be used more than once in the return array
+  -all integers are positive
+
+--------------------------EXAMPLES---------------------------------------
+[4, 1, 2, 3] == [[1, 3], [2, 4]]
+1, 2, 3, 4
+1 & 3 are have a dif of 2
+2 & 4 have a dif of 2
+1 & 2 do not
+1 & 4 do not
+returns => [[1, 3], [2, 4]]
+
+----------------------------ALGO-----------------------------------------
+High-Level --> Sort the given array and then iterate through it to find all pairs that have a difference of 2. Return as an array of arrays.
+
+-- method --> difference_of_two(array) --> array
+  -initialize 'pairs' to an empty array
+  -sort the given array
+  -iterate through the array (num)
+    -iterate through the array again (second_num)
+      -initialize 'pair' as an empty array
+      -if the difference between num and second_num is 2
+        -push both numbers to pair
+        -sort pair and push to 'pairs'
+  -return pairs
+
+=end
+
+def difference_of_two(arr)
+  pairs = []
+  sorted_arr = arr.sort
+
+  sorted_arr.each do |num|
+    sorted_arr.each do |second_num|
+      pair = []
+      if num - second_num == 2
+        pairs << pair.push(num, second_num).sort 
+      end
+    end
+  end
+  
+  pairs.uniq
+end
