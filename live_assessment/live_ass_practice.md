@@ -56,6 +56,10 @@
 54. - [x] [Sherlock on Pockets](#sherlock-on-pockets)
 55. - [x] [Capitalize Second of Third](#capitalize-second-of-third)
 56. - [x] [Difference of Two](#difference-of-two)
+57. - [x] [Vowel Back](#vowel-back)
+58. - [x] [Find Missing Letter](#find-missing-letter)
+59. - [x] [Word Scramble](#word-scramble)
+60. - [x] [Alphabetized](#alphabetized)
 
 ---
 
@@ -5165,22 +5169,35 @@ difference_of_two([4, 3, 1, 5, 6]) == [[1, 3], [3, 5], [4, 6]]
 difference_of_two([2, 4]) == [[2, 4]]
 difference_of_two([1, 4, 7, 10, 13]) == []
 ```
- 
 
+---
 
+## Vowel Back ##
 
+- Difficulty: **medium**
+- [x] Problem Completed?
 
+You need to play around with the provided string (s). \
+Move consonants forward 9 places through the alphabet. If they pass ‘z’, start
+again at ‘a’. Move vowels back 5 places through the alphabet. If they pass ‘a’,
+start again at ‘z’.  Provided string will always be lower case, won’t be empty
+and will have no special characters.
 
-
+p vowel_back("testcase") == "czbclvbz" \
+p vowel_back("codewars") == "ljmzfvab" \
+p vowel_back("exampletesthere") == "zgvvyuzczbcqzaz" \
+p vowel_back("returnofthespacecamel") == "azcpawjocqzbyvlzlvvzu" \
+p vowel_back("bringonthebootcamp") == "kadwpjwcqzkjjclvvy" \
+p vowel_back("weneedanofficedog") == "fzwzzmvwjoodlzmjp"
 
 ```ruby
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
 You need to play around with the provided string (s).
-# Move consonants forward 9 places through the alphabet. If they pass ‘z’, start
-# again at ‘a’. Move vowels back 5 places through the alphabet. If they pass ‘a’,
-# start again at ‘z’.  Provided string will always be lower case, won’t be empty
-# and will have no special characters.
+Move consonants forward 9 places through the alphabet. If they pass ‘z’, start
+again at ‘a’. Move vowels back 5 places through the alphabet. If they pass ‘a’,
+start again at ‘z’.  Provided string will always be lower case, won’t be empty
+and will have no special characters.
 
 --------------------------PROBLEM----------------------------------------
 Questions:
@@ -5271,7 +5288,6 @@ e -> backwards 5 places
 #   end.join
 # end
 
-
 def vowel_back(str)
   p const = ("a".."z").to_a + ("a".."z").to_a
   str.chars.map do |l|
@@ -5286,67 +5302,243 @@ p vowel_back("exampletesthere") == "zgvvyuzczbcqzaz"
 p vowel_back("returnofthespacecamel") == "azcpawjocqzbyvlzlvvzu"
 p vowel_back("bringonthebootcamp") == "kadwpjwcqzkjjclvvy"
 p vowel_back("weneedanofficedog") == "fzwzzmvwjoodlzmjp"
+
 ```
 
+---
 
+## Find Missing Letter ##
 
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Find the missing letter: Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array. You will always get an valid
+array. And it will be always exactly one letter be missing. The length of the array will always be at least 2. The array will always contain letters in only  one case. Use the English alphabet with 26 letters.
+
+find_missing_letter(["a","b","c","d","f"]) == "e" \
+find_missing_letter(["O","Q","R","S"]) == "P" \
+find_missing_letter(["b","d"]) == "c" \
+find_missing_letter(["a","b","d"]) == "c" \
+find_missing_letter(["b","d","e"]) == "c"
+
+```ruby
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
-Difference of Two: The objective is to return all pairs of integers from a given array of integers
-that have a difference of 2. The result array should be sorted in ascending order of values. Assume there are no duplicate integers in the array. The order of the integers in the input array should not matter.
+Find the missing letter: Write a method that takes an array of consecutive (increasing) letters as input and that returns the missing letter in the array. You will always get an valid
+array. And it will be always exactly one letter be missing. The length of the array will always be at least 2. The array will always contain letters in only  one case. Use the English alphabet with 26 letters.
 
 --------------------------PROBLEM----------------------------------------
 Questions:
-Input: 1 Array
-Output: 1 Array (nested, if applicable)
+Input: 1 Array of letters (Strings)
+Output: 1 String (missing letter)
+Interim:
 
 ---------------------------RULES-----------------------------------------
 Explicit:
-  -return all pairs of integers that have a difference of 2
-  -the return array should be sorted in ascending order
-  -the given array will have no duplicate integers
-  -the order of the given array should not matter
+  -given array will contain consecutive letters (increasing) with one letter missing
+  -find and return the missing letter
+  -given array will always be valid
+  -there will always be exactly 1 letter missing from given array
+  -given array will always be at least 2 elements long
+  -strings within given array will always have matching case
+  -letters will only be english alphabetical letters (26 total)
 Implicit:
-  -an integer within the given array can be used more than once in the return array
-  -all integers are positive
+  -
 
 --------------------------EXAMPLES---------------------------------------
-[4, 1, 2, 3] == [[1, 3], [2, 4]]
-1, 2, 3, 4
-1 & 3 are have a dif of 2
-2 & 4 have a dif of 2
-1 & 2 do not
-1 & 4 do not
-returns => [[1, 3], [2, 4]]
+find_missing_letter(["b","d"]) == "c"
+b _ d
+  c is the missing letter
+  
+returns => 'c'
 
 ----------------------------ALGO-----------------------------------------
-High-Level --> Sort the given array and then iterate through it to find all pairs that have a difference of 2. Return as an array of arrays.
+==> Iterate through the given array and check to see if the next element in the array is the same as the next element in the alphabet, if it's different return the next element in the alphabet
 
--- method --> difference_of_two(array) --> array
-  -initialize 'pairs' to an empty array
-  -sort the given array
-  -iterate through the array (num)
-    -iterate through the array again (second_num)
-      -initialize 'pair' as an empty array
-      -if the difference between num and second_num is 2
-        -push both numbers to pair
-        -sort pair and push to 'pairs'
-  -return pairs
+-- method --> find_missing_letter(array) --> string
+  -iterate through the given array utilizing the index
+    -unless the next element in the given array is the same as the next element in the alphabet
+      -return the next element in the alphabet
+      
+=end
+
+def find_missing_letter(arr)
+  arr.each_with_index do |letter, index|
+    return letter.next unless arr[index + 1] == letter.next
+  end
+end
+
+p find_missing_letter(["a","b","c","d","f"]) == "e"
+p find_missing_letter(["O","Q","R","S"]) == "P"
+p find_missing_letter(["b","d"]) == "c"
+p find_missing_letter(["a","b","d"]) == "c"
+p find_missing_letter(["b","d","e"]) == "c"
+```
+
+---
+
+## Word Scramble ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Complete the function `scramble(str1, str2)` that returns true if a portion of
+str1 characters can be rearranged to match str2, otherwise returns false. Notes: Only lower case letters will be used (a-z). No punctuation or digits will be included.
+
+scramble('fnollfkjchgjgedghmc', 'cwyydgtuidth') == false \
+scramble('hi', 'ih') == true \
+scramble('i', 'hi') == false \
+scramble('rkqodlw', 'world') == true \
+scramble('cedewaraaossoqqyt', 'codewars') == true \
+scramble('rkqodlw','world') == true \
+scramble('cedewaraaossoqqyt','codewars') == true \
+scramble('katas','steak') == false \
+scramble('scriptjava','javascript') == true \
+scramble('scriptingjava','javascript') == true
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the function `scramble(str1, str2)` that returns true if a portion of
+str1 characters can be rearranged to match str2, otherwise returns false. Notes: Only lower case letters will be used (a-z). No punctuation or digits will be included.
+
+--------------------------PROBLEM----------------------------------------
+Input: 2 Strings (main string, and potential sub-string)
+Output: 1 Booelan
+Questions:
+  -No punc or digits, does this include any non-letter character?
+  -Can I mutate the objects passed in to the method? 
+  
+---------------------------RULES-----------------------------------------
+Explicit:
+  -return true if a portion of str1 can be rearranged to form str2
+  -otherwise return false
+  -only lowercase letters will be used
+  -no punc or digits*
+Implicit:
+  -strings will not be empty
+  -
+Interim:
+  -Array will be used to iterate through the sttring elements
+  
+--------------------------EXAMPLES---------------------------------------
+scramble('rkqodlw', 'world') == true
+rkqodlw
+x  xxxx ---> r o d l w --> rearranged  ==> world
+
+returns ==> true
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Iterate through the characters of the second argument and delete them in both strings if they exist in the first string. If a character in string 2 doesn't exist in string 1 or after the complete iteration string 2 is an empty string return true, otherwise return false. 
+
+-- method --> scramble(string, string) --> boolean
+  -intiialize 'test_str' to a duplicate of str2
+  -split the second string into an array of characters
+  -iterate through the array of charatcers
+    -if the current character is found within str1
+      -substitute current characters with empty string in str1 and str2
+    -otherwise
+      -return false
+  -if test_str is empty return true
+  -otherwise return false
 
 =end
 
-def difference_of_two(arr)
-  pairs = []
-  sorted_arr = arr.sort
-
-  sorted_arr.each do |num|
-    sorted_arr.each do |second_num|
-      pair = []
-      if num - second_num == 2
-        pairs << pair.push(num, second_num).sort 
-      end
+def scramble(str1, str2)
+  test_str1 = str1.dup
+  test_str2 = str2.dup
+  
+  test_str2.chars.each do |char|
+    if test_str1.include?(char)
+      test_str1.sub!(char, '')
+      test_str2.sub!(char, '')
+    else
+      return false
     end
   end
   
-  pairs.uniq
+  test_str2.empty?
 end
+
+
+p scramble('fnollfkjchgjgedghmc', 'cwyydgtuidth') == false
+p scramble('hi', 'ih') == true
+p scramble('i', 'hi') == false
+p scramble('rkqodlw', 'world') == true
+p scramble('cedewaraaossoqqyt', 'codewars') == true
+p scramble('rkqodlw','world') == true
+p scramble('cedewaraaossoqqyt','codewars') == true
+p scramble('katas','steak') == false
+p scramble('scriptjava','javascript') == true
+p scramble('scriptingjava','javascript') == true
+p scramble('laifnalg','faaaalling') == false
+```
+
+---
+
+## Alphabetized ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given a string, concatenate into a new string with case-insensitive alphabetical
+order of appeareance. Whitespace and punctuation shall be removed.
+
+alphabetized("The Holy Bible") == "BbeehHilloTy"
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string, concatenate into a new string with case-insensitive alphabetical
+order of appeareance. Whitespace and punctuation shall be removed.
+
+--------------------------PROBLEM----------------------------------------
+Input: 1 String
+Output: 1 String
+Questions:
+  -Concatenation is required for this problem? 
+  -If I return a new string without concatenation does that count?
+  
+---------------------------RULES-----------------------------------------
+Explicit:
+  -concatenate given string into a new string with the letters ordered alphabetically ignoring case
+  -punctuation and white space will be removed
+Implicit:
+  -input will not be empty
+  -input will be a valid string
+Interim:
+  -using array to sort the characters of the given string
+--------------------------EXAMPLES---------------------------------------
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> convert the given string and sort while treating uppercase elements like lowercase elements. Then concatenate each letter to a new string removing punctuation and white space.
+
+-- method --> alphabetized(string) --> string
+  -initialize 'result' to an empty string
+  -split the given string into an array of characters
+  -sort the array of chars by their downcased values
+  -iterate through the array of characters
+    -if current char is a letter 
+      -concatenate to the 'result' string
+  -return the 'result' string
+
+=end
+
+def alphabetized(string)
+  result = ''
+  string.chars.sort_by { |sorting_char| sorting_char.downcase }.each do |char|
+    result.concat(char) if /[A-z]/.match?(char)
+  end
+  result
+end
+
+p alphabetized("The Holy Bible") == "BbeehHilloTy"
+```
+
+---
+
+##  ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
