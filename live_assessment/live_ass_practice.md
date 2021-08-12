@@ -60,6 +60,9 @@
 58. - [x] [Find Missing Letter](#find-missing-letter)
 59. - [x] [Word Scramble](#word-scramble)
 60. - [x] [Alphabetized](#alphabetized)
+61. - [x] [Anagram Detection](#anagram-detection)
+62. - [x] [Highest Scoring Word Again](#highest-scoring-word-again)
+63. - [x] [Rotate Matrix](#rotate-matrix)
 
 ---
 
@@ -4688,10 +4691,12 @@ Compare the daily low/high temperatures of the current week to the record lows/h
 There may be multiple record temperatures in a week.
 If there are no broken records return the original records array.
 
+```ruby
                 sun        mon      tues       wed      thur      fri       sat
 record_temps([[34, 82], [24, 82], [20, 89],  [5, 88],  [9, 88], [26, 89], [27, 83]],
              [[44, 72], [19, 70], [40, 69], [39, 68], [33, 64], [36, 70], [38, 69]])
 ➞            [[34, 82], [19, 82], [20, 89], [5, 88], [9, 88], [26, 89], [27, 83]]
+```
 
 ```ruby
 =begin
@@ -5537,8 +5542,328 @@ p alphabetized("The Holy Bible") == "BbeehHilloTy"
 
 ---
 
+## Anagram Detection ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+An anagram is the result of rearranging the letters of a word to produce a new word (see wikipedia).
+
+Note: anagrams are case insensitive
+
+Complete the function to return true if the two arguments given are anagrams of each other; return false otherwise.
+
+Examples
+"foefet" is an anagram of "toffee"
+
+"Buckethead" is an anagram of "DeathCubeK"
+
+p is_anagram('Creative', 'Reactive') == true \
+p is_anagram("foefet", "toffee") == true \
+p is_anagram("Buckethead", "DeathCubeK") == true \
+p is_anagram("Twoo", "WooT") == true \
+p is_anagram("dumble", "bumble") == false \
+p is_anagram("ound", "round") == false \
+p is_anagram("apple", "pale") == false
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+An anagram is the result of rearranging the letters of a word to produce a new word (see wikipedia).
+
+Note: anagrams are case insensitive
+
+Complete the function to return true if the two arguments given are anagrams of each other; return false otherwise.
+
+--------------------------PROBLEM----------------------------------------
+Input: 2 Strings
+Output: boolean value
+Questions:
+  -Will given strings contain only lowercase letters? Punctuation? White space?
+---------------------------RULES-----------------------------------------
+Explicit:
+  -Anagram: the result of rearranging the letters of a word to produce a new word
+  -anagrams are case insensitive
+  -return true if the given strings are anagrams of each other, otherwise false
+Implicit:
+  -given strings will not be empty
+  -given strings will not contain punctuation or whitespace
+
+--------------------------EXAMPLES---------------------------------------
+"foefet" is an anagram of "toffee"
+
+"Buckethead" is an anagram of "DeathCubeK"
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split up strings into arrays of characters and compare to see if they are the same if sorted. 
+
+-- method --> is_anagram(string, string) --> boolean
+  -downcase and then split both strings into array of characters, then sort
+  -compare whether these arrays are the same
+
+=end
+
+def is_anagram(str1, str2)
+  str1.downcase.chars.sort == str2.downcase.chars.sort
+end
+
+p is_anagram('Creative', 'Reactive') == true
+p is_anagram("foefet", "toffee") == true
+p is_anagram("Buckethead", "DeathCubeK") == true
+p is_anagram("Twoo", "WooT") == true
+p is_anagram("dumble", "bumble") == false
+p is_anagram("ound", "round") == false
+p is_anagram("apple", "pale") == false
+```
+
+---
+
+## Highest Scoring Word Again ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+Given a string of words, you need to find the highest scoring word.
+
+Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+
+You need to return the highest scoring word as a string.
+
+If two words score the same, return the word that appears earliest in the original string.
+
+All letters will be lowercase and all inputs wabideill be valid.
+
+p high('man i need a taxi up to ubud') == 'taxi' \
+p high('what time are we climbing up the volcano') == 'volcano' \
+p high('take me to semynak') == 'semynak' \
+p high('aaa b') == 'aaa'
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string of words, you need to find the highest scoring word.
+
+Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+
+You need to return the highest scoring word as a string.
+
+If two words score the same, return the word that appears earliest in the original string.
+
+All letters will be lowercase and all inputs will be valid.  
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -Find the highest scoring word within the given string
+  -letter values are equal to their numerical place within the alphabet (a -> 1, b -> 2, etc)
+  -return the WORD with the highest score
+  -if multiple words have the highest score, return the first to appear
+  -given inputs will be lowercase and valid
+Implicit Rules:
+  -a word is a cluster of characters within the given string separated by white space
+  -only letters separated by white space will be included in the given strings
+Questions:
+  -what is considered a word?
+  -will given string include punctuation or digits?
+  
+--------------------------EXAMPLES---------------------------------------
+('aaa b') == 'aaa'
+a ==> 1
+'aaa' --> 3 points
+
+b ==> 2
+'b' --> 2 points
+
+'aaa' > 'b'
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String, highest scoring word
+Additional DS Utilized:
+  -Array to split given string into words, and then into characters
+  -Hash to organze word scores
+  -Integers to calculate the score of words
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split given string into an array of words, then calcualte the value of each letter of each word to gather each words total score, then return the word with the highest score.
+
+-- method --> high(string) --> string
+  -split given string into an array of words
+  -initialize 'scores' to an empty hash
+  -iterate through the array of words
+    -split word into array of characters and iterate through using transformation
+      -return value of find_value(char)
+    -assign  word as key and return value of transformation as key to 'scores'
+  -find the maximum value within scores and return the key associated with it
+
+-- method --> find_value(string) --> integer
+  -initialize 'alpha' to an array of each letter in the alphabet
+  -return the index of the character + 1
+
+=end
+
+def find_value(char)
+  alpha = ('a'..'z').to_a
+  alpha.index(char) + 1
+end
+
+def high(sentence)
+  scores = {}
+  sentence.split.each do |word|
+    word_score = word.chars.map { |char| find_value(char) }.sum
+    scores[word] = word_score  
+  end
+  scores.max_by { |word, score| score }.first
+end
+
+# p find_value('a') == 1
+# p find_value('c') == 3
+# p find_value('f') == 6
+
+p high('man i need a taxi up to ubud') == 'taxi'
+p high('what time are we climbing up the valcono volcano') == 'valcono'
+p high('take me to semynak') == 'semynak'
+p high('aaa b') == 'aaa'
+```
+
+---
+
+## Rotate Matrix ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Given a matrix represented as a list of string, such as
+
+```ruby
+###.....
+..###...
+....###.
+.....###
+.....###
+....###.
+..###...
+###.....
+```
+
+write a function `rotateClockwise(matrix)` that return its 90° clockwise rotation, for our example:
+
+```ruby
+#......#
+#......#
+##....##
+.#....#.
+.##..##.
+..####..
+..####..
+...##...
+```
+
+rotateClockwise(["abc", "def"])) #, ["da", "eb", "fc"]); \
+rotateClockwise(["c","b","a"])) #, ["abc"]); \
+rotateClockwise(["cba"])) # ["c","b","a"]); \
+rotateClockwise(["a", "b", "c"])) #, ["cba"]);
+
+```ruby
+
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a matrix represented as a list of strings, such as...
+
+matrix = ['###.....',
+          '..###...',
+          '....###.',
+          '.....###',
+          '.....###',
+          '....###.',
+          '..###...',
+          '###.....']
+          
+write a function; rotateClockwise(matrix), that return its 90° clockwise rotation, for example:
+
+['#......#',
+ '#......#',
+ '##....##',
+ '.#....#.',
+ '.##..##.',
+ '..####..',
+ '..####..',
+ '...##...']
+  
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -matrix: a 2 dimensional collection, in this circumstance represented by an array of strings
+  -write a method that rotates the given matrix 90 degrees clockwise
+  -
+Implicit Rules:
+  -the elements within the first string should be the last elements in all of the strings of the output matrix
+  -all elements within the given array will be strings of the same length
+  -strings within given array will have a length of at least 1
+  -string elements within given array can be any characters
+Questions:
+  -what is a matrix?
+  
+--------------------------EXAMPLES---------------------------------------
+["abc", "def"] --> ["da", "eb", "fc"]
+
+[[a, b, c], [d, e, f]]
+[[d, a], [e, b], [f, c]]
+
+[da, eb, fc]
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 array of strings
+Output: 1 array
+Additional DS Utilized:
+  -Strings within given array will be converted to arrays then converted back to strings 
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Reverse the given array, then group the characters of each element by index in and push them to a new array where they are joined into strings.,
+
+-- method --> rotate_clockwise(array) --> array
+  -initialize an empty array (output)
+  -reverse the given array
+  -iterate a number times equal to the strings length in the given array (index)
+    -initialize an empty array (nested)
+    -iterate through the given array
+      -remove and push the elements at the current 'index' to 'nested'
+    -push nested to output
+  -return output
+
+=end
+
+def rotate_clockwise(arr)
+  output = []
+  reversed_arr = arr.reverse
+  
+  arr.first.size.times do |index|
+    nested_arr = reversed_arr.each_with_object([]) do |str, nested|
+      nested << str.chars[index]
+    end
+    output << nested_arr
+  end
+  output.map(&:join)
+end
+
+p rotate_clockwise(["abc", "def"]) == ["da", "eb", "fc"]
+p rotate_clockwise(["c","b","a"]) == ["abc"]
+p rotate_clockwise(["cba"]) == ["c","b","a"]
+p rotate_clockwise(["a", "b", "c"]) == ["cba"]
+p rotate_clockwise(['###.....', '..###...', '....###.', '.....###', '.....###', '....###.', '..###...', '###.....']) == ['#......#', '#......#', '##....##', '.#....#.', '.##..##.', '..####..', '..####..', '...##...']
+```
+
+---
+
 ##  ##
 
 - Difficulty: **medium**
 - [ ] Problem Completed?
 
+Write a method to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string,
+
+All given inputs are in lowercase letters a-z.
+
+puts common_prefix(["flower", "flow", "flight"]) == "fl"
+puts common_prefix(["dog", "racecar", "car"]) == ""
+puts common_prefix(["interspecies", "interstellar", "interstate"]) == "inters"
+puts common_prefix(["throne", "dungeon"]) == ""
+puts common_prefix(["throne", "throne"]) == "throne"
