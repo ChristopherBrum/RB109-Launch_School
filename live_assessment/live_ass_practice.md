@@ -1,8 +1,8 @@
 # RB 109 Live Assessment Practice Problems #
 
 1. - [x] [Repeater](#repeater)
-2. - [ ] [Double Consonants](#double-consonants)
-3. - [ ] [Rotate 13](#rotate-13)
+2. - [x] [Double Consonants](#double-consonants)
+3. - [x] [Rotate 13](#rotate-13)
 4. - [x] [Longest Palindrome](#longest-palindrome)
 5. - [x] [Find Chidren](#find-children)
 6. - [x] [Double Consonants Alternative](#double-consonants-alternative)
@@ -63,6 +63,8 @@
 61. - [x] [Anagram Detection](#anagram-detection)
 62. - [x] [Highest Scoring Word Again](#highest-scoring-word-again)
 63. - [x] [Rotate Matrix](#rotate-matrix)
+64. - [x] [Longest Common Prefix](#longest-common-prefix)
+65. - [x] [Consecutive Runs](#consecutive-runs)
 
 ---
 
@@ -121,7 +123,7 @@ p repeater('') == ''
 ## Double Consonants ##
 
 - Difficulty: **easy**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 Write a method that takes a string, and returns a new string in which every consonant character is doubled. Vowels (a,e,i,o,u), digits, punctuation, and whitespace should not be doubled.
 
@@ -134,24 +136,76 @@ double_consonants('') == ""
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
 Write a method that takes a string, and returns a new string in which every consonant character is doubled. Vowels (a,e,i,o,u), digits, punctuation, and whitespace should not be doubled.
+
 --------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -Take a string and double each consonant
+  -vowels, whitespace and punctuation stay the same
+Implicit Rules:
+  -an empty string is a valid input and returns an empty string
+  -case sensitive
 Questions:
+  -Should I mutate the original string or return a new object?
+  
+--------------------------EXAMPLES---------------------------------------
+'String' == "SSttrrinngg"
+string
+S --> SS
+t --> tt
+r --> rr
+i --> i
+n --> nn
+g --> gg
+
+returns => "SSttrrinngg"
+
+-----------------------DATA STRUCTURES-----------------------------------
 Input: 1 String
 Output: 1 String
-
----------------------------RULES-----------------------------------------
-Explicit:
-Implicit:
-
---------------------------EXAMPLES---------------------------------------
+Additional DS Utilized:
+  -split string into an array of characters
+  -join an array of characters into a string
 
 ----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split the given string to an array of characters, iterate through the characters pushing them to a new string object, doubling each consonant. 
+
+* split given string into array of characters
+* iterate through array doubling each consonant
+* return new string object
+
+-- method --> double_consonants(string) --> string
+  -split string into array of characters
+  -interate through the array using transformation (char)
+    -if char is_consonant?
+      -return char doubled
+    -otherwise
+      -return char
+  -join array and return
+
+-- method is_consonant?(string) --> boolean
+  -if char is included within the alphabet (upper/lowercase)
+  -AND char is not a vowel
+    -return true
 
 =end
-double_consonants('String') == "SSttrrinngg"
-double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
-double_consonants("July 4th") == "JJullyy 4tthh"
-double_consonants('') == ""
+
+def is_consonant?(char)
+  alpha = ('a'..'z').to_a
+  vowel = %w(a e i o u)
+  
+  alpha.include?(char.downcase) && !vowel.include?(char.downcase) 
+end
+
+def double_consonants(str)
+  str.chars.map do |char|
+    is_consonant?(char) ? char * 2 : char
+  end.join
+end
+
+p double_consonants('String') == "SSttrrinngg"
+p double_consonants("Hello-World!") == "HHellllo-WWorrlldd!"
+p double_consonants("July 4th") == "JJullyy 4tthh"
+p double_consonants('') == ""
 ```
 
 ---
@@ -159,7 +213,7 @@ double_consonants('') == ""
 ## Rotate 13 ##
 
 - Difficulty: **med/hard**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 How can you tell an extrovert from an introvert at NSA? Va gur ryringbef, gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
 
@@ -197,92 +251,118 @@ Algorithm:
 - iterate over the characters
   
 ```ruby
-def rot13(string)
-  lowercase_alpha = ("a".."z").to_a
-  uppercase_alpha = ("A".."Z").to_a
-  
-  result = ""
-  
-  #string.split.each do |char|
-    string.chars.each do |char|
-      if  lowercase_alpha.include?(char)
-        result << char.tr("abcdefghijklm", "nopqrstuvwxyz")
-      elsif uppercase_alpha.include?(char)
-        result << char.tr("ABCDEFGHIJKLM", "NOPQRSTUVWXYZ")
-      else
-        result << char
-      end
-    end
-  #end
-  result
-end
-
-# Having a Problem with this Solution
-
-p rot13("Abc") #== "Nop" \
-p rot13("xYz") == "kLm" \
-p rot13("EBG13 rknzcyr.") #== "ROT13 example." \
-p rot13("This is my first ROT13 excercise!") #== "Guvf vf zl svefg EBG13 rkprepvfr!" \
-
 =begin
--- Ginni's Algorithm
+-----------------------INSTRUCTIONS--------------------------------------
+How can you tell an extrovert from an introvert at NSA? Va gur ryringbef, gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
 
-- Convert the input string into an array of chars
-- Iterate over each char in the array transforming as follows
-  - If the current char is a uppercase letter:
-    - Convert to ASCII code
-    - Add 13 to the ASCII code
-    - If this is greater than 90
-      - subtract 91 from value
-      - Add that difference to the beginning letter of the ASCII values (65)
-    - Return the char associated with the integer result
-  - If the current char is a lowercase letter:
-    - Convert to ASCII code
-    - Add 13 to ASCII code
-    - If the is greater than 122
-      - subtract 123 from the value
-      - Add that difference to the beginning letter of the alphabet (97)
-    - Return the char associated with the integer result
-  - If the current char is not a letter
-    - Return that character
-- Join and return the resulting string
+I found this joke on USENET, but the punchline is scrambled. Maybe you can decipher it? According to Wikipedia, ROT13 is frequently used to obfuscate jokes on USENET.
+
+Hint: For this task you're only supposed to substitue characters. Not spaces, punctuation, numbers etc.
+
+Rot 13 means each letter is replaced by the letter appearing 13 places in the alphabet after the original letter. Last 13 letters alphabet you start over.
+
+Test examples:
+
+rot13("EBG13 rknzcyr.") == "ROT13 example."
+rot13("This is my first ROT13 excercise!" == "Guvf vf zl svefg EBG13 rkprepvfr!" 
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -For every letter within the given string swap it out for the letter 13 places ahead of it in the alphabet
+  -do not shange any characters other than letters
+Implicit Rules:
+  -uppercase and lowercase letters used within given string
+  
+Questions:
+  -
+  
+--------------------------EXAMPLES---------------------------------------
+"EBG13 rknzcyr." == "ROT13 example."
+
+E + 13 places --> R
+B + 13 places --> O
+G + 13 places --> T
+1 stays the same
+3 stays the same
+. stays the same
+
+==> "ROT13 example."
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String
+Additional DS Utilized:
+  -splitting strings into arrays
+  -joining arrays into strings
+  -boolean values in conditionals
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split given string into an array of characters, iterate through the charactes, for every letter swap with the letter 13 places ahead in the alphabet, then join and return string
+
+* split givern string into array of chars
+* iterate through array
+  * if letter swap out
+* join and return string
+
+-- method --> rot13(string) --> string
+  -split given string into array of chars (chars)
+  -iterate through array using transformation (char)
+    -if char is a letter
+      -swap_letter(char)
+    -otherwise
+      -char
+  -join arrya and return
+
+-- method --> swap_letter(string) --> string
+  -initialize alpha to array of alphabetical letters twice over
+  -if is_capitalized?(char) set to true (cap)
+  -downcase char
+  -find index of char in alpha
+  -find char at index + 13 in alpha
+  -if cap is true capitalize 
+
+-- method --> is_capitalized?(string) --> string
+  -if string uppercased is the same as string
+
 =end
 
-# Ginni's Solution
-def rot_upper(char)
-  value = char.ord
-  value += 13
-  if value > 90
-    value -= 91
-    value += 65
-  end
-  
-  value.chr
+ALPHA = (('a'..'z').to_a) * 2
+
+def is_capitalized?(str)
+  str.upcase == str
 end
 
-def rot_lower(char)
-  value = char.ord
-  value += 13
-  if value > 122
-    value -= 123
-    value += 97
-  end
+def swap_letter(char)
+  cap = true if is_capitalized?(char)
+  char = char.downcase
   
-  value.chr
+  index = ALPHA.index(char)
+  if cap == true 
+    ALPHA[index + 13].upcase
+  else
+    ALPHA[index + 13]
+  end
 end
 
-
-def rot13(string)
-  string.chars.map do |char|
-    if ('A'..'Z').include?(char)
-      rot_upper(char)
-    elsif ('a'..'z').include?(char)
-      rot_lower(char)
+def rot13(str)
+  str.chars.map do |char|
+    if ALPHA.include?(char.downcase)
+      swap_letter(char)
     else
       char
     end
   end.join
 end
+
+# p swap_letter('R')
+
+# p is_capitalized?('A') == true
+# p is_capitalized?('s') == false
+
+p rot13("Abc") == "Nop"
+p rot13("xYz") == "kLm"
+p rot13("EBG13 rknzcyr.") == "ROT13 example."
+p rot13("This is my first ROT13 excercise!") == "Guvf vf zl svefg EBG13 rkprepvfr!"
 ```
 
 ---
@@ -5841,6 +5921,7 @@ def rotate_clockwise(arr)
     end
     output << nested_arr
   end
+  
   output.map(&:join)
 end
 
@@ -5853,10 +5934,10 @@ p rotate_clockwise(['###.....', '..###...', '....###.', '.....###', '.....###', 
 
 ---
 
-##  ##
+## Longest Common Prefix ##
 
 - Difficulty: **medium**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 Write a method to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string,
 
@@ -5867,3 +5948,179 @@ puts common_prefix(["dog", "racecar", "car"]) == ""
 puts common_prefix(["interspecies", "interstellar", "interstate"]) == "inters"
 puts common_prefix(["throne", "dungeon"]) == ""
 puts common_prefix(["throne", "throne"]) == "throne"
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a method to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string,
+
+All given inputs are in lowercase letters a-z.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -find and return the longest common prefix of an array of strings
+  -return an empty string if no common prefix exists
+  -all given strings will be lowercase letters (a-z)
+Implicit Rules:
+  -All strings will be at least one letter in length
+Questions:
+  -What is a prefix?
+
+--------------------------EXAMPLES---------------------------------------
+["flower", "flow", "flight"]) == "fl"
+
+flower
+flxxxx
+
+flow
+flxx
+
+flight
+flxxxx
+
+'fl' is the longest common prefix of the given strings
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Array
+Output: 1 String
+Additional DS Utilized:
+  -split given strings into an array
+  -join array of strings to string
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split the first string into an array of characters, then compare all the strings character by character to see if they match the charatcers of the array, when a character doesn't match return the characters from the array up to that point, joined into a string.
+
+* split first string into array of characters
+* iterate based on index of array and compare the characters within the array at current index
+* when a character doesn't match return the array of characters up to the current index, joined as a string
+
+-- method --> common_prefix(array) --> string
+  -split first element of array into array of characters (base_chars)
+  -iterate from 0 upto the length of base_chars (index)
+    -unless all strings within given arr at current index equal the char of base_chars at current index
+      -return the chars of the first string in given arr from index 0, to current index
+  -otherwise return first string within given array
+      
+=end
+
+def common_prefix(arr)
+  base_chars = arr.first.chars
+  
+  base_chars.size.times do |index|
+    unless arr.all? { |word| word[index] == base_chars[index] }
+      return arr.first[0, index]
+    end
+  end
+  
+  arr.first
+end
+  
+p common_prefix(["flower", "flow", "flight"]) == "fl"
+p common_prefix(["dog", "racecar", "car"]) == ""
+p common_prefix(["interspecies", "interstellar", "interstate"]) == "inters"
+p common_prefix(["throne", "dungeon"]) == ""
+p common_prefix(["throne", "throne"]) == "throne"
+```
+
+---
+
+## Consecutive Runs ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given a certain string, create a hash with each character in string as key andall possible substrings in string starting at each character as value.
+
+p consecutive_runs('abcd') == {"a"=>["a", "ab", "abc", "abcd"], /
+                               "b"=>["b", "bc", "bcd"], /
+                               "c"=>["c", "cd"], /
+                               "d"=>["d"]}
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a certain string, create a hash with each character in string as key andall possible substrings in string starting at each character as value.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -create a hash where the keys are a character from the given string and the value is an array of all possible substrings starting with the key.
+Implicit Rules:
+  -input will be be a valid non-empty string
+  -lowercase letters only
+Questions:
+  -lowercase letters only? 
+  
+--------------------------EXAMPLES---------------------------------------
+'abcd'
+a --> a, ab, abc, abcd
+b --> b, bc, bcd
+etc.
+
+{"a"=>["a", "ab", "abc", "abcd"], 
+ "b"=>["b", "bc", "bcd"], 
+ "c"=>["c", "cd"], 
+ "d"=>["d"]}
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 Hash, keys will be strings, values will be arrays
+Additional DS Utilized:
+  -splitting strings into array of characters
+  -joining arrays into strings
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split given string into array of characters, iterate through all numbers upto the length of the array, collect all substrings starting at specific indices and add them to a hash collection based on the starting character.
+
+* split string into array of characters
+* collect all substring into an array
+* iterate through the array of characters
+* gather all substrings that begin with current character and push to hash
+* retruning hash
+
+-- method --> consecutive_runs(string) --> hash
+  -initialize an empty hash (subs)
+  -split given string into array of characters (chars)
+  -intialize subs to get_subs(arr)
+  -iterate through array of characters 
+    -select all chars that begin with current char and push to hash
+  -return hash
+
+-- method --> get_subs(array) --> array
+  -initialize subs as empty array
+  -iterate through 1 upto length of arr (length)
+    -iterate through the arr of characters by length
+      -push joined sub arrays to subs
+  -return subs
+  [a ab etc]
+
+=end
+
+def get_subs(arr)
+  subs = []
+  1.upto(arr.size) do |length|
+    arr.each_cons(length) do |sub_arr|
+      subs << sub_arr.join
+    end
+  end
+  subs
+end
+
+def consecutive_runs(str)
+  sub_hash = {}
+  str = str.chars
+  subs = get_subs(str)
+  
+  str.each do |char|
+    sub_hash[char] = subs.select { |sub| sub[0] == char }
+  end
+  
+  sub_hash
+end
+
+# p get_subs(%w(a b c d))
+
+p consecutive_runs('abcd') == {"a"=>["a", "ab", "abc", "abcd"], 
+                               "b"=>["b", "bc", "bcd"], 
+                               "c"=>["c", "cd"], 
+                               "d"=>["d"]}
+```
