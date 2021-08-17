@@ -73,6 +73,8 @@
 71. - [x] [Delete Digit](#delete-digit)
 72. - [x] [Multiples of 3 or 5](#multiples-of-3-or-5)
 73. - [x] [String Transformer](#string-transformer)
+74. - [x] [Largest Product in a Series](#largest-product-in-a-series)
+75. - [x] [Duplicate Encoder](#duplicate-encoder)
 
 ---
 
@@ -6909,8 +6911,8 @@ p string_transformer(" A b C d E f G ") == " g F e D c B a "
 
 ## Largest Product in a Series ##
 
-- Difficulty: **medium**
-- [ ] Problem Completed?
+- Difficulty: **hard**
+- [x] Problem Completed?
 
 Complete the greatestProduct method so that it'll find the greatest product of five consecutive digits in the given string of digits.
 
@@ -6926,38 +6928,214 @@ p greatest_product("92494737828244222221111111532909999") == 5292
 p greatest_product("02494037820244202221011110532909999") == 0
 
 ```ruby
-
-```
-
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
 Complete the greatestProduct method so that it'll find the greatest product of five consecutive digits in the given string of digits.
 
-For example:
-
-greatestProduct("123834539327238239583") // should return 3240
 The input string always has more than five digits.
 
 --------------------------PROBLEM----------------------------------------
 Explicit Rules:
+  -Find the greatest product of 5 consecutive digits within the given string
+  -product is the result of numbers being multipled together
+  -input string will always have more than 5 digits
 Implicit Rules:
+  -digits will all be considered positive
+  -given string number can start with 0
+  -given string will only consist of digits (0-9)
 Questions:
+  -What is the product? 
 --------------------------EXAMPLES---------------------------------------
+For example:
+
+greatestProduct("123834539327238239583") // should return 3240
+
+"123834539327238239583"
+12383 --> 1 * 2 * 3 * 8 * 3 --> product
+23834
+38345
+...
+
+greatest product of 5 consecutive digits --> 3240
 
 -----------------------DATA STRUCTURES-----------------------------------
-Input: 
-Output: 
+Input: 1 String
+Output: 1 Integer
 Additional DS Utilized:
+  -converting string into array
+  -joining array into string
+  -converting between strings an integers
 
 ----------------------------ALGO-----------------------------------------
-Higher-Level ==> 
+Higher-Level ==> Find all substrings of the given string that are 5 characters long, convert these substring into individual digits and find the product, the find and return the greatest of these products
 
--- method --> 
+* find all substrings that are 5 chars long
+* find all products of the individual digits within these substrings
+* find the greatest product and return
+
+-- method --> greatest_product(string) --> integer
+  -assign the return value of find_subs to 'subs'
+  -assign the return value of find_products to products
+  -find and return the greatest value in products
+  
+-- method --> find_subs(string) --> array
+  -split given string into array of characters
+  -initialize an empty array (subs_of_five)
+  -iterate through the array and collect all consecutive sub_arrays that have a length of 5
+    -join the sub_array and push to subs_of_five
+  -return subs_of_five
+  
+-- method --> find_products(array) --> array
+  -initialize an empty array (products)
+  -iterate through the given array
+    -initialize produt to 1
+      -split the current array into characters
+      -convert each char to an integer
+      -multiply the chars together
+      -return product
+  -return products
 
 =end
+
+def find_subs(str)
+  subs_of_five = []
+  str.chars.each_cons(5) { |sub_arr| subs_of_five << sub_arr.join }
+  subs_of_five
+end
+
+def find_products(subs_of_five)
+  subs_of_five.map do |sub|
+    product = 1
+    sub.chars.map(&:to_i).map { |num_sub| product *= num_sub }
+    product
+  end
+end
+
+def greatest_product(str)
+  subs = find_subs(str)
+  products = find_products(subs)
+  products.max
+end
+
+# p find_products(find_subs("123834539327238239583"))
+
+# p find_subs("123834539327238239583")
 
 p greatest_product("123834539327238239583") == 3240
 p greatest_product("395831238345393272382") == 3240
 p greatest_product("92494737828244222221111111532909999") == 5292
 p greatest_product("92494737828244222221111111532909999") == 5292
 p greatest_product("02494037820244202221011110532909999") == 0
+```
+
+---
+
+## Duplicate Encoder ##
+
+- Difficulty: **hard**
+- [x] Problem Completed?
+
+The goal of this exercise is to convert a string to a new string where each character in the new string is "(" if that character appears only once in the original string, or ")" if that character appears more than once in the original string. Ignore capitalization when determining if a character is a duplicate.
+
+Examples\
+"din"      =>  "((("\
+"recede"   =>  "()()()"\
+"Success"  =>  ")())())"\
+"(( @"     =>  "))(("
+
+p duplicate_encode("din") == "((("\
+p duplicate_encode("recede") == "()()()"\
+p duplicate_encode("Success") == ")())())"\
+p duplicate_encode("(( @") == "))(("
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+The goal of this exercise is to convert a string to a new string where each character in the new string is "(" if that character appears only once in the original string, or ")" if that character appears more than once in the original string. Ignore capitalization when determining if a character is a duplicate.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -create a new string object based on the given string object where;
+    -each character is replaced with '(' if that char only appears once in the given string
+    -if the char appears more than once in the given string replace it with ')'
+  -ignore case when determining if a char is a duplicate
+Implicit Rules:
+  -given string can contain upper and lower case letters
+  -given string can contain white spacce
+  -given string can contain punctuation
+  -given string can contain '(' and ')' characters as well
+  -given string will not be empty
+Questions:
+--------------------------EXAMPLES---------------------------------------
+"recede"   =>  "()()()"
+recede
+r --> 1 instance  --> '(' 
+e --> 3 instances --> ')'
+c --> 1 instance  --> '('
+d --> 1 instance  --> '('
+
+returns ==> "()()()"
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String
+Additional DS Utilized:
+  -converting string into array 
+  -joining array into string
+  -utilizing hash for tallying the number of char instances
+  -integers for tallying instances
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> 
+
+* Tally the number of instances of each character in the given string
+* Iterate through the given string broken into an array of characters
+  * construct a new string string based on whether the chars occur 1 time or more
+
+-- method --> duplicate_encode(string) --> string
+  -intialize 'instances' to the return value of 'tally_instances' with the given string downcased and apssed as an argument
+  -initialize an empty string (encoded)
+  -iterate through the given string downcased and split into an array of characters
+    -if current char occurs more than once in instances
+      -concat ')' to encoded
+    -otherwise
+      -concat '(' to encoded
+  -return encoded
+
+-- method --> tally_instances(string) --> hash
+  -initialize an empty hash (instances)
+  -split the given string into array of characters and iterate through
+    -if the current char is not a key within instances
+      -assigned the char as a key and its count within the arr as the value
+    -otherwise
+      -increment the value associated with the key by 1
+
+=end
+
+def tally_instances(str)
+  str.chars.each_with_object(Hash.new(0)) do |char, instances|
+    instances[char] += 1
+  end
+end
+
+def duplicate_encode(str)
+  instances = tally_instances(str.downcase)
+  str.downcase.chars.each_with_object('') do |char, encoded_str|
+    instances[char] > 1 ? encoded_str << ')' : encoded_str << '('
+  end
+end
+
+# p tally_instances("recede")
+
+p duplicate_encode("din") == "((("
+p duplicate_encode("recede") == "()()()"
+p duplicate_encode("Success") == ")())())"
+p duplicate_encode("(( @") == "))(("
+```
+
+---
+
+##  ##
+
+- Difficulty: **hard**
+- [ ] Problem Completed?
