@@ -65,6 +65,14 @@
 63. - [x] [Rotate Matrix](#rotate-matrix)
 64. - [x] [Longest Common Prefix](#longest-common-prefix)
 65. - [x] [Consecutive Runs](#consecutive-runs)
+66. - [x] [Search Query](#search-query)
+67. - [x] [Repeated Substring 2](#repeated-substring-2)
+68. - [x] [Reverse String](#reverse-string)
+69. - [x] [Fizzbuzz](#fizzbuzz)
+70. - [x] [Remove Vowels](#remove-vowels)
+71. - [x] [Delete Digit](#delete-digit)
+72. - [x] [Multiples of 3 or 5](#multiples-of-3-or-5)
+73. - [x] [String Transformer](#string-transformer)
 
 ---
 
@@ -6124,3 +6132,832 @@ p consecutive_runs('abcd') == {"a"=>["a", "ab", "abc", "abcd"],
                                "c"=>["c", "cd"], 
                                "d"=>["d"]}
 ```
+
+---
+
+## Search Query ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Solve utilizing the given examples;
+
+PRODUCTS = [\
+  { name: "Thinkpad x210", price: 220},\
+  { name: "Thinkpad x220", price: 250},\
+  { name: "Thinkpad x250", price: 979},\
+  { name: "Thinkpad x230", price: 300},\
+  { name: "Thinkpad x230", price: 330},\
+  { name: "Thinkpad x230", price: 350},\
+  { name: "Thinkpad x240", price: 700},\
+  { name: "Macbook Leopard", price: 300},\
+  { name: "Macbook Air", price: 700},\
+  { name: "Macbook Pro", price: 600},\
+  { name: "Macbook", price: 1449},\
+  { name: "Dell Latitude", price: 200},\
+  { name: "Dell Latitude", price: 650},\
+  { name: "Dell Inspiron", price: 300},\
+  { name: "Dell Inspiron", price: 450}
+]
+
+query = {
+  price_min: 240,
+  price_max: 280,
+  q: "thinkpad"
+}
+
+query2 = {
+  price_min: 300,
+  price_max: 450,
+  q: 'dell'
+}
+
+p search(query) == [ { name: "Thinkpad x220", price: 250} ] \
+p search(query2) == [ { name: "Dell Inspiron", price: 300}, { name: "Dell Inspiron", price: 450} ]
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Solve utilizing the given examples;
+
+PRODUCTS = [
+  { name: "Thinkpad x210", price: 220},
+  { name: "Thinkpad x220", price: 250},
+  { name: "Thinkpad x250", price: 979},
+  { name: "Thinkpad x230", price: 300},
+  { name: "Thinkpad x230", price: 330},
+  { name: "Thinkpad x230", price: 350},
+  { name: "Thinkpad x240", price: 700},
+  { name: "Macbook Leopard", price: 300},
+  { name: "Macbook Air", price: 700},
+  { name: "Macbook Pro", price: 600},
+  { name: "Macbook", price: 1449},
+  { name: "Dell Latitude", price: 200},
+  { name: "Dell Latitude", price: 650},
+  { name: "Dell Inspiron", price: 300},
+  { name: "Dell Inspiron", price: 450}
+]
+
+query = {
+  price_min: 240,
+  price_max: 280,
+  q: "thinkpad"
+}
+
+query2 = {
+  price_min: 300,
+  price_max: 450,
+  q: 'dell'
+}
+
+p search(query) == [ { name: "Thinkpad x220", price: 250} ]
+p search(query2) == [ { name: "Dell Inspiron", price: 300}, { name: "Dell Inspiron", price: 450} ]
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+Implicit Rules:
+  -return an array of hashes, where the hashes meet the search criteria passed in as an argument
+  -criteria icludes:
+    -price min
+    -price max
+    -keyword
+    
+Questions:
+--------------------------EXAMPLES---------------------------------------
+search(query) == [ { name: "Thinkpad x220", price: 250} ]
+
+min price = 240
+max price 280
+keyword = 'thinkpad'
+
+option that meets criteria => [ { name: "Thinkpad x220", price: 250} ]
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Hash, 3 criteria(key/values)
+Output: 1 Array of hashes, hashes are options that meet given criteria
+Additional DS Utilized:
+  - Array to return hash options
+  - Hashes for argument, constant options, and return options
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Utilizing the criteria passed in as an argument, iterate through the PRODUCTS constant and push all hashes that meet the criteria to a new array, return new array
+
+-- method --> search(hash) --> array
+  -iterate through the PRODUCTS array using selection (hash)
+    -current hash price >= min and <= max and name downcased contains keyword?
+  -return new array object
+
+=end
+
+PRODUCTS = [
+  { name: "Thinkpad x210", price: 220},
+  { name: "Thinkpad x220", price: 250},
+  { name: "Thinkpad x250", price: 979},
+  { name: "Thinkpad x230", price: 300},
+  { name: "Thinkpad x230", price: 330},
+  { name: "Thinkpad x230", price: 350},
+  { name: "Thinkpad x240", price: 700},
+  { name: "Macbook Leopard", price: 300},
+  { name: "Macbook Air", price: 700},
+  { name: "Macbook Pro", price: 600},
+  { name: "Macbook", price: 1449},
+  { name: "Dell Latitude", price: 200},
+  { name: "Dell Latitude", price: 650},
+  { name: "Dell Inspiron", price: 300},
+  { name: "Dell Inspiron", price: 450}
+]
+
+query = {
+  price_min: 240,
+  price_max: 280,
+  q: "thinkpad"
+}
+
+query2 = {
+  price_min: 300,
+  price_max: 450,
+  q: 'dell'
+}
+
+def search(query)
+  PRODUCTS.select do |hash|
+    hash[:price] >= query[:price_min] &&
+    hash[:price] <= query[:price_max] &&
+    hash[:name].downcase.include?(query[:q])
+  end
+end
+
+p search(query) == [ { name: "Thinkpad x220", price: 250} ]
+p search(query2) == [ { name: "Dell Inspiron", price: 300}, { name: "Dell Inspiron", price: 450} ]
+```
+
+---
+
+## Repeated Substring 2 ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given a non-empty string, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together. You may assume the given string consists of lowercase English letters only.
+
+- Example 1:
+  - Input "abab"
+  - Output: True
+  - Explanation: It's the substring 'ab' twice.
+
+- Example 2:
+  - Input: "aba"
+  - Output: False
+
+p repeated_substring('abab') == true\
+p repeated_substring('aba') == false\
+p repeated_substring('aabaaba') == false\
+p repeated_substring('abaababaab') == true\
+p repeated_substring('abcabcabcabc') == true\
+p repeated_substring('aaaaa') == true
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Problem 1: Repeated substring
+
+Given a non-empty string, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together. You may assume the given string consists of lowercase English letters only.
+
+Example 1:
+ - Input "abab"
+ - Output: True
+ - Explanation: It's the substring 'ab' twice.
+
+Example 2:
+ - Input: "aba"
+ - Output: False
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -Check if  the given string can be constructed by taking a substring of itself and repeating. 
+  -Given string will consist of lowercase letters only
+Implicit Rules:
+  -no empty strings given
+  -no whitespace or punctuation
+  -substring cannot be the same length as the given string
+Questions:
+  -
+  
+--------------------------EXAMPLES---------------------------------------
+"abab"
+a, ab, aba, abab
+a does not work
+ab if repeated twice, will be the same as the given string
+aba does not work
+abab is not valid
+
+==> true, because 'ab' repeated twice is the same as the given string
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 boolean
+Additional DS Utilized:
+  -split string into an array
+  -join array into a string
+  -integers used to countinstances of repeated substrings
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Find all substrings of a length less than the givens string, repeat each substring to determine if it casn be repeated to construct the given string, if it can return ture, else return false.
+
+-- method --> repeated_substring(string) --> boolean
+  -initialize subs to return value of find_subs
+  -iterate through the subs array
+    -intialize 'temp_string'
+    -loop
+      -concatenate the current sub_string to itslef until the length is greater or equal to the lenght of the given string
+    -if temp_string equals given string return true
+  -return false
+  
+-- method --> find_subs(string) --> array
+  -initialize an emoty array (subs)
+  -iterate from 1 to the length of the given string minus 1 (length)
+    -iterate through the given string broken into array of characters finding each consecutive combo based on length
+      -join and push sub_arrays into subs array
+  -return subs
+  
+=end
+
+def find_subs(str)
+  subs = []
+  1.upto(str.size - 1) do |length|
+    str.chars.each_cons(length) do |sub_arr|
+      subs << sub_arr.join
+    end
+  end
+  subs
+end
+
+def repeated_substring(str)
+  subs = find_subs(str)
+  subs.each do |sub_str|
+    temp_str = sub_str
+    rounds = 1   
+  
+    loop do
+      temp_str += sub_str
+      rounds += 1
+      break if temp_str.size >= str.size
+    end
+    return true if temp_str == str
+  end
+  false
+end
+
+# p find_subs('abab') == %w(a b a b ab ba ab aba bab)
+
+p repeated_substring('abab') == true
+p repeated_substring('aba') == false
+p repeated_substring('aabaaba') == false
+p repeated_substring('abaababaab') == true
+p repeated_substring('abcabcabcabc') == true
+p repeated_substring('aaaaa') == true
+```
+
+---
+
+## Reverse String ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Problem 1: Reverse a string without using the built-in #reverse method
+
+take a string as an argument, return the string in reverse order without using the built-in reverse method.
+
+reverse_string("abcde") == "edcba"\
+reverse_string(" ") == " "\
+reverse_string("football") == "llabtoof"
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Reverse a string without using the built-in #reverse method
+
+take a string as an argument, return the string in reverse order without using the built-in reverse method.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -take a string as an argument and reverse the order of the characters 
+  -do not use the reverse method
+Implicit Rules:
+  -whitespace allowed
+  -any character type allowed
+Questions:
+  -no questions currently
+  
+--------------------------EXAMPLES---------------------------------------
+'abcde'
+
+a b c d e
+e d c b a
+
+'edcba'
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String
+Additional DS Utilized:
+  -splitting string into an array
+  -joining arrays into strings
+  
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> split given string into an array of characters and push each character into a new string object starting from the end, then join and return the new string
+
+-- method --> reverse_string(string) --> string
+  -initialize an empty string object (new_string)
+  -initialize 'index' to -1
+  -while length of str is greater or equal to positive version of index
+    -concat character at current index to new_string
+    -decrement index by 1
+  -return new_string
+
+=end
+
+def reverse_string(str)
+  new_string = ''
+  index = -1
+  
+  while str.size >= index.abs do
+    new_string << str[index]
+    index -= 1
+  end
+  new_string
+end
+
+p reverse_string("abcde") == "edcba"
+p reverse_string(" ") == " "
+p reverse_string("football") == "llabtoof"
+```
+
+---
+
+## Fizzbuzz ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+Write a method that takes two arguments: the first is the starting number, and the second is the ending number. Print out all numbers between the two numbers except if a number is divisible by 3, print out "Fizz", if a number is divisible by 5, print out "Buzz", and if a number is divisible by 3 and 5, print out "FizzBuzz".
+
+fizzbuzz(1, 10)\
+fizzbuzz(1, 15)
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a method that takes two arguments: the first is the starting number, and the second is the ending number. Print out all numbers between the two numbers except if a number is divisible by 3, print out "Fizz", if a number is divisible by 5, print out "Buzz", and if a number is divisible by 3 and 5, print out "FizzBuzz".
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -return all digits from a given range
+  -if the digit is divisible by 3 return 'Fizz' instead
+  -if the digit is divisible by 5 return 'Buzz' instead
+  -if the digit is divisible by 3 and 5 return 'FizzBuzz' instead
+Implicit Rules:
+Questions:
+  
+--------------------------EXAMPLES---------------------------------------
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 
+Output: 
+Additional DS Utilized:
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> 
+
+-- method 
+
+=end
+
+def fizzbuzz(starting, ending)
+  starting.upto(ending) do |num|
+    if num % 3 == 0 && num % 5 == 0
+      puts 'FizzBuzz'
+    elsif num % 3 == 0
+      puts 'Fizz'
+    elsif num % 5 == 0
+      puts 'Buzz'
+    else
+      puts num
+    end
+  end
+end
+
+fizzbuzz(1, 10)
+fizzbuzz(1, 15)
+```
+
+---
+
+## Remove Vowels ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+Problem 1: remove vowels from an array of strings
+
+Write a method that takes an array of strings and returns an array of the same string values, except with the vowels removed.
+
+p remove_vowels(['green', 'yellow', 'black', 'white']) == ['grn', 'yllw', 'blck', 'wht']
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Problem 1: remove vowels from an array of strings
+
+Write a method that takes an array of strings and returns an array of the same string values, except with the vowels removed.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -remove all vowels from the given array of strings and return
+Implicit Rules:
+  -all given strings will comtain lowercase letters only
+  -input will be valid and strings will not be empty
+Questions:
+  -none
+  
+--------------------------EXAMPLES---------------------------------------
+['green', 'yellow', 'black', 'white'] == ['grn', 'yllw', 'blck', 'wht']
+
+green --> grn
+yellow --> yllw
+black --> blck
+white --> wht
+
+returns --> ['grn', 'yllw', 'blck', 'wht']
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Array of strings
+Output: 1 Array of strings
+Additional DS Utilized:
+  -split string into array
+  -join array into string
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Itersate through the array of strings, then iterate through each vowel character and remove from current string if applicable, return an array with al vowels removed from strings.
+
+-intialize 'vowels' to a constant of lowercase vowel characters
+
+-- method --> remove_vowels(array) --> array
+  -iterate through the given array using transformation
+    -iterate through current word split into characters using selection 
+      -check if the current char is not a vowel
+    -join split word back together and return to transformation
+    
+=end
+
+VOWELS = ['a', 'e', 'i', 'o', 'u']
+
+def remove_vowels(arr)
+  arr.map do |word|
+    word.chars.select { |char| !VOWELS.include?(char) }.join
+  end
+end
+
+p remove_vowels(['green', 'yellow', 'black', 'white']) == ['grn', 'yllw', 'blck', 'wht']
+```
+
+---
+
+## Delete Digit ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+Task: Given an integer n, find the maximal number you can obtain by deleting exactly one digit of the given number.
+
+Example
+For n = 152, the output should be 52;
+
+For n = 1001, the output should be 101.
+
+Input/Output\
+[input] integer n
+
+Constraints: 10 ≤ n ≤ 1,000,000.
+
+[output] an integer
+
+p delete_digit(152) == 52\
+p delete_digit(1001) == 101\
+p delete_digit(10) == 1
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Task
+Given an integer n, find the maximal number you can obtain by deleting exactly one digit of the given number.
+
+Example
+For n = 152, the output should be 52;
+
+For n = 1001, the output should be 101.
+
+Input/Output
+[input] integer n
+
+Constraints: 10 ≤ n ≤ 1,000,000.
+
+[output] an integer
+
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -find the maximal number obtainable by removing a single digit from the given input
+  -input will be between 10 and 1,000,000
+Implicit Rules:
+  -
+Questions:
+
+--------------------------EXAMPLES---------------------------------------
+1001
+
+001
+101
+101
+100
+
+101 is greatest of possible outputs
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Integer
+Output: 1 Integer
+Additional DS Utilized:
+ -converting integers into strings
+ -converting strings into integers
+ -splitting strings into array
+ -joining arrays into strings
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> convert given number into a string, split and iterate finding all possible different sub_digits by removing a single digit, then return the greatest of these digits.
+
+* convert to string and split, iterate over each char
+* feed each possible combination of removing a single digit into an array
+* find the greatest and return
+
+-- method --> deleet_digit(integer) --> integer
+  -convert num into string, split into chars and iterate over using transformation and index
+    -initialize str_num to num converted to string
+    -remove the current digit, join the remaining digits and convert to integer
+    -return this integer to the iteration
+  -find and return the greatest digit in the returned array
+
+=end
+
+def delete_digit(num)
+  num.to_s.chars.map.with_index do |digit, index|
+    temp = num.to_s
+    temp[index] = ''
+    temp.to_i
+  end.max
+end
+
+p delete_digit(152) == 52
+p delete_digit(1001) == 101
+p delete_digit(10) == 1
+```
+
+---
+
+## Multiples of 3 or 5 ##
+
+- Difficulty: **easy**
+- [x] Problem Completed?
+
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in.
+
+Note: If the number is a multiple of both 3 and 5, only count it once.
+
+p solution(10) == 23\
+p solution(20) == 78\
+p solution(200) == 9168
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in.
+
+Note: If the number is a multiple of both 3 and 5, only count it once.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -find all the multiples of 3 and 5 below the given number
+  -return the sum of all of these numbers
+  -if a number is divisible by 3 and 5 only include it once
+Implicit Rules:
+  -the given number is not included in the possible divisible number
+  -given number will always be a valid whole number
+Questions:
+  -
+--------------------------EXAMPLES---------------------------------------
+10
+
+3, 5, 6, 9 are all divisble by 3 and/or 5 
+
+summed --> 23
+
+returns 23
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Integer
+Output: 1 Integer
+Additional DS Utilized:
+  -array to hold divisible values
+  -range to search through possible numbers
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Find all numbers between 1 and upto the given number that are divisble by 3 and/or 5, add them all together and return the sum
+
+* iterate through numbers 1 upto given number aand push all divisible numbers to an array
+* find sum of digits within array and return
+
+-- method --> solution(integer) --> integer
+  -initialize en empty array (divisors)
+  -iterate through numbers 1 upto given integer
+    -if current num is divisible by 3 and/or 5 
+      -push to divisors
+  -find sum of divisors and return 
+
+=end
+
+def solution(num)
+  divisors = []
+  
+  3.upto(num - 1) do |current_num|
+    divisors << current_num if current_num % 3 == 0 || current_num % 5 == 0
+  end
+  
+  divisors.sum
+end
+
+p solution(10) == 23
+p solution(20) == 78
+p solution(200) == 9168
+```
+
+---
+
+## String Transformer ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given a string, return a new string that has transformed based on the input:
+
+Change case of every character, ie. lower case to upper case, upper case to lower case.
+Reverse the order of words from the input.
+
+Note: You will have to handle multiple spaces, and leading/trailing spaces.
+
+For example:
+
+"Example Input" ==> "iNPUT eXAMPLE"
+
+You may assume the input only contain English alphabet and spaces.
+
+string_transformer('Example string') == 'STRING eXAMPLE'\
+string_transformer("Example Input") == "iNPUT eXAMPLE"
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string, return a new string that has transformed based on the input:
+
+Change case of every character, ie. lower case to upper case, upper case to lower case.
+Reverse the order of words from the input.
+
+Note: You will have to handle multiple spaces, and leading/trailing spaces.
+
+You may assume the input only contain English alphabet and spaces.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -Change the case of every letter within the given string
+  -reverse the order of words in the string
+Implicit Rules:
+  -string inputs will not be empty
+  -split words in given string at ' '
+Questions:
+  -
+  
+--------------------------EXAMPLES---------------------------------------
+For example:
+
+"Example Input" ==> "iNPUT eXAMPLE"
+swap order of words  
+--> Input Example
+
+swap case
+--> 'iNPUT eXAMPLE
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String
+Additional DS Utilized:
+  -split strings into arrays
+  -join arrays into strings
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> 
+
+* split given stirng into array of words
+* interate through each character of each word and swap their case
+* return new string
+
+-- method --> string_transformer(string) --> string
+  -split given string into array of words (words)
+  -iterate through words transformatively
+    -split word and iterate through each character
+      -swap case
+    -join array back into a word
+  -join array of words back into a string abd return
+
+=end
+
+def swap_case(char)
+  char.upcase == char ? char.downcase : char.upcase
+end
+
+def string_transformer(str)
+  words = str.split(/ /).reverse
+  swapped = words.map do |word|
+    word.chars.map { |char| swap_case(char) }.join
+  end.join(' ')
+  
+  str[-1] == ' ' ? swapped = ' '  + swapped : swapped
+end
+
+# p swap_case('A') == 'a'
+# p swap_case('b') == 'B'
+
+p string_transformer('Example string') == 'STRING eXAMPLE'
+p string_transformer("Example Input") == "iNPUT eXAMPLE"
+p string_transformer("Rsl Zqlv") == "zQLV rSL"
+p string_transformer("You Know When  THAT  Hotline Bling") == "bLING hOTLINE  that  wHEN kNOW yOU"
+p string_transformer(" A b C d E f G ") == " g F e D c B a "
+```
+
+---
+
+## Largest Product in a Series ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Complete the greatestProduct method so that it'll find the greatest product of five consecutive digits in the given string of digits.
+
+For example:
+
+greatestProduct("123834539327238239583") // should return 3240
+The input string always has more than five digits.
+
+p greatest_product("123834539327238239583") == 3240
+p greatest_product("395831238345393272382") == 3240
+p greatest_product("92494737828244222221111111532909999") == 5292
+p greatest_product("92494737828244222221111111532909999") == 5292
+p greatest_product("02494037820244202221011110532909999") == 0
+
+```ruby
+
+```
+
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the greatestProduct method so that it'll find the greatest product of five consecutive digits in the given string of digits.
+
+For example:
+
+greatestProduct("123834539327238239583") // should return 3240
+The input string always has more than five digits.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+Implicit Rules:
+Questions:
+--------------------------EXAMPLES---------------------------------------
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 
+Output: 
+Additional DS Utilized:
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> 
+
+-- method --> 
+
+=end
+
+p greatest_product("123834539327238239583") == 3240
+p greatest_product("395831238345393272382") == 3240
+p greatest_product("92494737828244222221111111532909999") == 5292
+p greatest_product("92494737828244222221111111532909999") == 5292
+p greatest_product("02494037820244202221011110532909999") == 0
