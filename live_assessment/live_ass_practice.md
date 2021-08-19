@@ -75,6 +75,10 @@
 73. - [x] [String Transformer](#string-transformer)
 74. - [x] [Largest Product in a Series](#largest-product-in-a-series)
 75. - [x] [Duplicate Encoder](#duplicate-encoder)
+76. - [x] [Backspaces in String](#backspaces-in-string)
+77. - [x] [Alphabetized](#alphabetized)
+78. - [x] [Tranform to Prime](#transform-to-prime)
+79. - [ ] [Word to Digit](#word-to-digit)
 
 ---
 
@@ -7135,7 +7139,362 @@ p duplicate_encode("(( @") == "))(("
 
 ---
 
+## Backspaces in String ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Assume "#" is like a backspace in string. This means that string "a#bc#d" actually is "bd"
+
+Your task is to process a string with "#" symbols.
+
+Examples
+"abc#d##c"      ==>  "ac"
+"abc##d######"  ==>  ""
+"#######"       ==>  ""
+""              ==>  ""
+
+p clean_string('abc#d##c') == "ac"
+p clean_string('abc####d##c#') == ""
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Assume "#" is like a backspace in string. This means that string "a#bc#d" actually is "bd"
+
+Your task is to process a string with "#" symbols.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -'#' acts like a backspace
+  -return a string where for every '#' in the string, the character before it will be removed
+Implicit Rules:
+  -string inputs will be non-empty
+  -an empty string input will return an empty string
+  -string containing only '#' characters will return an empty string
+Questions:
+  -n/a
+  
+--------------------------EXAMPLES---------------------------------------
+Examples
+"abc#d##c"      ==>  "ac"
+"abc##d######"  ==>  ""
+"#######"       ==>  ""
+""              ==>  ""
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String
+Additional DS Utilized:
+  -converting string into array
+  -converting array into string
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Split given string into array and iterate through the collection pushing each element to a new array unless the character is '#' in which case remove the last element pushed to the new array, then join and return the new string
+
+-- method --> clean_string(string) --> string
+  -initialize an empty array (clean_arr)
+  -split given string into array of characters and iterate through the collection
+    -if the char is not '#' 
+      -push to clean_arr
+    -otherwise
+      -remove the last element in clean_arr
+  -join clean_arr and return
+
+=end
+
+def clean_string(str)
+  str.chars.each_with_object([]) do |char, clean_arr|
+    char == '#' ? clean_arr.pop : clean_arr << char
+  end.join
+end
+
+p clean_string('abc#d##c') == "ac"
+p clean_string('abc####d##c#') == ""
+```
+---
+
+## Alphabetized ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Re-order the characters of a string, so that they are concatenated into a new string in "case-insensitively-alphabetical-order-of-appearance".\
+Whitespace and punctuation shall simply be removed.\
+The input string can contain any characters except for numbers.
+
+def alphabetized(str)
+  alpha = ('a'..'z').to_a
+  letters = str.chars.select { |char| alpha.include?(char.downcase) }
+  letters.sort { |a, b| a.downcase <=> b.downcase }.join
+end
+
+p alphabetized("The Holy Bible") == "BbeehHilloTy"
+p alphabetized("!@$%^&*()_+=-`,") == ""
+p alphabetized("codeWars Can't Load Today") == "aaaacCdddeLnooorstTWy"
+
+```ruby
+def alphabetized(str)
+  alpha = ('a'..'z').to_a
+  letters = str.chars.select { |char| alpha.include?(char.downcase) }
+  letters.sort { |a, b| a.downcase <=> b.downcase }.join
+end
+
+p alphabetized("The Holy Bible") == "BbeehHilloTy"
+p alphabetized("!@$%^&*()_+=-`,") == ""
+p alphabetized("codeWars Can't Load Today") == "aaaacCdddeLnooorstTWy"
+```
+
+---
+
+## Transform to Prime ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Given a List [] of n integers , find the minimum number to be inserted in a list, so that the sum of all elements of the list should equal the closest prime number .
+
+Notes
+
+- List size is at least 2 .
+
+- List's numbers will only have positives (n > 0) .
+
+- Repetition of numbers in the list could occur .
+
+- The newer list's sum should equal the closest prime number .
+
+- Input >> Output Examples
+
+1. minimum_number([3,1,2]) ==> return (1)\
+Explanation:\
+Since , the sum of the list's elements equal to (6) , the minimum number to be inserted to transform the sum to prime number is (1) , which will make *the sum of the List** equal the closest prime number (7)* .
+
+2. minimum_number([2,12,8,4,6]) ==> return (b, 5)
+Explanation:\
+Since , the sum of the list's elements equal to (32) , the minimum number to be inserted to transform the sum to prime number is (5) , which will make *the sum of the List** equal the closest prime number (37)* .
+
+3. minimum_number ([50,39,49,6,17,28]) ==> return (2)
+Explanation:\
+Since , the sum of the list's elements equal to (189) , the minimum number to be inserted to transform the sum to prime number is (2) , which will make *the sum of the List** equal the closest prime number (191)* .
+
+p minimum_number([3,1,2]) == 1\
+p minimum_number([5,2]) == 0\
+p minimum_number([1,1,1]) == 0\
+p minimum_number([2,12,8,4,6]) == 5\
+p minimum_number([50,39,49,6,17,28]) == 2
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given a List [] of n integers , find the minimum number to be inserted in a list, so that the sum of all elements of the list should equal the closest prime number.
+
+Notes
+List size is at least 2 .
+
+List's numbers will only have positives (n > 0) .
+
+Repetition of numbers in the list could occur .
+
+The newer list's sum should equal the closest prime number .
+
+Input >> Output Examples
+
+1. minimum_number([3,1,2]) ==> return (1)
+Explanation:
+Since , the sum of the list's elements equal to (6) , the minimum number to be inserted to transform the sum to prime number is (1) , which will make the sum of the List** equal the closest prime number (7) .
+
+2. minimum_number([2,12,8,4,6]) ==> return (5)
+Explanation:
+Since , the sum of the list's elements equal to (32) , the minimum number to be inserted to transform the sum to prime number is (5) , which will make the sum of the List** equal the closest prime number (37) .
+
+3. minimum_number([50,39,49,6,17,28]) ==> return (2)
+Explanation:
+Since , the sum of the list's elements equal to (189), the minimum number to be inserted to transform the sum to prime number is (2) , which will make the sum of the List equal the closest prime number (191) .
+
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -given array will be at least 2 elements long
+  -given array integers will be pos
+  -there may be repeated numbers within the given array
+  -new array, when summed, should equal the closest prime number
+  -return an integer, that when included within the given array and summed equals the closest* prime number
+Implicit Rules:
+  -the closest prime number will always be greater than the sum of the array integers
+  -if the sum of the warray integers is a prime, return 0
+Questions:
+  -closest prime number? Up? Down? Either?
+    --> closest prime number greater than the sum of the array integers
+--------------------------EXAMPLES---------------------------------------
+p minimum_number([3,1,2]) == 1
+[3, 1, 2] summed --> 6
+6 is not prime
+add 1 and check 
+7 is prime!
+
+therefore, return 1
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 array, containing positive integers
+Output: 1 integer
+Additional DS Utilized:
+  -arrays and integers
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> Find the sum of the given array, check if it is a prime number, add 1 to the sum and check again until the new total is a prime, then return the amount added to the original sum.
+
+* find the sum of the given array
+* loop
+  * check if the sum is prime, increment sum by 1 and check again until its prime
+* return the amount incremented
+
+-- method --> minimum_number(array) --> integer
+  -find the sum of the given array (sum)
+  -initialize 'result' set to 0
+  -unless is_prime? == true
+    -increment result by 1
+    -increment sum by 1
+  -return result
+  
+-- method --> is_prime?(integer) --> boolean
+  -iterate through 2 upto the given integer to see if any of them are divisibles
+
+=end
+
+def is_prime?(given_num)
+  !(2..given_num -1).to_a.any? { |num| given_num % num == 0 }
+end
+
+def minimum_number(arr)
+  sum = arr.sum
+  result = 0
+  
+  until is_prime?(sum) do
+    result += 1
+    sum += 1
+  end
+  
+  result
+end
+
+# p is_prime?(6) == false
+# p is_prime?(7) == true
+
+p minimum_number([3,1,2]) == 1
+p minimum_number([5,2]) == 0
+p minimum_number([1,1,1]) == 0
+p minimum_number([2,12,8,4,6]) == 5
+p minimum_number([50,39,49,6,17,28]) == 2
+```
+
+---
+
+## Word to Digit ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+Given a string that contains the written versions of the numbers 0-9, return the same string that has converted each writtten number within the string to an integer.
+
+a = 'One Two Three'
+convert_word_to_number(a) == '1 2 3'
+a == '1 2 3'
+
+b = 'one Two three'
+convert_word_to_number(b) == '1 2 3'
+b == '1 2 3'
+
+convert_word_to_number('One Two Three and some words') == '1 2 3 and some words'
+convert_word_to_number('Nine eight seven and some words') == '9 8 7 and some words'
+
+convert_word_to_number('one word') == '1 word'
+convert_word_to_number('lone word') == 'lone word'
+
+```ruby
+-----------------------INSTRUCTIONS--------------------------------------
+Given a string that contains the written versions of the numbers 0-9, return the same string that has converted each writtten number within the string to an integer.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -given string will include word versions of numbers 0-9
+  -return the same string converting words nums to nums
+  
+Implicit Rules:
+  -maintain all other characters besides word numbers
+  -white space, other words etc will remainn the same
+  -all words are separated by one space
+  -words can be capitalized or lowercase
+Questions:
+
+--------------------------EXAMPLES---------------------------------------
+('one word') == '1 word'
+one ==> 1
+
+so we swap out the word number
+
+returns '1 word'
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 String
+Additional DS Utilized:
+  -converting string into array of words
+
+----------------------------ALGO-----------------------------------------
+Higher-Level ==> 
+
+* initialize contant 'WORD-NUMS' to words and their numberical equal in a hash
+* iterate through the WORD_NUM and for each key word found in the given string sub with the value
+* return the string
+
+- initialize WORD_NUM to ...
+
+-- method --> convert_word_to_number(string) --> string
+  -iterate through WORD_NUM
+    -substitute globally any instance of a element with ita index
+  -return string
+
+=end
+
+
+
+WORD_NUMS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+# def convert_word_to_number(str)
+#   WORD_NUMS.each_with_index do |word, index|
+#     str.gsub!(word, index.to_s)
+#   end
+#   str
+# end
+def convert_word_to_number(str)
+  str.split.each do |word|
+    if WORD_NUMS.include?(word.downcase)
+      str.gsub!(word, WORD_NUMS.index(word.downcase).to_s)
+    end
+  end
+
+  str
+end
+
+a = 'One Two Three'
+convert_word_to_number(a) == '1 2 3'
+a == '1 2 3'
+
+b = 'one Two three'
+convert_word_to_number(b) == '1 2 3'
+b == '1 2 3'
+
+convert_word_to_number('One Two Three and some words') == '1 2 3 and some words'
+convert_word_to_number('Nine eight seven and some words') == '9 8 7 and some words'
+
+convert_word_to_number('one word') == '1 word'
+p convert_word_to_number('lone word') == 'lone word'
+```
+
+---
+
 ##  ##
 
-- Difficulty: **hard**
+- Difficulty: **medium**
 - [ ] Problem Completed?
