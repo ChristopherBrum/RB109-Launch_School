@@ -59,7 +59,7 @@
 57. - [x] [Vowel Back](#vowel-back)
 58. - [x] [Find Missing Letter](#find-missing-letter)
 59. - [x] [Word Scramble](#word-scramble)
-60. - [x] [Alphabetized](#alphabetized)
+60. - [x] [Alphabetized Again](#alphabetized-again)
 61. - [x] [Anagram Detection](#anagram-detection)
 62. - [x] [Highest Scoring Word Again](#highest-scoring-word-again)
 63. - [x] [Rotate Matrix](#rotate-matrix)
@@ -80,6 +80,8 @@
 78. - [x] [Tranform to Prime](#transform-to-prime)
 79. - [x] [Word to Digit](#word-to-digit)
 80. - [x] [Longest AE](#longest-ae)
+81. - [x] [Minimum Sub Length](#minimum-sub-length)
+82. - [x] [Two Sum](#two-sum)
 
 ---
 
@@ -7213,9 +7215,10 @@ end
 p clean_string('abc#d##c') == "ac"
 p clean_string('abc####d##c#') == ""
 ```
+
 ---
 
-## Alphabetized ##
+## Alphabetized Again ##
 
 - Difficulty: **medium**
 - [x] Problem Completed?
@@ -7592,10 +7595,10 @@ p longest_ae("secaundogenituareabb") == 16
 
 ---
 
-##  ##
+## Minimum Sub Length ##
 
-- Difficulty: ****
-- [ ] Problem Completed?
+- Difficulty: **medium**
+- [x] Problem Completed?
 
 Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
 
@@ -7605,6 +7608,162 @@ p minSubLength([1, 11, 100, 1, 0, 200, 3, 2, 1, 250], 280) == 4\
 p minSubLength([1, 2, 4], 8) == 0
 
 ```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
 
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -given an array of positive integers and an integer object (s)
+  -find shortest array of integers that, when summed, is greater than or equal to parameter s
+  -if there isn't one, return 0
+  -give integers will be positive
+Implicit Rules:
+  -given array will not be empty
+  -given integer will be positive
+Questions:
+
+--------------------------EXAMPLES---------------------------------------
+([1, 10, 5, 2, 7], 9) == 1
+[1, 10] >= 9
+[10] >= 9 --> shortest sub-array >= 9
+[5, 2, 7] >= 9
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Array of integers, 1 Integer
+Output: 1 integer
+Additional DS Utilized:
+  -integers, arrays
+
+----------------------------ALGO-----------------------------------------
+High-Level-Algo:
+* find all sub-arrays
+* filter out any sub-arrays thats sum is less than parameter s
+* find the shortest sub-array and return its length, otherwise return 0
+
+-- method --> min_sub_length(array, integer) --> integer
+  -initialize subs to the return value of find_subs
+  -select the sub-arrays from subs whose sum is >= to s
+  -find the shortest sub-array 
+  -return shortest sub-array length or 0
+  
+-- method --> find_subs(array) --> array
+  -initialize an empty array (subs)
+  -iterate through numbers 1 upto arrays length (length)
+    -iterate through array finding consecutive sub-arrays  
+      -push all sub_arrays to subs
+  -return subs
+
+=end
+
+def find_subs(arr)
+  subs = []
+  1.upto(arr.size) do |length|
+    arr.each_cons(length) { |sub_arr| subs << sub_arr }
+  end
+  subs
+end
+
+def min_sub_length(arr, s)
+  subs = find_subs(arr)
+  greater_subs = subs.select { |sub_arr| sub_arr.sum >= s }
+  return 0 if greater_subs.empty?
+  greater_subs.min_by { |sub_arr| sub_arr.length }.size
+end
+
+# p find_subs([2,3,1,2,4,3]) 
+
+p min_sub_length([2,3,1,2,4,3], 7) == 2
+p min_sub_length([1, 10, 5, 2, 7], 9) == 1
+p min_sub_length([1, 11, 100, 1, 0, 200, 3, 2, 1, 250], 280) == 4
+p min_sub_length([1, 2, 4], 8) == 0
 ```
 
+---
+
+## Two Sum ##
+
+- Difficulty: **medium**
+- [x] Problem Completed?
+
+Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indices of these items should then be returned in a tuple like so: (index1, index2).
+
+The input will always be valid (numbers will be an array of length 2 or greater, and all of the items will be numbers; target will always be the sum of two different items from that array).
+
+p two_sum([1, 2, 3], 4).sort == [0, 2]\
+p two_sum([1234, 5678, 9012], 14690).sort == [1, 2]\
+p two_sum([2, 2, 3], 4).sort == [0, 1]
+
+```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indices of these items should then be returned in a tuple like so: (index1, index2).
+
+The input will always be valid (numbers will be an array of length 2 or greater, and all of the items will be numbers; target will always be the sum of two different items from that array).
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -given an array of integers and a target integer
+  -find two different numbers in the array thats sum is the target
+  -the indices of these numbers should be returned in an array
+  -inputs will always be a valid array with at least 2 valid integers
+  -target will always be the sum of 2 numbers in the array
+Implicit Rules:
+  -given integers will always be greater than 0
+Questions:
+
+--------------------------EXAMPLES---------------------------------------
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 array, 1 integer
+Output: 1 array
+Additional DS Utilized:
+  -
+
+----------------------------ALGO-----------------------------------------
+High-Level-Algo:
+* find all possible 2 element long sub-arrays
+* iterate through the sub_arrays and find combos thats sum is the target and the numbes are different
+* find the indices of these 2 numbers and return them in an array
+
+-- method --> two_sum(array, integer) --> array
+  -find all 2 element long sub-arrays (all_subs)
+  -iterate through all_subs using selection
+    -two numbers == target & two numbers different?
+  -find the indices of the 2 numbers and return
+
+=end
+
+def two_sum(arr, target)
+  all_subs = arr.combination(2).to_a
+  result_subs = all_subs.select { |sub| sub.sum == target }
+  
+  result_subs = result_subs.first 
+  result = []
+  
+  1.times do |_|
+    first_index = arr.index(result_subs[0])
+    result << first_index
+    arr[first_index] = ''
+    result << arr.index(result_subs[1])
+  end
+
+  result
+end
+
+p two_sum([1, 2, 3], 4).sort == [0, 2]
+p two_sum([1234, 5678, 9012], 14690).sort == [1, 2]
+p two_sum([2, 2, 3], 4).sort == [0, 1]
+```
+
+---
+
+##  ##
+
+- Difficulty: **medium**
+- [ ] Problem Completed?
+
+
+```ruby
+
+```
