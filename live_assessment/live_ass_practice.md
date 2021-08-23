@@ -31,14 +31,14 @@
 29. - [x] [Nested Brackets](#nested-brackets)
 30. - [x] [Write Number in Expanded Form](#write-number-in-expanded-form)
 31. - [x] [Mexican Wave Variation 1](#mexican-wave-variation-1)
-32. - [ ] [Sum Consecutives](#sum-consecutives)
-33. - [ ] [Mexican Wave Variation 2](#mexican-wave-variation-2)
+32. - [x] [Sum Consecutives](#sum-consecutives)
+33. - [x] [Mexican Wave Variation 2](#mexican-wave-variation-2)
 34. - [x] [Persistent Bugger](#persistent-bugger)
 35. - [x] [Title Case](#title-case)
 36. - [x] [Count and Group Character Occurrences in a String](#count-and-group-character-occurrences-in-a-string)
 37. - [x] [Sum of Squared Divisors a Square](#sum-of-squared-divisors-a-square)
 38. - [x] [Find the Mine](#find-the-mine)
-39. - [ ] [Scramblies](#scramblies)
+39. - [x] [Scramblies](#scramblies)
 40. - [ ] [Longest Alphabetical Substring](#longest-alphabetical-substring)
 41. - [x] [Hashtag Generator](#hashtag-generator)
 42. - [x] [Pete the Baker](#pete-the-baker)
@@ -82,6 +82,7 @@
 80. - [x] [Longest AE](#longest-ae)
 81. - [x] [Minimum Sub Length](#minimum-sub-length)
 82. - [x] [Two Sum](#two-sum)
+83. - [x] [Digital Root](#digital-root)
 
 ---
 
@@ -2974,7 +2975,7 @@ p wave(" gap ") == [" Gap ", " gAp ", " gaP "]
 ## Sum Consecutives ##
 
 - Difficulty: **hard**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 You are given an array that contains only integers (positive and negative). Your job is to sum only the numbers that are the same and consecutive. The result should be one array.
 
@@ -2985,6 +2986,69 @@ p sum_consecutives([1,1,7,7,3]) == [2,14,3] \
 p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
 
 ```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+You are given an array that contains only integers (positive and negative). Your job is to sum only the numbers that are the same and consecutive. The result should be one array.
+
+You can assume there is never an empty array and there will always be an integer.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -given array will contain pos and neg integers
+  -return the sum of the numbers that are the same and consecutive in an array
+  -given array will never be empty
+Implicit Rules:
+  -zero is an acceptable input
+Questions:
+  -
+
+--------------------------EXAMPLES---------------------------------------
+[1, 1, 7, 7, 3]
+organize into subarrays of like integers
+
+[[1, 1], [7, 7], [3]]
+then find the sum for these like integer collections
+
+[2, 14, 3]
+return the array of these collections summed
+
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 array
+Output: 1 array
+Additional DS Utilized:
+  -utilizing integers within the arrays
+
+----------------------------ALGO-----------------------------------------
+High-Level-Algo:
+* separate the like integers into sub-arrays
+* find the sum of these sub-arrays
+* return array of the sums
+
+-- method --> sum_consecutives(array) --> array
+  -slice the given array into sub-arrays when the element is not the same as the last
+  -iterate through the array using transformation
+    -find the sum of each sub-array
+  -return the array of sums
+
+=end
+
+def sum_consecutives(arr)
+  sliced_arr = arr.slice_when { |a, b| a != b }.to_a
+  sliced_arr.map { |sub_arr| sub_arr.sum }
+end
+
+p sum_consecutives([1,4,4,4,0,4,3,3,1,1]) == [1,12,0,4,6,2]
+p sum_consecutives([1,1,7,7,3]) == [2,14,3] 
+p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
+
+
+
+
+#### ALTERNATIVE SOLUTION ####
+
+
+
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
 You are given an array that contains only integers (positive and negative). Your job is to sum only the numbers that are the same and consecutive. The result should be one array.
@@ -3023,22 +3087,6 @@ sum_consecutives([1,1,7,7,3]) ==> [2,14,3]
 
 =end
 
-# def sum_consecutives(arr)
-#   sums = []
-#   arr.each_with_index do |num, index|
-#     sum = 0
-#     current = 0
-#     loop do
-#       current = num
-#       sum += current
-#       p "array current: #{arr[index]}, arr + 1: #{arr[index + 1]}"
-#       break if arr[index] != arr[index + 1]
-#     end
-#     sums << sum
-#   end
-#   sum
-# end
-
 def sum_consecutives(arr)
   temp = []
   result = []
@@ -3067,7 +3115,7 @@ p sum_consecutives([-5,-5,7,7,12,0]) ==  [-10,14,12,0]
 ## Mexican Wave Variation 2 ##
 
 - Difficulty: **hard**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
 Your task is to create a method that turns a string into a wave (like at a stadium). You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
 
@@ -3165,6 +3213,91 @@ def we_skip(index)
   (index + 1) % INDEX_TO_SKIP == 0
 end
   
+p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]
+p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]
+p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"]
+p wave("") == []
+```
+
+```ruby
+#### ALTERNATIVE SOLUTION ####
+
+
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Your task is to create a method that turns a string into a wave (like at a stadium). You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up.
+
+Rules
+
+ 1. The input string will always be lower case but maybe empty.
+ 2. If the character in the string is whitespace then pass over it
+ 3. Leave each fourth letter unaltered—-do not make those letters uppercase
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -return an array of the given string where each letter is capitalized at the next index
+  -given string will always be lowercase
+  -if the current char is whitespace, pass it over
+  -every 4th letter remains unaltered
+Implicit Rules:
+  -given an empty string return an empty string
+  -
+Questions:
+
+--------------------------EXAMPLES---------------------------------------
+("studying")-> ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]
+                 idx 0       idx 1        idx 2    idx 3 no cap   idx 4       idx 5        idx 6  idx 7 no caps
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 String
+Output: 1 Array, of strings
+Additional DS Utilized:
+  -splitting strings into arrays
+  -joining arrays into strings
+  -integers to keep track of indices
+
+----------------------------ALGO-----------------------------------------
+High-Level-Algo:
+* iterate over the chars of the given string
+* populate a new array with modified versions of the given string
+* return the array
+
+-- method --> wave(string) --> array
+-initialize letter_count to 1
+  -split the given string into an array of characters (str_arr)
+  -iterate through str_arr using transformation 
+    -initialize str_arr to given string split into array of characters
+    -if current char is whitespace
+      -skip
+    -if char is not a fourth iteration
+      -increment letter_count
+      -given string
+    -otherwise
+      -increment letter_count
+      -capital the char of given string at the current index and push to wave
+  -return wave, removing nils
+  
+=end
+
+def wave(string)
+  letter_count = 1
+  wave = string.chars.map.with_index do |char, index|
+    str_arr = string.chars
+    if char == ' '
+      next
+    elsif letter_count % 4 == 0 
+      letter_count += 1
+      string
+    else
+      letter_count += 1
+      str_arr[index] = char.upcase 
+      str_arr.join
+    end
+  end
+  
+  wave.select { |word| word }
+end
+
 p wave("hello") == ["Hello", "hEllo", "heLlo", "hello", "hellO"]
 p wave("studying") == ["Studying", "sTudying", "stUdying", "studying", "studYing", "studyIng", "studyiNg", "studying"]
 p wave("launch school") == ["Launch school", "lAunch school", "laUnch school", "launch school", "launCh school", "launcH school", "launch School", "launch school", "launch scHool", "launch schOol", "launch schoOl", "launch school"]
@@ -3753,6 +3886,79 @@ p scramble('scriptjava','javascript') == true \
 p scramble('scriptingjava','javascript') == true
 
 ```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
+
+Notes:
+
+Only lower case letters will be used (a-z). No punctuation or digits will be included.
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -figure out if any of the characters in str1 can be rearranged to match str2
+  -given strings will b elowercase letters
+  -no punctuation or digits will be in given strings
+Implicit Rules:
+  -characters in str1 cannot count for multiple chars in str2
+Questions:
+  -Null terminated? 
+
+--------------------------EXAMPLES---------------------------------------
+rkqodlw', 'world'
+
+str1 --> d k l o q r w
+           x     x
+str2 --> d   l o   r w --> matches up!
+
+retuns true
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 2 Strings
+Output: boolean
+Additional DS Utilized:
+  -splitting strings into arrays
+
+----------------------------ALGO-----------------------------------------
+High-Level-Algo:
+* iterate through the chars of str 2 to check if they exist in str 1
+* retunr true if all characters are found, otherwise return false
+
+-- method --> scramble(string, string) --> boolean
+  -iinitialize index to 0
+  -split str2 into array of characters
+  -loop 
+    -if char is found in str1
+      -remove char from str1
+    -otherwise
+      -return false
+  -return true
+
+=end
+
+def scramble(str1, str2)
+  index = 0
+  
+  while index < (str2.size - 1) do 
+    return false unless str1.include?(str2[index])
+    index += 1
+  end
+  true
+end
+
+p scramble('rkqodlw', 'world') == true
+p scramble('cedewaraaossoqqyt', 'codewars') == true
+p scramble('katas', 'steak') == false
+p scramble('rkqodlw','world') == true
+p scramble('cedewaraaossoqqyt','codewars') == true
+p scramble('katas','steak') == false
+p scramble('scriptjava','javascript') == true
+p scramble('scriptingjava','javascript') == true
+```
+
+```ruby
+#### ALTERNATE SOLUTION ####
+
 =begin
 -----------------------INSTRUCTIONS--------------------------------------
 Complete the function scramble(str1, str2) that returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false.
@@ -7758,12 +7964,132 @@ p two_sum([2, 2, 3], 4).sort == [0, 1]
 
 ---
 
-##  ##
+## Digital Root ##
 
 - Difficulty: **medium**
-- [ ] Problem Completed?
+- [x] Problem Completed?
 
+In this kata, you must create a digital root function.
+
+A digital root is the recursive sum of all the digits in a number. Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. This is only applicable to the natural numbers.
+
+Here's how it works:
+
+digital_root(16)\
+=> 1 + 6\
+=> 7
+
+digital_root(942)\
+=> 9 + 4 + 2\
+=> 15 ...\
+=> 1 + 5\
+=> 6
+
+digital_root(132189)\
+=> 1 + 3 + 2 + 1 + 8 + 9\
+=> 24 ...\
+=> 2 + 4\
+=> 6
+
+digital_root(493193)\
+=> 4 + 9 + 3 + 1 + 9 + 3\
+=> 29 ...\
+=> 2 + 9\
+=> 11 ...\
+=> 1 + 1\
+=> 2
+
+p digital_root(16) == 7\
+p digital_root(456) == 6\
+p digital_root(132189) == 6\
+p digital_root(493193) == 2
 
 ```ruby
+=begin
+-----------------------INSTRUCTIONS--------------------------------------
+In this kata, you must create a digital root function.
 
+A digital root is the recursive sum of all the digits in a number. Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. This is only applicable to the natural numbers.
+
+Here's how it works:
+
+digital_root(16)
+=> 1 + 6
+=> 7
+
+digital_root(942)
+=> 9 + 4 + 2
+=> 15 ...
+=> 1 + 5
+=> 6
+
+digital_root(132189)
+=> 1 + 3 + 2 + 1 + 8 + 9
+=> 24 ...
+=> 2 + 4
+=> 6
+
+digital_root(493193)
+=> 4 + 9 + 3 + 1 + 9 + 3
+=> 29 ...
+=> 2 + 9
+=> 11 ...
+=> 1 + 1
+=> 2
+
+--------------------------PROBLEM----------------------------------------
+Explicit Rules:
+  -given an integer input
+    -take the sum of the digits of the given integer
+    -if that value is a double digit, repeat, until a single digit
+    -return the number of times this must be done
+Implicit Rules:
+  -given number will be gresater than 0
+  -given number will be a whole number
+Questions:
+
+--------------------------EXAMPLES---------------------------------------
+456
+--> 4 + 5 + 6 (1)
+15
+--> 1 + 5 (2)
+6
+
+returns 2
+
+-----------------------DATA STRUCTURES-----------------------------------
+Input: 1 Integer
+Output: 1 Integer
+Additional DS Utilized:
+  -splitting integers into an array of digits
+
+----------------------------ALGO-----------------------------------------
+High-Level-Algo:
+* unless given integer is a single digit, split into digits and find sum
+* increment a counter for every time this must be done
+* return the counter 
+
+-- method --> digital_root(integer) --> integer
+  -initialize 'counter' to 0
+  -if given number split into array of digits is longer than 1 element long
+    -pass sum of array of digits to digital_root
+    -increment counter by 1
+  -otherwise
+    -return counter
+=end
+
+def digital_root(num)
+  num = num.digits
+  if num.size > 1
+    num = num.sum
+    digital_root(num)
+  else
+    return num.sum
+  end
+end
+
+p digital_root(16) == 7 
+p digital_root(456) == 6 
+p digital_root(132189) == 6
+p digital_root(493193) == 2
 ```
